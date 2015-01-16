@@ -1,0 +1,4 @@
+services:
+#    rufy_rest_api.example:
+#        class: Rufy\RestApiBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

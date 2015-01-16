@@ -1,0 +1,3 @@
+rufy_rest_api_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RufyRestApiBundle:Default:index }

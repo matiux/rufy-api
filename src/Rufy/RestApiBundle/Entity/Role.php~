@@ -1,0 +1,101 @@
+<?php namespace Rufy\RestApiBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="role", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
+ */
+class Role
+{
+    public function __construct() {
+
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role", cascade={"persist"})
+     */
+    private $users;
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Role
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \User $user
+     *
+     * @return Role
+     */
+    public function addUser(\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \User $user
+     */
+    public function removeUser(\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
