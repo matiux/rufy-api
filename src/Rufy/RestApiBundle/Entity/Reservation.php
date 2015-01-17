@@ -1,10 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Entity\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Reservation {
 
@@ -88,6 +90,27 @@ class Reservation {
      * @ORM\JoinColumn(name="turn_id", referencedColumnName="id", nullable=false)
      */
     private $turn;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * Set people
@@ -316,11 +339,11 @@ class Reservation {
     /**
      * Set user
      *
-     * @param \User $user
+     * @param \Rufy\RestApiBundle\Entity\User $user
      *
      * @return Reservation
      */
-    public function setUser(\User $user)
+    public function setUser(\Rufy\RestApiBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -340,11 +363,11 @@ class Reservation {
     /**
      * Set area
      *
-     * @param \Area $area
+     * @param \Rufy\RestApiBundle\Entity\Area $area
      *
      * @return Reservation
      */
-    public function setArea(\Area $area)
+    public function setArea(\Rufy\RestApiBundle\Entity\Area $area)
     {
         $this->area = $area;
 
@@ -388,11 +411,11 @@ class Reservation {
     /**
      * Set customer
      *
-     * @param \Customer $customer
+     * @param \Rufy\RestApiBundle\Entity\Customer $customer
      *
      * @return Reservation
      */
-    public function setCustomer(\Customer $customer)
+    public function setCustomer(\Rufy\RestApiBundle\Entity\Customer $customer)
     {
         $this->customer = $customer;
 
@@ -412,11 +435,11 @@ class Reservation {
     /**
      * Set turn
      *
-     * @param \Turn $turn
+     * @param \Rufy\RestApiBundle\Entity\Turn $turn
      *
      * @return Reservation
      */
-    public function setTurn(\Turn $turn)
+    public function setTurn(\Rufy\RestApiBundle\Entity\Turn $turn)
     {
         $this->turn = $turn;
 
@@ -487,5 +510,28 @@ class Reservation {
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Reservation
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }

@@ -167,11 +167,11 @@ class Restaurant {
     /**
      * Add area
      *
-     * @param \Area $area
+     * @param \Rufy\RestApiBundle\Entity\Area $area
      *
      * @return Restaurant
      */
-    public function addArea(\Area $area)
+    public function addArea(\Rufy\RestApiBundle\Entity\Area $area)
     {
         $this->areas[] = $area;
 
@@ -225,11 +225,11 @@ class Restaurant {
     /**
      * Add service
      *
-     * @param \Service $service
+     * @param \Rufy\RestApiBundle\Entity\Service
      *
      * @return Restaurant
      */
-    public function addService(\Service $service)
+    public function addService(\Rufy\RestApiBundle\Entity\Service $service)
     {
         $this->services[] = $service;
 

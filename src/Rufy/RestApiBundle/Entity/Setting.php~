@@ -1,10 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="setting", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Setting
 {
@@ -41,6 +43,27 @@ class Setting
      * @ORM\JoinColumn(name="category_setting_id", referencedColumnName="id")
      */
     private $category_setting;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * Set name

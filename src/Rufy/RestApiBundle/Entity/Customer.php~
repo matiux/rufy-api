@@ -2,10 +2,12 @@
 
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\Data\Repositories\Doctrine\CustomerRepository")
  * @ORM\Table(name="customer", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Customer
 {
@@ -62,6 +64,26 @@ class Customer
      **/
     private $reservations;
 
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * Set name
@@ -210,11 +232,11 @@ class Customer
     /**
      * Set restaurant
      *
-     * @param \Restaurant $restaurant
+     * @param \Rufy\RestApiBundle\Entity\Restaurant $restaurant
      *
      * @return Customer
      */
-    public function setRestaurant(\Restaurant $restaurant = null)
+    public function setRestaurant(\Rufy\RestApiBundle\Entity\Restaurant $restaurant = null)
     {
         $this->restaurant = $restaurant;
 
@@ -273,5 +295,74 @@ class Customer
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Customer
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Customer
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Customer
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }

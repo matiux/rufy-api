@@ -24,6 +24,8 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface
         $customer->setNewsletter(true);
         $customer->setRestaurant($this->getReference('restaurant'));
 
+        $this->setReference('customer_1', $customer);
+
         $customer = new Customer();
         $customer->setName('Pancia');
         $customer->setSurname('Sfonda');
@@ -32,6 +34,8 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface
         $customer->setPrivacy(false);
         $customer->setNewsletter(false);
         $customer->setRestaurant($this->getReference('restaurant'));
+
+        $this->setReference('customer_2', $customer);
     }
 
     /**

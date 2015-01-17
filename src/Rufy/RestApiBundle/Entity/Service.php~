@@ -29,7 +29,7 @@ class Service
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Turn", mappedBy="service", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Turn", mappedBy="service", cascade={"persist","remove"})
      **/
     private $turns;
 
@@ -87,11 +87,11 @@ class Service
     /**
      * Add turn
      *
-     * @param \Turn $turn
+     * @param \Rufy\RestApiBundle\Entity\Turn $turn
      *
      * @return Service
      */
-    public function addTurn(\Turn $turn)
+    public function addTurn(\Rufy\RestApiBundle\Entity\Turn $turn)
     {
         $this->turns[] = $turn;
 
@@ -123,11 +123,11 @@ class Service
     /**
      * Set restaurant
      *
-     * @param \Restaurant $restaurant
+     * @param \Rufy\RestApiBundle\Entity\Restaurant $restaurant
      *
      * @return Service
      */
-    public function setRestaurant(\Restaurant $restaurant)
+    public function setRestaurant(\Rufy\RestApiBundle\Entity\Restaurant $restaurant)
     {
         $this->restaurant = $restaurant;
 

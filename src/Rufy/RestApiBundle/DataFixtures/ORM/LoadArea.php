@@ -25,7 +25,7 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area->setFull(false);
         $area->setInvalids(false);
         $area->setAnimals(true);
-
+        $this->setReference('area_1', $area);
         $restaurant->addArea($area);
 
         $area = new Area();
@@ -36,7 +36,7 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area->setFull(true);
         $area->setInvalids(true);
         $area->setAnimals(false);
-
+        $this->setReference('area_2', $area);
         $restaurant->addArea($area);
     }
 
