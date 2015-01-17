@@ -57,7 +57,7 @@ class Restaurant {
     private $services;
 
     /**
-     * @ORM\OneToMany(targetEntity="Setting", mappedBy="restaurant", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Setting", mappedBy="restaurant", cascade={"remove"})
      */
     private $settings;
 

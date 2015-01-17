@@ -18,22 +18,18 @@ class LoadCategorySetting extends AbstractFixture implements OrderedFixtureInter
         $cat            = new CategorySetting();
         $cat->setName('Ristorante');
         $this->setReference('cat_set_ristorante', $cat);
-        $manager->persist($cat);
 
         $cat            = new CategorySetting();
         $cat->setName('Servizi');
         $this->setReference('cat_set_servizi', $cat);
-        $manager->persist($cat);
 
         $cat            = new CategorySetting();
         $cat->setName('Prenotazioni');
         $this->setReference('cat_set_prenotazioni', $cat);
-        $manager->persist($cat);
 
         $cat            = new CategorySetting();
         $cat->setName('Sale');
         $this->setReference('cat_set_sale', $cat);
-        $manager->persist($cat);
     }
 
     /**

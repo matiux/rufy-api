@@ -21,8 +21,7 @@ class LoadSetting extends AbstractFixture implements OrderedFixtureInterface
         $setting->setName('animali.ammessi');
         $setting->setLabel('Animali ammessi');
         $setting->setValue(1);
-
-        $manager->persist($setting);
+        $this->setReference('set_animali.ammessi', $setting);
 
         $setting =      new Setting();
         $setting->setCategorySetting($this->getReference('cat_set_ristorante'));
@@ -30,6 +29,7 @@ class LoadSetting extends AbstractFixture implements OrderedFixtureInterface
         $setting->setName('telefono.obbligatorio');
         $setting->setLabel('Telefono obbligatorio');
         $setting->setValue(1);
+        $this->setReference('set_telefono.obbligatorio', $setting);
 
         $manager->persist($setting);
 
@@ -39,6 +39,7 @@ class LoadSetting extends AbstractFixture implements OrderedFixtureInterface
         $setting->setName('nome.cognome.separati');
         $setting->setLabel('Nome e cognome separati');
         $setting->setValue(0);
+        $this->setReference('set_nome.cognome.separati', $setting);
 
         $manager->persist($setting);
     }

@@ -29,7 +29,7 @@ class CategorySetting
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Setting", mappedBy="category_setting")
+     * @ORM\OneToMany(targetEntity="Setting", mappedBy="category_setting", cascade={"remove"})
      */
     private $settings;
 

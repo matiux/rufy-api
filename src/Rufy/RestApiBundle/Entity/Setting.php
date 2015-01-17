@@ -39,7 +39,7 @@ class Setting
     private $restaurant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CategorySetting", inversedBy="settings")
+     * @ORM\ManyToOne(targetEntity="CategorySetting", inversedBy="settings", cascade={"persist"}))
      * @ORM\JoinColumn(name="category_setting_id", referencedColumnName="id")
      */
     private $category_setting;
