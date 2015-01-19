@@ -14,8 +14,6 @@ class FeatureContext extends RestContext implements Context, SnippetAcceptingCon
 {
     private $_session;
 
-    private $_string;
-
     /**
      * Initializes context.
      *
@@ -23,15 +21,10 @@ class FeatureContext extends RestContext implements Context, SnippetAcceptingCon
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct(Session $session, String $string)
+    public function __construct(Session $session)
     {
-        /**
-         * TODO
-         * leggere capitolo contenitore Sf per Servizi
-         */
-        parent::__construct($string);
+        parent::__construct();
 
         $this->_session     = $session;
-        $this->_string      = $string;
     }
 }

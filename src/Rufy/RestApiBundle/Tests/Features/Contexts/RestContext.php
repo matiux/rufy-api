@@ -1,16 +1,13 @@
 <?php namespace Rufy\RestApiBundle\Tests\Features\Contexts;
 
+use Rufy\RestApiBundle\Utility\String;
+
 abstract class RestContext
 {
     const METHOD_DELETE = 'DELETE';
     const METHOD_GET    = 'GET';
     const METHOD_POST   = 'POST';
     const METHOD_PUT    = 'PUT';
-
-    /**
-     * @var Rufy\RestApiBundle\Utility\String
-     */
-    private $_string;
 
     /**
      * @var string
@@ -22,10 +19,8 @@ abstract class RestContext
      */
     protected $requestMethod;
 
-    public function __construct($string)
+    public function __construct()
     {
-        $this->_string = $string;
-
         $this->baseUrl  = 'http://rufysf.local/api';
     }
 
@@ -41,22 +36,17 @@ abstract class RestContext
 
     private function setResource($resource) {
 
-        $this->_string->set($resource);
+        $resource = new String($resource);
 
-        if ($this->_string->contains('\/')) {
-
-            echo 'si';
+        if ($resource->contains('\/')) {
 
             $els        = explode('/', $resource);
 
             $this->resource_id = $els[1];
 
             $resource   = $els[0];
-        } else {
-
-            echo 'no';
         }
 
-        $this->resource         = $resource;
+        $this->resource         = (string) $resource;
     }
 }

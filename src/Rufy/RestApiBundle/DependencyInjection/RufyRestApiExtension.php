@@ -1,6 +1,4 @@
-<?php
-
-namespace Rufy\RestApiBundle\DependencyInjection;
+<?php namespace Rufy\RestApiBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

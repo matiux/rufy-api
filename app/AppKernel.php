@@ -26,6 +26,7 @@ class AppKernel extends Kernel
 
             //Dev
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Wrep\Bundle\BugsnagBundle\BugsnagBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

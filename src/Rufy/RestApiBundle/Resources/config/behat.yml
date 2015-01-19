@@ -8,6 +8,6 @@ default:
             contexts:
                 - Rufy\RestApiBundle\Tests\Features\Contexts\FeatureContext:
                     session: '@session'
-                    string: '@string'
+                    #string: '@string'
     extensions:
         Behat\Symfony2Extension: ~
