@@ -1,0 +1,13 @@
+default:
+    suites:
+        rufy_restapibundle:
+            type: symfony_bundle
+            bundle: RufyRestApiBundle
+            paths:
+                - %paths.base%/src/Rufy/RestApiBundle/Tests/Features
+            contexts:
+                - Rufy\RestApiBundle\Tests\Features\Contexts\FeatureContext:
+                    session: '@session'
+                    string: '@string'
+    extensions:
+        Behat\Symfony2Extension: ~

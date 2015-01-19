@@ -1,0 +1,2 @@
+imports:
+    - src/Rufy/RestApiBundle/Resources/config/behat.yml

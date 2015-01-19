@@ -26,7 +26,7 @@
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "behat/behat": "dev-master"
+        "behat/symfony2-extension": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [

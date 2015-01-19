@@ -2,3 +2,5 @@ services:
 #    rufy_rest_api.example:
 #        class: Rufy\RestApiBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    string:
+        class: Rufy\RestApiBundle\Utility\String
