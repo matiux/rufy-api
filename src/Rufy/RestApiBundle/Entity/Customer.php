@@ -54,7 +54,7 @@ class Customer
     private $newsletter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="customer")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="customers")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      **/
     private $restaurant;

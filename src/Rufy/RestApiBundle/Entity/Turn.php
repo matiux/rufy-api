@@ -35,7 +35,7 @@ class Turn
     private $service;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="service")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="turn")
      **/
     private $reservations;
 

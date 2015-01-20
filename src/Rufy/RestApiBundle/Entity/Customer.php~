@@ -54,7 +54,7 @@ class Customer
     private $newsletter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="customer")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="customers")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      **/
     private $restaurant;
@@ -256,11 +256,11 @@ class Customer
     /**
      * Add reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Customer
      */
-    public function addReservation(\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -270,9 +270,9 @@ class Customer
     /**
      * Remove reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }

@@ -39,7 +39,7 @@ class Setting
     private $restaurant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CategorySetting", inversedBy="settings", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="CategorySetting", inversedBy="settings", cascade={"persist"}))
      * @ORM\JoinColumn(name="category_setting_id", referencedColumnName="id")
      */
     private $category_setting;
@@ -116,11 +116,11 @@ class Setting
     /**
      * Set restaurant
      *
-     * @param \Restaurant $restaurant
+     * @param \Rufy\RestApiBundle\Entity\Restaurant $restaurant
      *
      * @return Setting
      */
-    public function setRestaurant(\Restaurant $restaurant = null)
+    public function setRestaurant(\Rufy\RestApiBundle\Entity\Restaurant $restaurant = null)
     {
         $this->restaurant = $restaurant;
 
@@ -140,11 +140,11 @@ class Setting
     /**
      * Set categorySetting
      *
-     * @param \CategorySetting $categorySetting
+     * @param \Rufy\RestApiBundle\Entity\CategorySetting $categorySetting
      *
      * @return Setting
      */
-    public function setCategorySetting(\CategorySetting $categorySetting = null)
+    public function setCategorySetting(\Rufy\RestApiBundle\Entity\CategorySetting $categorySetting = null)
     {
         $this->category_setting = $categorySetting;
 
@@ -193,5 +193,74 @@ class Setting
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Setting
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Setting
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Setting
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }

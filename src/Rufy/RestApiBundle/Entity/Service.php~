@@ -103,9 +103,9 @@ class Service
     /**
      * Remove turn
      *
-     * @param \Turn $turn
+     * @param Turn $turn
      */
-    public function removeTurn(\Turn $turn)
+    public function removeTurn(Turn $turn)
     {
         $this->turns->removeElement($turn);
     }

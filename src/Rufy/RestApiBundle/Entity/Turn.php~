@@ -35,7 +35,7 @@ class Turn
     private $service;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="service")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="turn")
      **/
     private $reservations;
 
@@ -111,11 +111,11 @@ class Turn
     /**
      * Add reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Turn
      */
-    public function addReservation(\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -125,9 +125,9 @@ class Turn
     /**
      * Remove reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
