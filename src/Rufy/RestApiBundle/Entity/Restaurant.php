@@ -133,11 +133,11 @@ class Restaurant {
     /**
      * Add user
      *
-     * @param \User $user
+     * @param \Rufy\RestApiBundle\Entity\User $user
      *
      * @return Restaurant
      */
-    public function addUser(\User $user)
+    public function addUser(\Rufy\RestApiBundle\Entity\User $user)
     {
         $this->users[] = $user;
 
@@ -147,9 +147,9 @@ class Restaurant {
     /**
      * Remove user
      *
-     * @param \User $user
+     * @param \Rufy\RestApiBundle\Entity\User $user
      */
-    public function removeUser(\User $user)
+    public function removeUser(\Rufy\RestApiBundle\Entity\User $user)
     {
         $this->users->removeElement($user);
     }
@@ -181,9 +181,9 @@ class Restaurant {
     /**
      * Remove area
      *
-     * @param \Area $area
+     * @param \Rufy\RestApiBundle\Entity\Area $area
      */
-    public function removeArea(\Area $area)
+    public function removeArea(\Rufy\RestApiBundle\Entity\Area $area)
     {
         $this->areas->removeElement($area);
     }
@@ -201,11 +201,11 @@ class Restaurant {
     /**
      * Set customer
      *
-     * @param \Customer $customer
+     * @param \Rufy\RestApiBundle\Entity\Customer $customer
      *
      * @return Restaurant
      */
-    public function setCustomer(\Customer $customer)
+    public function setCustomer(\Rufy\RestApiBundle\Entity\Customer $customer)
     {
         $this->customer = $customer;
 
@@ -241,9 +241,9 @@ class Restaurant {
     /**
      * Remove service
      *
-     * @param \Service $service
+     * @param \Rufy\RestApiBundle\Entity\Service $service
      */
-    public function removeService(\Service $service)
+    public function removeService(\Rufy\RestApiBundle\Entity\Service $service)
     {
         $this->services->removeElement($service);
     }
@@ -261,11 +261,11 @@ class Restaurant {
     /**
      * Add setting
      *
-     * @param \Setting $setting
+     * @param \Rufy\RestApiBundle\Entity\Setting $setting
      *
      * @return Restaurant
      */
-    public function addSetting(\Setting $setting)
+    public function addSetting(\Rufy\RestApiBundle\Entity\Setting $setting)
     {
         $this->settings[] = $setting;
 
@@ -275,9 +275,9 @@ class Restaurant {
     /**
      * Remove setting
      *
-     * @param \Setting $setting
+     * @param \Rufy\RestApiBundle\Entity\Setting $setting
      */
-    public function removeSetting(\Setting $setting)
+    public function removeSetting(\Rufy\RestApiBundle\Entity\Setting $setting)
     {
         $this->settings->removeElement($setting);
     }
@@ -295,11 +295,11 @@ class Restaurant {
     /**
      * Add customer
      *
-     * @param \Customer $customer
+     * @param \Rufy\RestApiBundle\Entity\Customer $customer
      *
      * @return Restaurant
      */
-    public function addCustomer(\Customer $customer)
+    public function addCustomer(\Rufy\RestApiBundle\Entity\Customer $customer)
     {
         $this->customers[] = $customer;
 
@@ -309,9 +309,9 @@ class Restaurant {
     /**
      * Remove customer
      *
-     * @param \Customer $customer
+     * @param \Rufy\RestApiBundle\Entity\Customer $customer
      */
-    public function removeCustomer(\Customer $customer)
+    public function removeCustomer(\Rufy\RestApiBundle\Entity\Customer $customer)
     {
         $this->customers->removeElement($customer);
     }

@@ -81,11 +81,11 @@ class CategorySetting
     /**
      * Add setting
      *
-     * @param \Setting $setting
+     * @param Setting $setting
      *
      * @return CategorySetting
      */
-    public function addSetting(\Setting $setting)
+    public function addSetting(Setting $setting)
     {
         $this->settings[] = $setting;
 
@@ -95,9 +95,9 @@ class CategorySetting
     /**
      * Remove setting
      *
-     * @param \Setting $setting
+     * @param Setting $setting
      */
-    public function removeSetting(\Setting $setting)
+    public function removeSetting(Setting $setting)
     {
         $this->settings->removeElement($setting);
     }

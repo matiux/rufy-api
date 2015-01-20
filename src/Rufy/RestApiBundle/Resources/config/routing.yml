@@ -1,3 +1,10 @@
-rufy_rest_api_homepage:
-    path:     /hello/{name}
+rufy_rest_api_home:
+    path:     /
     defaults: { _controller: RufyRestApiBundle:Default:index }
+
+reservations:
+    type: rest
+    prefix: v1
+    resource: Rufy\RestApiBundle\Controller\ReservationController
+    name_prefix:  api_v1_
+

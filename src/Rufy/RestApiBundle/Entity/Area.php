@@ -256,11 +256,11 @@ class Area
     /**
      * Set reservations
      *
-     * @param \Reservation $reservations
+     * @param Reservation $reservations
      *
      * @return Area
      */
-    public function setReservations(\Reservation $reservations)
+    public function setReservations(Reservation $reservations)
     {
         $this->reservations = $reservations;
 
@@ -280,11 +280,11 @@ class Area
     /**
      * Add reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Area
      */
-    public function addReservation(\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -294,9 +294,9 @@ class Area
     /**
      * Remove reservation
      *
-     * @param \Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }

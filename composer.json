@@ -21,8 +21,8 @@
         "jms/serializer-bundle": "@dev",
         "friendsofsymfony/rest-bundle": "@dev",
         "nelmio/api-doc-bundle": "@dev",
-        "stof/doctrine-extensions-bundle": "~1.1@dev",
-        "wrep/bugsnag-php-symfony": "~1.0"
+        "stof/doctrine-extensions-bundle": "~1.1@dev"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

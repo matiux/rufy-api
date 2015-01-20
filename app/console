@@ -10,8 +10,7 @@ set_time_limit(0);
 require_once __DIR__.'/bootstrap.php.cache';
 require_once __DIR__.'/AppKernel.php';
 
-//use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Wrep\Bundle\BugsnagBundle\Console\BugsnagConsoleApplication;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
 
@@ -24,6 +23,5 @@ if ($debug) {
 }
 
 $kernel = new AppKernel($env, $debug);
-//$application = new Application($kernel);
-$application = new BugsnagConsoleApplication($kernel);
+$application = new Application($kernel);
 $application->run($input);
