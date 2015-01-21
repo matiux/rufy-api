@@ -2,14 +2,15 @@
 
 use Doctrine\ORM\Mapping AS ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\ReservationInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Entity\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Reservation {
-
+class Reservation implements ReservationInterface
+{
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -6,7 +6,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReservationController extends FOSRestController implements ClassResourceInterface
 {
-    // [GET] /resource/{id}
+    /**
+     * // [GET] /resource/{id}
+     *
+     * @param $id
+     * @return Response
+     */
     public function getAction($id)
     {
         $reservation = $this->getDoctrine()->getRepository('\Rufy\RestApiBundle\Entity\Reservation')->find($id);
@@ -15,6 +20,11 @@ class ReservationController extends FOSRestController implements ClassResourceIn
         return new Response('<html><body>Numero: '.rand(1, 10).'</body></html>');
     }
 
+    /**
+     * // [GET] /resource/{id}
+     *
+     * @return Response
+     */
     public function cgetAction()
     {
         $reservation = $this->getDoctrine()->getRepository('\Rufy\RestApiBundle\Entity\Reservation')->findAll();
