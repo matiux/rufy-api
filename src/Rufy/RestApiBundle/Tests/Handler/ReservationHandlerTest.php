@@ -3,6 +3,7 @@
 use Rufy\RestApiBundle\Handler\ReservationHandler;
 use Rufy\RestApiBundle\Model\ReservationInterface;
 use Rufy\RestApiBundle\Entity\Reservation;
+use Guzzle\Service\Client;
 
 class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,71 +12,40 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $om;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $repository;
+    protected $_client;
 
     public function setUp()
     {
-        if (!interface_exists('Doctrine\Common\Persistence\ObjectManager')) {
-            $this->markTestSkipped('Doctrine Common has to be installed for this test to run.');
-        }
-
-        /**
-         * We then create a dummy Lights object by calling PHPUnit's getMock() method and passing the
-         * name of the Lights class. This returns an instance of Lights, but every method returns null--a dummy
-         * object. This dummy object cannot do anything, but it gives our code the interface necessary to work
-         * with Light objects.
-         */
-        $class              = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
-        $this->om           = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository   = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
-
-        $this->om->expects($this->any())
-            ->method('getRepository')
-            ->with($this->equalTo(static::RESERVATION_CLASS))
-            ->will($this->returnValue($this->repository));
-
-        $this->om->expects($this->any())
-            ->method('getClassMetadata')
-            ->with($this->equalTo(static::RESERVATION_CLASS))
-            ->will($this->returnValue($class));
-
-        $class->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue(static::RESERVATION_CLASS));
+        $this->_client = new Client('http://rufysf.local');
     }
 
-    public function testGet()
+    public function testGetJson()
     {
-//        $id                 = 1;
-//        $reservation        = $this->getReservation();
-//
-//        $this->repository->expects($this->once())->method('find')
-//            ->with($this->equalTo($id))
-//            ->will($this->returnValue($reservation));
-//
-//        $this->reservationHandler = $this->createReservationHandler($this->om, static::RESERVATION_CLASS);
-//
-//        $this->reservationHandler->get($id);
+        $resourceId = 3;
+
+        $request        = $this->_client->get('app_dev.php/api/v1/reservations/'.$resourceId);
+        $response       = $request->send();
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $jsonResponse   = $response->json();
+
+        $this->assertJson(json_encode($jsonResponse));
+
+        $this->assertArrayHasKey('id', $jsonResponse);
+//        $this->assertArrayHasKey('name', $jsonResponse['customer']);
+//        $this->assertArrayHasKey('phone', $jsonResponse['customer']);
+//        $this->assertArrayHasKey('area', $jsonResponse);
+//        $this->assertArrayHasKey('table_name', $jsonResponse);
+//        $this->assertArrayHasKey('turn', $jsonResponse);
+        $this->assertArrayHasKey('people', $jsonResponse);
+//        $this->assertArrayHasKey('date', $jsonResponse);
+//        $this->assertArrayHasKey('time', $jsonResponse);
+//        $this->assertArrayHasKey('confirmed', $jsonResponse);
+//        $this->assertArrayHasKey('waiting', $jsonResponse);
+//        $this->assertArrayHasKey('drawing_width', $jsonResponse);
+//        $this->assertArrayHasKey('drawing_height', $jsonResponse);
+//        $this->assertArrayHasKey('drawing_pos_x', $jsonResponse);
+//        $this->assertArrayHasKey('drawing_pos_y', $jsonResponse);
     }
-
-    protected function createReservationHandler($objectManager, $reservationClass)
-    {
-        return new ReservationHandler($objectManager, $reservationClass);
-    }
-
-    protected function getReservation()
-    {
-        $reservationClass = static::RESERVATION_CLASS;
-
-        return new $reservationClass();
-    }
-}
-
-class DummyReservation extends Reservation
-{
 }

@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
  * @ORM\Table(name="user", options={"collate"="utf8_general_ci", "charset"="utf8"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */

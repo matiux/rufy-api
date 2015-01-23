@@ -87,5 +87,41 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
+    serializer:
+        serialize_null: true
     routing_loader:
         default_format: json
+        include_format: true
+    format_listener: true
+    param_fetcher_listener: force
+    body_listener: true
+    allowed_methods_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml: true
+        templating_formats:
+            html: false
+
+nelmio_api_doc:
+    name: Rufy Rest API
+    cache:
+        enabled: true
+        file: '%kernel.cache_dir%/api-doc.cache'
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: false }
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+        directories:
+            RufyRestApiBundle:
+                namespace_prefix: "Rufy\\RestApiBundle\\Entity"
+                path: "@RufyRestApiBundle/Resources/config/serializer"

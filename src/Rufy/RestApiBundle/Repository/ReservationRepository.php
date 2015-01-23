@@ -1,6 +1,4 @@
-<?php
-
-namespace Rufy\RestApiBundle\Entity;
+<?php namespace Rufy\RestApiBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

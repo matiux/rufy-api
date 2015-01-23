@@ -1,25 +1,27 @@
 <?php namespace Rufy\RestApiBundle\Handler; 
 
-use Doctrine\ORM\EntityManager;
+//use Doctrine\ORM\EntityManager;
 use Rufy\RestApiBundle\Model\ReservationInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Form\FormFactoryInterface;
-
-//use Acme\BlogBundle\Form\PageType;
-//use Acme\BlogBundle\Exception\InvalidFormException;
 
 class ReservationHandler implements ReservationHandlerInterface
 {
-    private $_em;
+    //private $_em;
     private $_entityClass;
     private $_repository;
 
-    public function __construct(EntityManager $em, $entityClass)
-    {
-        $this->_em                  = $em;
-        $this->_entityClass         = $entityClass;
+    /**
+     * @var ObjectManager
+     */
+    private $_om;
 
-        $this->_repository          = $this->_em->getRepository($entityClass);
+    public function __construct(ObjectManager $om, $entityClass)
+    {
+        //$this->_em              = $em;
+        $this->_om              = $om;
+        $this->_entityClass     = $entityClass;
+
+        $this->_repository      = $this->_om->getRepository($entityClass);
     }
 
     /**
@@ -33,6 +35,7 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     public function get($id)
     {
+        $a = 1;
         return $this->_repository->find($id);
     }
 

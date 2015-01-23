@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Rufy\RestApiBundle\RufyRestApiBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Misd\GuzzleBundle\MisdGuzzleBundle(),
 
             //Dev
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
