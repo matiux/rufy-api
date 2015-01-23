@@ -28,7 +28,6 @@
         "sensio/generator-bundle": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
         "phpunit/phpunit": "3.7.*",
-        "liip/functional-test-bundle":"dev-master",
         "behat/symfony2-extension": "dev-master"
     },
     "scripts": {
