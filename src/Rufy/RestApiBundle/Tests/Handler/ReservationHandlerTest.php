@@ -39,14 +39,14 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo(static::RESERVATION_CLASS))
             ->will($this->returnValue($this->repository));
 
-//        $this->om->expects($this->any())
-//            ->method('getClassMetadata')
-//            ->with($this->equalTo(static::RESERVATION_CLASS))
-//            ->will($this->returnValue($class));
-//
-//        $class->expects($this->any())
-//            ->method('getName')
-//            ->will($this->returnValue(static::RESERVATION_CLASS));
+        $this->om->expects($this->any())
+            ->method('getClassMetadata')
+            ->with($this->equalTo(static::RESERVATION_CLASS))
+            ->will($this->returnValue($class));
+
+        $class->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue(static::RESERVATION_CLASS));
     }
 
     public function testGet()
