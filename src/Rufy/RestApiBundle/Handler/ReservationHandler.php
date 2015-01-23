@@ -10,20 +10,16 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class ReservationHandler implements ReservationHandlerInterface
 {
-    private $_om;
     private $_em;
     private $_entityClass;
     private $_repository;
-    private $_formFactory;
 
-    public function __construct(ObjectManager $om, EntityManager $em, $entityClass, FormFactoryInterface $formFactory)
+    public function __construct(EntityManager $em, $entityClass)
     {
-        //$this->_om               = $om;
-        $this->_em               = $em;
-        $this->_entityClass      = $entityClass;
-        $this->_repository      = $this->em->getRepository($entityClass);
-        //$this->_repository       = $this->om->getRepository($this->entityClass);
-        $this->_formFactory      = $formFactory;
+        $this->_em                  = $em;
+        $this->_entityClass         = $entityClass;
+
+        $this->_repository          = $this->_em->getRepository($entityClass);
     }
 
     /**
@@ -37,7 +33,7 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     public function get($id)
     {
-        return $this->repository->find($id);
+        return $this->_repository->find($id);
     }
 
     /**
@@ -50,7 +46,7 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     public function all($limit = 5, $offset = 0)
     {
-        return $this->repository->findBy(array(), null, $limit, $offset);
+        return $this->_repository->findBy(array(), null, $limit, $offset);
     }
 
     /**

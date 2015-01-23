@@ -1,6 +1,16 @@
+parameters:
+    rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\ReservationHandler
+    rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
+
 services:
 #    rufy_rest_api.example:
 #        class: Rufy\RestApiBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+
     string:
         class: Rufy\RestApiBundle\Utility\String
+
+    rufy_api.reservation.handler:
+        class: "%rufy_api.reservation.handler.class%"
+        arguments: ["@doctrine.orm.entity_manager", "%rufy_api.reservation.class%"]

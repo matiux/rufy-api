@@ -2,14 +2,15 @@
 
 use Doctrine\ORM\Mapping AS ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\ReservationInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Entity\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Reservation {
-
+class Reservation implements ReservationInterface
+{
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -136,59 +137,6 @@ class Reservation {
         return $this->people;
     }
 
-    /**
-     * Set time
-     *
-     * @param \DateTime $time
-     *
-     * @return Reservation
-     */
-    public function setTime($time)
-    {
-        if (!is_object($time) || !is_a($time, 'DateTime'))
-            $time           = Date::createFromFormat('H:i', $time,'Europe/Rome');
-
-        $this->time = $time;
-
-        return $this;
-    }
-
-    /**
-     * Get time
-     *
-     * @return \DateTime
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Reservation
-     */
-    public function setDate($date)
-    {
-        if (!is_object($date) || !is_a($date, 'DateTime'))
-            $date           = Date::createFromFormat('d/m/Y', $date,'Europe/Rome');
-
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
 
     /**
      * Set confirmed
@@ -339,11 +287,11 @@ class Reservation {
     /**
      * Set user
      *
-     * @param \Rufy\RestApiBundle\Entity\User $user
+     * @param User $user
      *
      * @return Reservation
      */
-    public function setUser(\Rufy\RestApiBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -363,11 +311,11 @@ class Reservation {
     /**
      * Set area
      *
-     * @param \Rufy\RestApiBundle\Entity\Area $area
+     * @param Area $area
      *
      * @return Reservation
      */
-    public function setArea(\Rufy\RestApiBundle\Entity\Area $area)
+    public function setArea(Area $area)
     {
         $this->area = $area;
 
@@ -435,11 +383,11 @@ class Reservation {
     /**
      * Set turn
      *
-     * @param \Rufy\RestApiBundle\Entity\Turn $turn
+     * @param Turn $turn
      *
      * @return Reservation
      */
-    public function setTurn(\Rufy\RestApiBundle\Entity\Turn $turn)
+    public function setTurn(Turn $turn)
     {
         $this->turn = $turn;
 
@@ -533,5 +481,51 @@ class Reservation {
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return Reservation
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Reservation
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

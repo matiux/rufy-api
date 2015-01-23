@@ -137,59 +137,6 @@ class Reservation implements ReservationInterface
         return $this->people;
     }
 
-    /**
-     * Set time
-     *
-     * @param \DateTime $time
-     *
-     * @return Reservation
-     */
-    public function setTime($time)
-    {
-        if (!is_object($time) || !is_a($time, 'DateTime'))
-            $time           = Date::createFromFormat('H:i', $time,'Europe/Rome');
-
-        $this->time = $time;
-
-        return $this;
-    }
-
-    /**
-     * Get time
-     *
-     * @return \DateTime
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Reservation
-     */
-    public function setDate($date)
-    {
-        if (!is_object($date) || !is_a($date, 'DateTime'))
-            $date           = Date::createFromFormat('d/m/Y', $date,'Europe/Rome');
-
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
 
     /**
      * Set confirmed
@@ -340,11 +287,11 @@ class Reservation implements ReservationInterface
     /**
      * Set user
      *
-     * @param \Rufy\RestApiBundle\Entity\User $user
+     * @param User $user
      *
      * @return Reservation
      */
-    public function setUser(\Rufy\RestApiBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -364,11 +311,11 @@ class Reservation implements ReservationInterface
     /**
      * Set area
      *
-     * @param \Rufy\RestApiBundle\Entity\Area $area
+     * @param Area $area
      *
      * @return Reservation
      */
-    public function setArea(\Rufy\RestApiBundle\Entity\Area $area)
+    public function setArea(Area $area)
     {
         $this->area = $area;
 
@@ -436,11 +383,11 @@ class Reservation implements ReservationInterface
     /**
      * Set turn
      *
-     * @param \Rufy\RestApiBundle\Entity\Turn $turn
+     * @param Turn $turn
      *
      * @return Reservation
      */
-    public function setTurn(\Rufy\RestApiBundle\Entity\Turn $turn)
+    public function setTurn(Turn $turn)
     {
         $this->turn = $turn;
 
@@ -534,5 +481,51 @@ class Reservation implements ReservationInterface
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return Reservation
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Reservation
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }
