@@ -21,13 +21,25 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      *   resource = true,
      *   description = "Gets a Reservation for a given id",
      *   output = "Rufy\RestApiBundle\Entity\Reservation",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Reservation ID"
+     *      }
+     *  },
+     *   parameters={
+     *      {"name"="id", "dataType"="integer", "required"=true, "format"="", "description"="Reservation ID"}
+     *   },
+     *
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the page is not found"
+     *     404 = "Returned when the reservation is not found"
      *   }
      * )
      *
-     * @param int     $id      the page id
+     * @param int $id Reservation id
      *
      * @return array
      *

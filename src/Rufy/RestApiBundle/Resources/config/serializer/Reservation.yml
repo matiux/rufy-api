@@ -1,19 +1,14 @@
 Rufy\RestApiBundle\Entity\Reservation:
     exclusion_policy: ALL
     xml_root_name: reservation
-    virtual_properties:
-        getCustomer:
-            serialized_name: name
-            type: string
-            xml_map:
-                inline: true
-                key_attribute_name: name
-                entry_name: name
     properties:
         id:
             expose: true
+            since_version: v1
         people:
             expose: true
+            since_version: v1
         confirmed:
             expose: true
+            since_version: v1
 

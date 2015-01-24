@@ -21,7 +21,7 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetJson()
     {
-        $resourceId = 3;
+        $resourceId = 1;
 
         $request        = $this->_client->get('app_dev.php/api/v1/reservations/'.$resourceId);
         $response       = $request->send();
