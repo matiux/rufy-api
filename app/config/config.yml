@@ -89,6 +89,8 @@ swiftmailer:
 fos_rest:
     serializer:
         serialize_null: true
+    service:
+        view_handler: rufy_api.reservation.view_handler
     routing_loader:
         default_format: json
         include_format: true
@@ -117,11 +119,11 @@ sensio_framework_extra:
 jms_serializer:
     metadata:
         auto_detection: true
-        cache: file
         debug: "%kernel.debug%"
+        cache: file
         file_cache:
-            dir: "%kernel.cache_dir%/serializer"
-        directories:
-            RufyRestApiBundle:
-                namespace_prefix: "Rufy\\RestApiBundle\\Entity"
-                path: "@RufyRestApiBundle/Resources/config/serializer"
+            dir: "%kernel.cache_dir%/jms_serializer"
+#        directories:
+#            RufyRestApiBundle:
+#                namespace_prefix: "Rufy\\RestApiBundle\\Entity"
+#                path: "@RufyRestApiBundle/Resources/config/serializer"

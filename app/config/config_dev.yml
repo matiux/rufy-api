@@ -44,5 +44,20 @@ monolog:
 assetic:
     use_controller: true
 
+twig:
+    cache:  false
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        debug: "%kernel.debug%"
+        cache: ~
+
+nelmio_api_doc:
+    name: 'Rufy Rest API'
+    cache:
+        enabled: false
+        file: ~
+
 #swiftmailer:
 #    delivery_address: me@example.com

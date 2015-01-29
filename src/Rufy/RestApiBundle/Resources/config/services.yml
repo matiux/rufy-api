@@ -14,3 +14,11 @@ services:
     rufy_api.reservation.handler:
         class: "%rufy_api.reservation.handler.class%"
         arguments: ["@doctrine.orm.entity_manager", "%rufy_api.reservation.class%"]
+
+    rufy_api.reservation.json_handler:
+        class: Rufy\RestApiBundle\Response\View\JsonViewHandler
+
+    rufy_api.reservation.view_handler:
+        parent: fos_rest.view_handler.default
+        calls:
+            - ['registerHandler', [ 'json', [@rufy_api.reservation.json_handler, 'createResponse'] ] ]
