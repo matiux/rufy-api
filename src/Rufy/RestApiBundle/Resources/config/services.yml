@@ -1,5 +1,5 @@
 parameters:
-    rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\ReservationHandler
+    rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\ReservationHandler
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
 
 services:
@@ -43,20 +43,27 @@ services:
 
     #############################################
 
-
     ###########################################
-    ##  Custom handler per FosRestBundle
-    rufy_api.json_handler:
-        class: Rufy\RestApiBundle\Response\View\JsonViewHandler
+    ##  Custom Serializer per FosRestBundle
+    rufy_api.fosrest_serializer:
+        class: Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler
         arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
 
-    rufy_api.xml_handler:
-        class: Rufy\RestApiBundle\Response\View\XmlViewHandler
-
-    rufy_api.view_handler:
-        parent: fos_rest.view_handler.default
-        calls:
-            - ['registerHandler', [ 'json', [@rufy_api.json_handler, 'createResponse'] ] ]
-            - ['registerHandler', [ 'xml', [@rufy_api.xml_handler, 'createResponse'] ] ]
-    ## Fine Custom handler per FosRestBundle
+    ###########################################
+    ##  Custom View handler per FosRestBundle
+    ## View Layer personalizzato per FosRest, si basa sempre su JmsSerializer.
+    ## Utilizzando invece @rufy_api.fosrest_serializer, ho potuto togliere definitivamente JmsSerializer.
+#    rufy_api.json_handler:
+#        class: Rufy\RestApiBundle\Response\View\JsonViewHandler
+#        arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
+#
+#    rufy_api.xml_handler:
+#        class: Rufy\RestApiBundle\Response\View\XmlViewHandler
+#
+#    rufy_api.view_handler:
+#        parent: fos_rest.view_handler.default
+#        calls:
+#            - ['registerHandler', [ 'json', [@rufy_api.json_handler, 'createResponse'] ] ]
+#            - ['registerHandler', [ 'xml', [@rufy_api.xml_handler, 'createResponse'] ] ]
+    ## Fine Custom View handler per FosRestBundle
     #############################################

@@ -1,8 +1,9 @@
 <?php namespace Rufy\RestApiBundle\Tests\Handler;
 
-use Rufy\RestApiBundle\Handler\ReservationHandler;
-use Rufy\RestApiBundle\Model\ReservationInterface;
-use Rufy\RestApiBundle\Entity\Reservation;
+use Rufy\RestApiBundle\Handler\Db\ReservationHandler,
+    Rufy\RestApiBundle\Model\ReservationInterface,
+    Rufy\RestApiBundle\Entity\Reservation;
+
 use Guzzle\Service\Client;
 
 class ReservationHandlerTest extends \PHPUnit_Framework_TestCase

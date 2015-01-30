@@ -98,9 +98,10 @@ sensio_framework_extra:
 
 fos_rest:
     serializer:
-        serialize_null: true
+        serialize_null: false
     service:
-        view_handler: rufy_api.view_handler
+        serializer: rufy_api.fosrest_serializer
+        #view_handler: rufy_api.view_handler
     routing_loader:
         default_format: json
         include_format: true
@@ -115,11 +116,3 @@ fos_rest:
             xml: true
         templating_formats:
             html: false
-
-jms_serializer:
-    metadata:
-        auto_detection: true
-        debug: "%kernel.debug%"
-        cache: file
-        file_cache:
-            dir: "%kernel.cache_dir%/jms_serializer"
