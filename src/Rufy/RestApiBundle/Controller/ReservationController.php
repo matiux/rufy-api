@@ -49,13 +49,6 @@ class ReservationController extends FOSRestController implements ClassResourceIn
     {
         $reservation = $this->getOr404($id);
 
-//        $view = $this->view($reservation, 200)
-//            ->setTemplate("RufyRestApiBundle:Reservation:getReservation.json.twig")
-//            ->setTemplateVar('users')
-//        ;
-//
-//        return $this->handleView($view);
-
         return $reservation;
     }
 

@@ -50,9 +50,13 @@ services:
         class: Rufy\RestApiBundle\Response\View\JsonViewHandler
         arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
 
+    rufy_api.xml_handler:
+        class: Rufy\RestApiBundle\Response\View\XmlViewHandler
+
     rufy_api.view_handler:
         parent: fos_rest.view_handler.default
         calls:
             - ['registerHandler', [ 'json', [@rufy_api.json_handler, 'createResponse'] ] ]
+            - ['registerHandler', [ 'xml', [@rufy_api.xml_handler, 'createResponse'] ] ]
     ## Fine Custom handler per FosRestBundle
     #############################################

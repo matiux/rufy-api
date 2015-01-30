@@ -86,6 +86,16 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+nelmio_api_doc:
+    name: 'Rufy Rest API'
+    cache:
+        enabled: true
+        file: '%kernel.cache_dir%/api-doc.cache'
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: false }
+
 fos_rest:
     serializer:
         serialize_null: true
@@ -106,16 +116,6 @@ fos_rest:
         templating_formats:
             html: false
 
-nelmio_api_doc:
-    name: 'Rufy Rest API'
-    cache:
-        enabled: true
-        file: '%kernel.cache_dir%/api-doc.cache'
-
-sensio_framework_extra:
-    view:    { annotations: false }
-    router:  { annotations: false }
-
 jms_serializer:
     metadata:
         auto_detection: true
@@ -123,7 +123,3 @@ jms_serializer:
         cache: file
         file_cache:
             dir: "%kernel.cache_dir%/jms_serializer"
-#        directories:
-#            RufyRestApiBundle:
-#                namespace_prefix: "Rufy\\RestApiBundle\\Entity"
-#                path: "@RufyRestApiBundle/Resources/config/serializer"
