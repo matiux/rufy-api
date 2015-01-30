@@ -90,7 +90,7 @@ fos_rest:
     serializer:
         serialize_null: true
     service:
-        view_handler: rufy_api.reservation.view_handler
+        view_handler: rufy_api.view_handler
     routing_loader:
         default_format: json
         include_format: true

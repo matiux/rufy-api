@@ -3,11 +3,27 @@
 use FOS\RestBundle\View\View,
     FOS\RestBundle\View\ViewHandler;
 
+use League\Fractal\Resource\Item;
+use Rufy\RestApiBundle\Transformer\Serializer\CustomSerializer;
+
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\Response;
 
-class JsonViewHandler
+use SamJ\FractalBundle\Manager;
+
+final class JsonViewHandler
 {
+    const TRANSFORMER_PATH = 'Rufy\RestApiBundle\Transformer\\';
+
+    private $resourceType;
+    private $resourceClassName;
+    private $transformer;
+
+    public function __construct(Manager $fractalManager) {
+
+        $this->fractalManager = $fractalManager;
+    }
+
     /**
      * @param ViewHandler $viewHandler
      * @param View $view
@@ -18,13 +34,36 @@ class JsonViewHandler
      */
     public function createResponse(ViewHandler $handler, View $view, Request $request, $format)
     {
-        //difinizione della logica
+        $this->setResourceType(get_class($view->getData()));
 
-        $reservation = $view->getData();
-        $customer = $reservation->getCustomer()->getName();
+        $this->fractalManager->setSerializer(new CustomSerializer());
 
-        $data = json_encode(['ciao' => 'Matteo']);
+//        if (Input::get('include'))
+//            $this->fractalManager->parseIncludes(Input::get('include'));
 
-        return new Response($data, 200, $view->getHeaders());
+        $this->transformer   = $this->getTransformer();
+
+        $resource                   = new Item($view->getData(), new $this->transformer());
+
+        //return new Response($data, 200, $view->getHeaders());
+        return $this->fractalManager->createData($resource);
+    }
+
+    private function setResourceType($entity) {
+
+        $this->resourceType             = $entity;
+        $dirs                           = explode('\\', $entity);
+        $this->resourceClassName        = $dirs[count($dirs) - 1];
+    }
+
+    private function getTransformer() {
+
+        return static::TRANSFORMER_PATH.$this->resourceClassName.'Transformer';;
+
+        //switch
+
+        //"Rufy\\Data\\Transformers\\".$this->_obj->getClassName().'Transformer';
+
+        //static::TRANSFORMER_PATH
     }
 }

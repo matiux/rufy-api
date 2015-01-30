@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Rufy\RestApiBundle\RufyRestApiBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Misd\GuzzleBundle\MisdGuzzleBundle(),
+            new SamJ\FractalBundle\SamJFractalBundle(),
 
             //Dev
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
