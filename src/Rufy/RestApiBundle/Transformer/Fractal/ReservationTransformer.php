@@ -1,4 +1,4 @@
-<?php namespace Rufy\RestApiBundle\Transformer;
+<?php namespace Rufy\RestApiBundle\Transformer\Fractal;
 
 use League\Fractal;
 

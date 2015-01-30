@@ -11,15 +11,48 @@ services:
     string:
         class: Rufy\RestApiBundle\Utility\String
 
-    rufy_api.reservation.handler:
-        class: "%rufy_api.reservation.handler.class%"
-        arguments: ["@doctrine.orm.entity_manager", "%rufy_api.reservation.class%"]
+    rufy_api.custom.fractal.serializer:
+        class: Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer
 
+    ###########################################
+    ## Modelli
+
+    rufy_api.reservation.class:
+        class: %rufy_api.reservation.class%
+
+    ## Fine Modelli
+    #############################################
+
+    ###########################################
+    ## Handler dei modelli
+
+    rufy_api.reservation.handler:
+        class: %rufy_api.reservation.handler.class%
+        arguments: [@doctrine.orm.entity_manager, @rufy_api.reservation.class]
+    ## Fine Handler dei modelli
+
+    #############################################
+
+
+    ###########################################
+    # Transformer
+
+    rufy_api.reservation.transformer:
+        class: Rufy\RestApiBundle\Transformer\Fractal\ReservationTransformer
+    ## Fine Transformer
+
+    #############################################
+
+
+    ###########################################
+    ##  Custom handler per FosRestBundle
     rufy_api.json_handler:
         class: Rufy\RestApiBundle\Response\View\JsonViewHandler
-        arguments: ["@sam_j_fractal.manager"]
+        arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
 
     rufy_api.view_handler:
         parent: fos_rest.view_handler.default
         calls:
             - ['registerHandler', [ 'json', [@rufy_api.json_handler, 'createResponse'] ] ]
+    ## Fine Custom handler per FosRestBundle
+    #############################################

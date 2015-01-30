@@ -33,19 +33,19 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertJson(json_encode($jsonResponse));
 
         $this->assertArrayHasKey('id', $jsonResponse);
-//        $this->assertArrayHasKey('name', $jsonResponse['customer']);
-//        $this->assertArrayHasKey('phone', $jsonResponse['customer']);
-//        $this->assertArrayHasKey('area', $jsonResponse);
-//        $this->assertArrayHasKey('table_name', $jsonResponse);
-//        $this->assertArrayHasKey('turn', $jsonResponse);
+        $this->assertArrayHasKey('name', $jsonResponse);
+        $this->assertArrayHasKey('phone', $jsonResponse);
+        $this->assertArrayHasKey('area', $jsonResponse);
+        $this->assertArrayHasKey('tableName', $jsonResponse);
+        $this->assertArrayHasKey('turn', $jsonResponse);
         $this->assertArrayHasKey('people', $jsonResponse);
-//        $this->assertArrayHasKey('date', $jsonResponse);
-//        $this->assertArrayHasKey('time', $jsonResponse);
-//        $this->assertArrayHasKey('confirmed', $jsonResponse);
-//        $this->assertArrayHasKey('waiting', $jsonResponse);
-//        $this->assertArrayHasKey('drawing_width', $jsonResponse);
-//        $this->assertArrayHasKey('drawing_height', $jsonResponse);
-//        $this->assertArrayHasKey('drawing_pos_x', $jsonResponse);
-//        $this->assertArrayHasKey('drawing_pos_y', $jsonResponse);
+        $this->assertArrayHasKey('date', $jsonResponse);
+        $this->assertArrayHasKey('time', $jsonResponse);
+        $this->assertArrayHasKey('confirmed', $jsonResponse);
+        $this->assertArrayHasKey('waiting', $jsonResponse);
+        $this->assertArrayHasKey('drawingWidth', $jsonResponse);
+        $this->assertArrayHasKey('drawingHeight', $jsonResponse);
+        $this->assertArrayHasKey('drawingPosX', $jsonResponse);
+        $this->assertArrayHasKey('drawingPosY', $jsonResponse);
     }
 }

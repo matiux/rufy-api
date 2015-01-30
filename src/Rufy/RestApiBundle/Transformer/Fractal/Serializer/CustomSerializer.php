@@ -1,4 +1,4 @@
-<?php namespace Rufy\RestApiBundle\Transformer\Serializer;
+<?php namespace Rufy\RestApiBundle\Transformer\Fractal\Serializer;
 
 use League\Fractal\Serializer\ArraySerializer;
 

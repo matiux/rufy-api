@@ -4,7 +4,8 @@ use FOS\RestBundle\View\View,
     FOS\RestBundle\View\ViewHandler;
 
 use League\Fractal\Resource\Item;
-use Rufy\RestApiBundle\Transformer\Serializer\CustomSerializer;
+
+use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer;
 
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\Response;
@@ -13,15 +14,18 @@ use SamJ\FractalBundle\Manager;
 
 final class JsonViewHandler
 {
-    const TRANSFORMER_PATH = 'Rufy\RestApiBundle\Transformer\\';
+    const TRANSFORMER_PATH = 'Rufy\RestApiBundle\Transformer\Fractal\\';
 
-    private $resourceType;
-    private $resourceClassName;
-    private $transformer;
+    private $_resourceType;
+    private $_resourceClassName;
+    private $_transformer;
+    private $_fractalManager;
+    private $_customFractalSerializer;
 
-    public function __construct(Manager $fractalManager) {
+    public function __construct(Manager $fractalManager, CustomSerializer $customFractalSerializer) {
 
-        $this->fractalManager = $fractalManager;
+        $this->_fractalManager                  = $fractalManager;
+        $this->_customFractalSerializer         = $customFractalSerializer;
     }
 
     /**
@@ -36,33 +40,34 @@ final class JsonViewHandler
     {
         $this->setResourceType(get_class($view->getData()));
 
-        $this->fractalManager->setSerializer(new CustomSerializer());
+        $this->_fractalManager->setSerializer($this->_customFractalSerializer);
 
+        /**
+         * TODO
+         * Sistemare
+         */
 //        if (Input::get('include'))
 //            $this->fractalManager->parseIncludes(Input::get('include'));
 
-        $this->transformer   = $this->getTransformer();
+        $this->_transformer          = $this->getTransformer();
 
-        $resource                   = new Item($view->getData(), new $this->transformer());
+        $resource                   = new Item($view->getData(), $this->_transformer);
 
-        return new Response($this->fractalManager->createData($resource), 200, $view->getHeaders());
+        return new Response($this->_fractalManager->createData($resource)->toJson(), 200, $view->getHeaders());
     }
 
     private function setResourceType($entity) {
 
-        $this->resourceType             = $entity;
+        $this->_resourceType             = $entity;
         $dirs                           = explode('\\', $entity);
-        $this->resourceClassName        = $dirs[count($dirs) - 1];
+        $this->_resourceClassName        = $dirs[count($dirs) - 1];
     }
 
     private function getTransformer() {
 
-        return static::TRANSFORMER_PATH.$this->resourceClassName.'Transformer';;
+        $class = static::TRANSFORMER_PATH.$this->_resourceClassName.'Transformer';
 
-        //switch
+        return new $class();
 
-        //"Rufy\\Data\\Transformers\\".$this->_obj->getClassName().'Transformer';
-
-        //static::TRANSFORMER_PATH
     }
 }

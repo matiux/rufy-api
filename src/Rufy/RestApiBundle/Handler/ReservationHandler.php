@@ -1,7 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Handler; 
 
-//use Doctrine\ORM\EntityManager;
-use Rufy\RestApiBundle\Model\ReservationInterface;
+use Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Model\ReservationInterface;
+
 use Doctrine\Common\Persistence\ObjectManager;
 
 class ReservationHandler implements ReservationHandlerInterface
@@ -15,13 +16,13 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     private $_om;
 
-    public function __construct(ObjectManager $om, $entityClass)
+    public function __construct(ObjectManager $om, Reservation $entityClass)
     {
         //$this->_em              = $em;
         $this->_om              = $om;
         $this->_entityClass     = $entityClass;
 
-        $this->_repository      = $this->_om->getRepository($entityClass);
+        $this->_repository      = $this->_om->getRepository(get_class($entityClass));
     }
 
     /**
@@ -100,6 +101,6 @@ class ReservationHandler implements ReservationHandlerInterface
 
     private function createReservation()
     {
-        return new $this->entityClass();
+        return $this->entityClass;
     }
 }
