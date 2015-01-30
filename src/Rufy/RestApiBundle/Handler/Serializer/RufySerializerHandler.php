@@ -24,13 +24,26 @@ class RufySerializerHandler
 
     public function serialize($entity, $type)
     {
+        /**
+         * TODO
+         * Implementare response xml oppure rimuovere format da FosRest
+         */
+        if ($type == 'xml') {
+
+            $content = "<?xml version=\"1.0\" ?>\n";
+            $content .= "<daimplementare>\n";
+            $content .= "</daimplementare>";
+
+            return $content;
+        }
+
         $this->setResourceType(get_class($entity));
 
         $this->_fractalManager->setSerializer($this->_customFractalSerializer);
 
-        $this->_transformer          = $this->getTransformer();
+        $this->_transformer             = $this->getTransformer();
 
-        $resource                   = new Item($entity, $this->_transformer);
+        $resource                       = new Item($entity, $this->_transformer);
 
         return $this->_fractalManager->createData($resource)->toJson();
     }
