@@ -9,5 +9,6 @@ default:
                 - Rufy\RestApiBundle\Tests\Features\Contexts\FeatureContext:
                     session: '@session'
                     #string: '@string'
+                - Rufy\RestApiBundle\Tests\Features\Contexts\ReservationContext: ~
     extensions:
         Behat\Symfony2Extension: ~

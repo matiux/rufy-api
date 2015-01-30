@@ -2,17 +2,20 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Component\HttpFoundation\Session\Session;
-use \Rufy\RestApiBundle\Utility\String;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends RestContext implements Context, SnippetAcceptingContext
+class FeatureContext implements Context, SnippetAcceptingContext
 {
     private $_session;
+
+    /**
+     * @var \Rufy\RestApiBundle\Tests\Features\Contexts\ReservationContext
+     */
+    private $_reservationContext;
 
     /**
      * Initializes context.
@@ -23,8 +26,19 @@ class FeatureContext extends RestContext implements Context, SnippetAcceptingCon
      */
     public function __construct(Session $session)
     {
-        parent::__construct();
+        //parent::__construct();
 
         $this->_session     = $session;
     }
+
+    /**
+     * @BeforeScenario
+     * @param BeforeScenarioScope $scope
+     */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment               = $scope->getEnvironment();
+        $this->_reservationContext = $environment->getContext('Rufy\RestApiBundle\Tests\Features\Contexts\ReservationContext');
+    }
+
 }
