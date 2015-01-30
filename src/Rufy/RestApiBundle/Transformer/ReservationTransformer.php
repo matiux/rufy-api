@@ -2,9 +2,11 @@
 
 use League\Fractal;
 
+use Rufy\RestApiBundle\Entity\Reservation;
+
 class ReservationTransformer extends Fractal\TransformerAbstract
 {
-    public function transform(\Reservation $reservation) {
+    public function transform(Reservation $reservation) {
 
         return [
 

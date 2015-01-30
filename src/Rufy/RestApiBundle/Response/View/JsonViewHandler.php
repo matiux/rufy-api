@@ -45,8 +45,7 @@ final class JsonViewHandler
 
         $resource                   = new Item($view->getData(), new $this->transformer());
 
-        //return new Response($data, 200, $view->getHeaders());
-        return $this->fractalManager->createData($resource);
+        return new Response($this->fractalManager->createData($resource), 200, $view->getHeaders());
     }
 
     private function setResourceType($entity) {
