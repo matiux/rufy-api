@@ -3,20 +3,16 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
  * @ORM\Table(name="user", options={"collate"="utf8_general_ci", "charset"="utf8"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class User {
-
-    public function __construct() {
-
-        $this->restaurants            = new ArrayCollection();
-        $this->reservations           = new ArrayCollection();
-    }
-
+class User implements UserInterface, \Serializable
+{
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -30,9 +26,19 @@ class User {
     private $username;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
      * @ORM\Column(type="string", nullable=false, unique=false)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $roles;
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned":true, "default":1})
@@ -76,6 +82,14 @@ class User {
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    public function __construct()
+    {
+        $this->is_active                = true;
+
+        $this->restaurants              = new ArrayCollection();
+        $this->reservations             = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -312,5 +326,122 @@ class User {
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        $this->roles;
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

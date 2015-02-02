@@ -12,6 +12,7 @@ use Rufy\RestApiBundle\Model\ReservationInterface;
 class Reservation implements ReservationInterface
 {
     /**
+     * Reservation ID
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -19,11 +20,13 @@ class Reservation implements ReservationInterface
     protected $id;
 
     /**
+     * The number of the people
      * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
      */
     private $people;
 
     /**
+     * Time to reservation
      * @ORM\Column(type="time", nullable=true)
      */
     private $time;
@@ -34,6 +37,7 @@ class Reservation implements ReservationInterface
     private $date;
 
     /**
+     * Is reservation confirmed
      * @ORM\Column(type="boolean", options={"unsigned":true, "default":1}, nullable=false)
      */
     private $confirmed;
