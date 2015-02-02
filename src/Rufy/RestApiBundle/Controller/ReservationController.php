@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Model\ReservationInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReservationController extends FOSRestController implements ClassResourceInterface
 {
@@ -44,9 +45,17 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      * @return array
      *
      * @throws NotFoundHttpException when reservation not exist
+     * @throws AccessDeniedException when role is not allowed
      */
     public function getAction($id)
     {
+        //        if (!$this->get('security.context')->isGranted('ROLE_USER'))
+        //            throw new AccessDeniedException();
+
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
         $reservation = $this->getOr404($id);
 
         return $reservation;

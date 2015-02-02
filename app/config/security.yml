@@ -1,7 +1,25 @@
 security:
+    #In questa configurazione, gli utenti con il ruolo ROLE_ADMIN avranno anche il ruolo ROLE_USER.
+    role_hierarchy:
+        ROLE_USER:          ROLE_VISITOR
+        ROLE_ADMIN:         [ROLE_USER, ROLE_VISITOR]
+
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    silvia:
+                        password: $2a$12$HSBmWvUZDiZM/IQFtP12L.drU7vKWz9PCNrNxH3BQodbVEHmbnxbO
+                        roles: 'ROLE_VISITOR'
+                        #010487
+                    matiux:
+                        password: $2a$12$FrQbVGNmmmB.Db2VjdVcqO6SxVbzTb6F1l0lvrCHW3nv4RSj5qRTa
+                        roles: 'ROLE_USER'
 
     firewalls:
         dev:
@@ -10,3 +28,8 @@ security:
 
         default:
             anonymous: ~
+            http_basic: ~
+            stateless: ~
+
+    access_control:
+        - { path: ^/api, roles: ROLE_USER  }

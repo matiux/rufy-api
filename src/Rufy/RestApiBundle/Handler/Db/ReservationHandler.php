@@ -5,24 +5,37 @@ use Rufy\RestApiBundle\Entity\Reservation,
 
 use Doctrine\Common\Persistence\ObjectManager;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
+
 class ReservationHandler implements ReservationHandlerInterface
 {
-    //private $_em;
+    /**
+     * @var \Rufy\RestApiBundle\Entity\Reservation
+     */
     private $_entityClass;
+
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
     private $_repository;
 
     /**
-     * @var ObjectManager
+     * @var \Doctrine\Common\Persistence\ObjectManager
      */
     private $_om;
 
-    public function __construct(ObjectManager $om, Reservation $entityClass)
-    {
-        //$this->_em              = $em;
-        $this->_om              = $om;
-        $this->_entityClass     = $entityClass;
+    /**
+     * @var \Symfony\Component\Security\Core\User\User
+     */
+    private $_user;
 
-        $this->_repository      = $this->_om->getRepository(get_class($entityClass));
+    public function __construct(ObjectManager $om, Reservation $entityClass, SecurityContextInterface $securityContext)
+    {
+        $this->_om                      = $om;
+        $this->_entityClass             = $entityClass;
+        $this->_user                    = $securityContext->getToken()->getUser();
+
+        $this->_repository              = $this->_om->getRepository(get_class($entityClass));
     }
 
     /**
@@ -36,7 +49,6 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     public function get($id)
     {
-        $a = 1;
         return $this->_repository->find($id);
     }
 
