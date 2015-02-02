@@ -1,16 +1,18 @@
 security:
-    #In questa configurazione, gli utenti con il ruolo ROLE_ADMIN avranno anche il ruolo ROLE_USER.
+
+    encoders:
+        Rufy\RestApiBundle\Entity\User:
+        #Symfony\Component\Security\Core\User\User:
+            algorithm: sha512
+
+    #Gli utenti con il ruolo ROLE_ADMIN avranno anche il ruolo ROLE_USER e ROLE_READER.
     role_hierarchy:
         ROLE_USER:          ROLE_READER
         ROLE_ADMIN:         [ROLE_USER, ROLE_READER]
 
-    encoders:
-        Rufy\RestApiBundle\Entity\User:
-            algorithm: bcrypt
-
     providers:
         users:
-            entity: { class: RufyRestApiBundle:User, property: username }
+            entity: { class: RufyRestApiBundle:User }
 
 #        in_memory:
 #            memory:
@@ -29,9 +31,8 @@ security:
             security: false
 
         default:
-            anonymous: ~
             http_basic: ~
-            stateless: ~
+            stateless: true
 
     access_control:
         - { path: ^/api, roles: ROLE_USER  }

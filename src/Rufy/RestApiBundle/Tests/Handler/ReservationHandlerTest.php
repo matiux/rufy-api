@@ -1,6 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Tests\Handler;
 
-use Rufy\RestApiBundle\Handler\Db\ReservationHandler,
+use Rufy\RestApiBundle\Handler\Db\Doctrine\ReservationHandler,
     Rufy\RestApiBundle\Model\ReservationInterface,
     Rufy\RestApiBundle\Entity\Reservation;
 

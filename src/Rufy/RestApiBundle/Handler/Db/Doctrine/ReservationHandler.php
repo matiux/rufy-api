@@ -1,10 +1,11 @@
-<?php namespace Rufy\RestApiBundle\Handler\Db;
+<?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
 use Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Model\ReservationInterface;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
+use Rufy\RestApiBundle\Handler\Db\HandlerDbInterface\ReservationHandlerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ReservationHandler implements ReservationHandlerInterface

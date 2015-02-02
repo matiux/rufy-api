@@ -1,5 +1,5 @@
 parameters:
-    rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\ReservationHandler
+    rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\ReservationHandler
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
 
 services:

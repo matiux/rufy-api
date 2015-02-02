@@ -29,6 +29,10 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($this->getReference('set_telefono.obbligatorio'));
         $manager->persist($this->getReference('set_nome.cognome.separati'));
 
+        $manager->persist($this->getReference('role_admin'));
+        $manager->persist($this->getReference('role_user'));
+        $manager->persist($this->getReference('role_visitor'));
+
         $manager->persist($owner);
         $manager->flush();
     }

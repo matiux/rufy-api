@@ -3,15 +3,16 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
+ * Rufy\RestApiBundle\Entity\User
+ *
  * @ORM\Table(name="user", options={"collate"="utf8_general_ci", "charset"="utf8"})
+ * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -26,7 +27,12 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=128)
      */
     private $password;
 
@@ -36,14 +42,9 @@ class User implements UserInterface, \Serializable
     private $name;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(name="is_active", type="boolean", options={"unsigned":true, "default":1})
      */
-    private $roles;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":1})
-     */
-    private $is_active;
+    private $isActive;
 
     /**
      * @ORM\ManyToOne(targetEntity="Owner", inversedBy="users")
@@ -56,6 +57,12 @@ class User implements UserInterface, \Serializable
      * @ORM\JoinTable(name="users_restaurants")
      **/
     private $restaurants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="users_roles")
+     */
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="user", cascade={"persist"})
@@ -85,10 +92,13 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->is_active                = true;
+        $this->isActive                 = true;
 
         $this->restaurants              = new ArrayCollection();
         $this->reservations             = new ArrayCollection();
+        $this->roles                    = new ArrayCollection();
+
+        $this->salt                     = md5(uniqid(null, true));
     }
 
     /**
@@ -148,14 +158,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set is_active
+     * Set isActive
      *
      * @param boolean $isActive
      * @return User
      */
     public function setIsActive($isActive)
     {
-        $this->is_active = $isActive;
+        $this->isActive = $isActive;
 
         return $this;
     }
@@ -167,7 +177,7 @@ class User implements UserInterface, \Serializable
      */
     public function getIsActive()
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
     /**
@@ -380,7 +390,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        $this->roles;
+        return $this->roles->toArray();
     }
 
     /**
@@ -405,7 +415,11 @@ class User implements UserInterface, \Serializable
      */
     public function getSalt()
     {
-        return null;
+        /**
+         * TODO
+         * Migliorare
+         */
+        return 'matteo';
     }
 
     /**
@@ -433,15 +447,108 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set roles
+     * Checks whether the user's account has expired.
      *
-     * @param string $roles
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
      * @return User
      */
-    public function setRoles($roles)
+    public function setEmail($email)
     {
-        $this->roles = $roles;
+        $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \Rufy\RestApiBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Rufy\RestApiBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Rufy\RestApiBundle\Entity\Role $roles
+     */
+    public function removeRole(\Rufy\RestApiBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }

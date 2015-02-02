@@ -1,4 +1,4 @@
-<?php namespace Rufy\RestApiBundle\Handler\Db;
+<?php namespace Rufy\RestApiBundle\Handler\Db\HandlerDbInterface;
 
 use Rufy\RestApiBundle\Model\ReservationInterface;
 

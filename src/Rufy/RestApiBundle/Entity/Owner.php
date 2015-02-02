@@ -11,11 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Owner
 {
-    public function __construct() {
-
-        $this->users            = new ArrayCollection();
-    }
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -73,6 +68,11 @@ class Owner
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    public function __construct() {
+
+        $this->users            = new ArrayCollection();
+    }
 
     /**
      * Get id

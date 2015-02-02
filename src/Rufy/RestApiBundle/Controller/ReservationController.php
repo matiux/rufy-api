@@ -1,17 +1,13 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\Util\Codes;
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\FOSRestController,
+    FOS\RestBundle\Routing\ClassResourceInterface,
+    FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Rufy\RestApiBundle\Model\ReservationInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationController extends FOSRestController implements ClassResourceInterface
 {
@@ -51,7 +47,7 @@ class ReservationController extends FOSRestController implements ClassResourceIn
     {
         //        if (!$this->get('security.context')->isGranted('ROLE_USER'))
         //            throw new AccessDeniedException();
-
+        //
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
         }
