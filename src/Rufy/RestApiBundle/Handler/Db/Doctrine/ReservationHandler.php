@@ -61,11 +61,16 @@ class ReservationHandler implements ReservationHandlerInterface
 
         if ($reservation) {
 
+            // Il ristorante della prenotazione
             $reservationRestaurant  = $reservation->getArea()->getRestaurant();
+
+            // I ristoranti nei quali lavora lo user
             $userRestaurants        = $this->_user->getRestaurants();
 
+            // Ciclo i ristoranti dello user
             foreach ($userRestaurants as $restaurant) {
 
+                // Se la prenotazione appartiene a un ristorante dello user, la restituisco
                 if ($reservationRestaurant->getId() == $restaurant->getId())
                     return $reservation;
 
