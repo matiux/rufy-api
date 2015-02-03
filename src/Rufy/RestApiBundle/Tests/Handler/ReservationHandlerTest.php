@@ -11,7 +11,7 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
     const RESERVATION_CLASS = 'Rufy\RestApiBundle\Tests\Handler\DummyReservation';
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \Guzzle\Service\Client
      */
     protected $_client;
 
@@ -22,9 +22,8 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetJson()
     {
-        $resourceId = 1;
-
-        $request        = $this->_client->get('app_dev.php/api/v1/reservations/'.$resourceId);
+        $resourceId     = 1;
+        $request        = $this->_client->get('app_dev.php/api/v1/reservations/'.$resourceId, [], ['auth' => ['matiux', '281285']]);
         $response       = $request->send();
 
         $this->assertEquals(200, $response->getStatusCode());
