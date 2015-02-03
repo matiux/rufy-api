@@ -50,6 +50,24 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setTurn($this->getReference('turn_2'));
 
         $this->getReference('user_emanuele')->addReservation($reservation);
+
+        $reservation    = new Reservation();
+        $reservation->setCustomer($this->getReference('customer_3'));
+        $reservation->setArea($this->getReference('area_3'));
+        $reservation->setUser($this->getReference('user_pincopallo'));
+        $reservation->setPeople(3);
+        $reservation->setTime(new \DateTime('21:30'));
+        $reservation->setDate(new \DateTime('31-12-2014'));
+        $reservation->setConfirmed(true);
+        $reservation->setWaiting(false);
+        $reservation->setTableName('12');
+        $reservation->setDrawingWidth(50);
+        $reservation->setDrawingHeight(10);
+        $reservation->setDrawingPosX(125);
+        $reservation->setDrawingPosY(90);
+        $reservation->setTurn($this->getReference('turn_3'));
+
+        $this->getReference('user_pincopallo')->addReservation($reservation);
     }
 
     /**

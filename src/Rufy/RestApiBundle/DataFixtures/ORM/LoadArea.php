@@ -15,29 +15,41 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
-        $restaurant = $this->getReference('restaurant');
+        $restaurant1 = $this->getReference('restaurant1');
+        $restaurant2 = $this->getReference('restaurant2');
 
         $area = new Area();
         $area->setName('2° Piano  - Terrazzo');
-        $area->setRestaurant($this->getReference('restaurant'));
+        $area->setRestaurant($this->getReference('restaurant1'));
         $area->setOutside(true);
         $area->setSmokers(true);
         $area->setFull(false);
         $area->setInvalids(false);
         $area->setAnimals(true);
         $this->setReference('area_1', $area);
-        $restaurant->addArea($area);
+        $restaurant1->addArea($area);
 
         $area = new Area();
         $area->setName('1° Piano  - Sala Grande');
-        $area->setRestaurant($this->getReference('restaurant'));
+        $area->setRestaurant($this->getReference('restaurant1'));
         $area->setOutside(false);
         $area->setSmokers(false);
         $area->setFull(true);
         $area->setInvalids(true);
         $area->setAnimals(false);
         $this->setReference('area_2', $area);
-        $restaurant->addArea($area);
+        $restaurant1->addArea($area);
+
+        $area = new Area();
+        $area->setName('Corridoio Esterno');
+        $area->setRestaurant($this->getReference('restaurant2'));
+        $area->setOutside(false);
+        $area->setSmokers(false);
+        $area->setFull(true);
+        $area->setInvalids(true);
+        $area->setAnimals(false);
+        $this->setReference('area_3', $area);
+        $restaurant2->addArea($area);
     }
 
     /**

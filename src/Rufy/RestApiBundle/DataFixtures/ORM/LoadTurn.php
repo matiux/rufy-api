@@ -26,6 +26,10 @@ class LoadTurn extends AbstractFixture implements OrderedFixtureInterface
         $turn               = new Turn();
         $turn->setName('Secondo turno Cena');
         $this->setReference('turn_3', $turn);
+
+        $turn               = new Turn();
+        $turn->setName('Unico turno serale');
+        $this->setReference('turn_4', $turn);
     }
 
     /**

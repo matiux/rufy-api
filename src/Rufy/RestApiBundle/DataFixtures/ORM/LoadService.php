@@ -15,22 +15,30 @@ class LoadService extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
-        $restaurant = $this->getReference('restaurant');
+        $restaurant1 = $this->getReference('restaurant1');
+        $restaurant2 = $this->getReference('restaurant2');
 
         $service = new Service();
         $service->setName('Pranzo');
-        $service->setRestaurant($this->getReference('restaurant'));
+        $service->setRestaurant($this->getReference('restaurant1'));
         $service->addTurn($this->getReference('turn_1'));
-        $restaurant->addService($service);
+        $restaurant1->addService($service);
         $this->setReference('service_pranzo', $service);
 
         $service = new Service();
         $service->setName('Cena');
-        $service->setRestaurant($this->getReference('restaurant'));
+        $service->setRestaurant($this->getReference('restaurant1'));
         $service->addTurn($this->getReference('turn_2'));
         $service->addTurn($this->getReference('turn_3'));
-        $restaurant->addService($service);
+        $restaurant1->addService($service);
         $this->setReference('service_cena', $service);
+
+        $service = new Service();
+        $service->setName('Cena');
+        $service->setRestaurant($this->getReference('restaurant2'));
+        $service->addTurn($this->getReference('turn_4'));
+        $restaurant2->addService($service);
+        $this->setReference('service_cena_rist_2', $service);
     }
 
     /**

@@ -97,8 +97,8 @@ sensio_framework_extra:
     router:  { annotations: false }
 
 fos_rest:
-    serializer:
-        serialize_null: false
+    #serializer:
+    #   serialize_null: false
     service:
         serializer: rufy_api.fosrest_serializer
         #view_handler: rufy_api.view_handler

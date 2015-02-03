@@ -1,5 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
+use Doctrine\ORM\NoResultException;
 use Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Model\ReservationInterface;
 
@@ -26,7 +27,7 @@ class ReservationHandler implements ReservationHandlerInterface
     private $_om;
 
     /**
-     * @var \Symfony\Component\Security\Core\User\User
+     * @var \Rufy\RestApiBundle\Entity\User
      */
     private $_user;
 
@@ -40,17 +41,38 @@ class ReservationHandler implements ReservationHandlerInterface
     }
 
     /**
-     * Get a Reservation given the identifier
+     * Get a Reservation given the identifier and checking that the reservation belongs to the user who invokes
      *
      * @api
      *
      * @param mixed $id
      *
      * @return ReservationInterface
+     * @return null
      */
     public function get($id)
     {
-        return $this->_repository->find($id);
+        /**
+         * TODO
+         * Provare con doctrine query builder per eseguire meno query
+         */
+
+        $reservation                = $this->_repository->find($id);
+
+        if ($reservation) {
+
+            $reservationRestaurant  = $reservation->getArea()->getRestaurant();
+            $userRestaurants        = $this->_user->getRestaurants();
+
+            foreach ($userRestaurants as $restaurant) {
+
+                if ($reservationRestaurant->getId() == $restaurant->getId())
+                    return $reservation;
+
+            }
+        }
+
+        return null;
     }
 
     /**

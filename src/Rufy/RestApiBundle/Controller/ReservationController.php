@@ -79,7 +79,7 @@ class ReservationController extends FOSRestController implements ClassResourceIn
     {
         if (!($reservation = $this->get('rufy_api.reservation.handler')->get($id))) {
 
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
+            throw new NotFoundHttpException(sprintf('The Reservation \'%s\' was not found for your Restaurant.', $id));
         }
 
         return $reservation;

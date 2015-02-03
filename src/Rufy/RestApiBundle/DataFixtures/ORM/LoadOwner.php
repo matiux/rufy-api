@@ -13,17 +13,25 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
     function load(ObjectManager $manager)
     {
         $owner = new Owner();
-
         $owner->setName('Matteo');
         $owner->setSurname('Galacci');
         $owner->setActive(1);
         $owner->setEmail('m.galacci@gmail.com');
         $owner->setPhone('3397476790');
-
         $owner->addUser($this->getReference('user_emanuele'));
         $owner->addUser($this->getReference('user_matteo'));
+        $this->addReference('owner1', $owner);
+        $manager->persist($owner);
 
-        $this->addReference('owner', $owner);
+        $owner = new Owner();
+        $owner->setName('Mario');
+        $owner->setSurname('Rossi');
+        $owner->setActive(1);
+        $owner->setEmail('m.rossi@gmail.com');
+        $owner->setPhone('1234567989');
+        $owner->addUser($this->getReference('user_pincopallo'));
+        $this->addReference('owner2', $owner);
+        $manager->persist($owner);
 
         $manager->persist($this->getReference('set_animali.ammessi'));
         $manager->persist($this->getReference('set_telefono.obbligatorio'));
@@ -33,7 +41,7 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($this->getReference('role_user'));
         $manager->persist($this->getReference('role_visitor'));
 
-        $manager->persist($owner);
+
         $manager->flush();
     }
 
