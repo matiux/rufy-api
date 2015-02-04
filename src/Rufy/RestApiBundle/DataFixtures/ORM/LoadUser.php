@@ -1,13 +1,16 @@
 <?php namespace Rufy\RestApiBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\Doctrine;
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture,
+    Doctrine\Common\DataFixtures\Doctrine,
+    Doctrine\Common\DataFixtures\FixtureInterface,
+    Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Rufy\RestApiBundle\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUser extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
@@ -23,13 +26,11 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
      */
     function load(ObjectManager $manager)
     {
-
-
         $user       = new User();
-        $encoder    = $this->container->get('security.encoder_factory')->getEncoder($user);
+        $encoder    = $this->container->get('security.password_encoder');
 
         $user->setUsername('matiux');
-        $user->setPassword($encoder->encodePassword('281285', $user->getSalt()));
+        $user->setPassword($encoder->encodePassword($user, '281285'));
         $user->setIsActive(true);
         $user->addRole($this->getReference('role_admin'));
         $user->setName('Matteo');
@@ -39,9 +40,8 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $this->addReference('user_matteo', $user);
 
         $user       = new User();
-        $encoder    = $this->container->get('security.encoder_factory')->getEncoder($user);
         $user->setUsername('ingro');
-        $user->setPassword($encoder->encodePassword('eleuname', $user->getSalt()));
+        $user->setPassword($encoder->encodePassword($user, 'eleuname'));
         $user->setIsActive(true);
         $user->addRole($this->getReference('role_admin'));
         $user->setName('Emanuele');
@@ -51,9 +51,8 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $this->addReference('user_emanuele', $user);
 
         $user       = new User();
-        $encoder    = $this->container->get('security.encoder_factory')->getEncoder($user);
         $user->setUsername('pinco');
-        $user->setPassword($encoder->encodePassword('pallo', $user->getSalt()));
+        $user->setPassword($encoder->encodePassword($user, 'pallo'));
         $user->setIsActive(true);
         $user->addRole($this->getReference('role_user'));
         $user->setName('Pinco');

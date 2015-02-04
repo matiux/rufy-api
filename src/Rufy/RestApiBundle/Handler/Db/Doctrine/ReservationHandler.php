@@ -1,14 +1,15 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Doctrine\ORM\NoResultException;
 use Rufy\RestApiBundle\Entity\Reservation,
-    Rufy\RestApiBundle\Model\ReservationInterface;
+    Rufy\RestApiBundle\Model\ReservationInterface,
+    Rufy\RestApiBundle\Handler\Db\HandlerDbInterface\ReservationHandlerInterface;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager,
+    Doctrine\ORM\NoResultException;
 
-use Rufy\RestApiBundle\Handler\Db\HandlerDbInterface\ReservationHandlerInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage,
+    Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class ReservationHandler implements ReservationHandlerInterface
 {
@@ -35,14 +36,14 @@ class ReservationHandler implements ReservationHandlerInterface
     /**
      * @var SecurityContextInterface
      */
-    private $_securityContext;
+    private $_authChecker;
 
-    public function __construct(ObjectManager $om, Reservation $entityClass, SecurityContextInterface $securityContext)
+    public function __construct(ObjectManager $om, Reservation $entityClass, TokenStorage $tokenStorage, AuthorizationChecker $authChecker)
     {
         $this->_om                      = $om;
         $this->_reservationClass        = $entityClass;
-        $this->_securityContext         = $securityContext;
-        $this->_user                    = $securityContext->getToken()->getUser();
+        $this->_authChecker             = $authChecker;
+        $this->_user                    = $tokenStorage->getToken()->getUser();
 
         $this->_repository              = $this->_om->getRepository(get_class($entityClass));
     }
@@ -63,7 +64,7 @@ class ReservationHandler implements ReservationHandlerInterface
     {
         $reservation = $this->_repository->findCustom($id);
 
-        if (false === $this->_securityContext->isGranted('view', $reservation)) {
+        if (false === $this->_authChecker->isGranted('view', $reservation)) {
             throw new AccessDeniedException('Accesso non autorizzato!');
         }
 

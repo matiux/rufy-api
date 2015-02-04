@@ -19,7 +19,7 @@ services:
     ## Handler dei modelli
     rufy_api.reservation.handler:
         class: %rufy_api.reservation.handler.class%
-        arguments: [@doctrine.orm.entity_manager, @rufy_api.reservation.class, @security.context]
+        arguments: [@doctrine.orm.entity_manager, @rufy_api.reservation.class, @security.token_storage, @security.authorization_checker]
     ## Fine Handler dei modelli
     #############################################
 
