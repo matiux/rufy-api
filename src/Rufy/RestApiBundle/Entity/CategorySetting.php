@@ -3,13 +3,14 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\CategorySettingInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="category_setting", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class CategorySetting
+class CategorySetting implements CategorySettingInterface
 {
     public function __construct() {
 

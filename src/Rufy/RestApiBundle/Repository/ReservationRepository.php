@@ -24,7 +24,6 @@ class ReservationRepository extends EntityRepository
         //$area           = $this->getRepo('Area')->findOneById($params['area_id']);
         //$user           = $this->getRepo('User')->findOneById(\Auth::user()->getId());
         //$customer       = $this->getRepo('Customer')->findOneById($params['customer_id']);
-        //$turn           = $this->getRepo('Turn')->findOneById($params['turn_id']);
 
         $date           = Date::createFromFormat('d/m/Y', $params['date'],'Europe/Rome');
         $time           = Date::createFromFormat('H:i', $params['time'],'Europe/Rome');
@@ -48,7 +47,6 @@ class ReservationRepository extends EntityRepository
         $reservation->setWaiting($params['waiting']);
         $reservation->setConfirmed($params['confirmed']);
 
-        $reservation->setTurn($this->getRef('Turn', $params['turn_id']));
         $reservation->setArea($this->getRef('Area', $params['area_id']));
         $reservation->setUser($this->getRef('User', \Auth::user()->getId()));
         $reservation->setCustomer($this->getRef('Customer', $params['customer_id']));

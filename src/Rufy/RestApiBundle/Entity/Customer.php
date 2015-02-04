@@ -3,13 +3,14 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\CustomerInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\Data\Repositories\Doctrine\CustomerRepository")
  * @ORM\Table(name="customer", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Customer
+class Customer implements CustomerInterface
 {
     public function __construct() {
 

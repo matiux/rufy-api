@@ -9,7 +9,7 @@ interface ReservationHandlerInterface
      *
      * @api
      *
-     * @param mixed $id
+     * @param int $id
      *
      * @return ReservationInterface
      */

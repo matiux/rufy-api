@@ -14,7 +14,6 @@ class Restaurant {
     public function __construct() {
 
         $this->users            = new ArrayCollection();
-        $this->services         = new ArrayCollection();
         $this->settings         = new ArrayCollection();
         $this->customers        = new ArrayCollection();
     }
@@ -50,11 +49,6 @@ class Restaurant {
      * @ORM\OneToMany(targetEntity="Customer", mappedBy="restaurant")
      **/
     private $customers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Service", mappedBy="restaurant", cascade={"persist"})
-     */
-    private $services;
 
     /**
      * @ORM\OneToMany(targetEntity="Setting", mappedBy="restaurant", cascade={"remove"})
@@ -220,42 +214,6 @@ class Restaurant {
     public function getCustomer()
     {
         return $this->customer;
-    }
-
-    /**
-     * Add service
-     *
-     * @param \Rufy\RestApiBundle\Entity\Service
-     *
-     * @return Restaurant
-     */
-    public function addService(\Rufy\RestApiBundle\Entity\Service $service)
-    {
-        $this->services[] = $service;
-
-        $service->setRestaurant($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove service
-     *
-     * @param \Rufy\RestApiBundle\Entity\Service $service
-     */
-    public function removeService(\Rufy\RestApiBundle\Entity\Service $service)
-    {
-        $this->services->removeElement($service);
-    }
-
-    /**
-     * Get services
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getServices()
-    {
-        return $this->services;
     }
 
     /**

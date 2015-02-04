@@ -91,12 +91,6 @@ class Reservation implements ReservationInterface
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Turn", inversedBy="reservations")
-     * @ORM\JoinColumn(name="turn_id", referencedColumnName="id", nullable=false)
-     */
-    private $turn;
-
-    /**
      * @var datetime $created
      *
      * @Gedmo\Timestampable(on="create")
@@ -189,8 +183,6 @@ class Reservation implements ReservationInterface
     {
         return $this->waiting;
     }
-
-
 
     /**
      * Set drawingWidth
@@ -382,30 +374,6 @@ class Reservation implements ReservationInterface
     public function getCustomer()
     {
         return $this->customer;
-    }
-
-    /**
-     * Set turn
-     *
-     * @param Turn $turn
-     *
-     * @return Reservation
-     */
-    public function setTurn(Turn $turn)
-    {
-        $this->turn = $turn;
-
-        return $this;
-    }
-
-    /**
-     * Get turn
-     *
-     * @return \Turn
-     */
-    public function getTurn()
-    {
-        return $this->turn;
     }
 
     /**

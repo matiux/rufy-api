@@ -1,5 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Repository;
 
+use Rufy\RestApiBundle\Entity\Reservation;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -40,8 +41,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getQuery();
 
         try {
-            // Il metodo Query::getSingleResult() lancia un'eccezione
-            // se nessuna riga corrisponde ai criteri
+            // Il metodo Query::getSingleResult() lancia un'eccezione se nessuna riga corrisponde ai criteri
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             $message = sprintf(
@@ -93,5 +93,32 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function supportsClass($class)
     {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+    }
+
+
+    /**
+     * Controlla se una prenotazione appartiene
+     *
+     * @param Reservation $reservation
+     * @return bool
+     */
+    public function hasReservation(Reservation $reservation, $user)
+    {
+        // Il ristorante della prenotazione
+        $reservationRestaurant  = $reservation->getArea()->getRestaurant();
+
+        // I ristoranti nei quali lavora lo user
+        $userRestaurants        = $user->getRestaurants();
+
+        // Ciclo i ristoranti dello user
+        foreach ($userRestaurants as $restaurant) {
+
+            // Se la prenotazione appartiene a un ristorante dello user, la restituisco
+            if ($reservationRestaurant->getId() == $restaurant->getId())
+                return true;
+
+        }
+
+        return false;
     }
 }

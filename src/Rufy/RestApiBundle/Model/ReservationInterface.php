@@ -3,7 +3,6 @@
 use Rufy\RestApiBundle\Entity\User;
 use Rufy\RestApiBundle\Entity\Area;
 use Rufy\RestApiBundle\Entity\Customer;
-use Rufy\RestApiBundle\Entity\Turn;
 
 interface ReservationInterface {
 
@@ -33,8 +32,6 @@ interface ReservationInterface {
     public function getTableName();
     public function setCustomer(Customer $customer);
     public function getCustomer();
-    public function setTurn(Turn $turn);
-    public function getTurn();
     public function getId();
     public function setCreated($created);
     public function getCreated();

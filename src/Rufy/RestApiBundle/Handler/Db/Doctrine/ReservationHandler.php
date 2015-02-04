@@ -7,6 +7,7 @@ use Rufy\RestApiBundle\Entity\Reservation,
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Rufy\RestApiBundle\Handler\Db\HandlerDbInterface\ReservationHandlerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ReservationHandler implements ReservationHandlerInterface
@@ -31,10 +32,16 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     private $_user;
 
+    /**
+     * @var SecurityContextInterface
+     */
+    private $_securityContext;
+
     public function __construct(ObjectManager $om, Reservation $entityClass, SecurityContextInterface $securityContext)
     {
         $this->_om                      = $om;
         $this->_entityClass             = $entityClass;
+        $this->_securityContext         = $securityContext;
         $this->_user                    = $securityContext->getToken()->getUser();
 
         $this->_repository              = $this->_om->getRepository(get_class($entityClass));
@@ -45,39 +52,32 @@ class ReservationHandler implements ReservationHandlerInterface
      *
      * @api
      *
-     * @param mixed $id
+     * @param int $id - Reservation ID
      *
      * @return ReservationInterface
      * @return null
+     *
+     * @throws AccessDeniedException
      */
     public function get($id)
     {
-        /**
-         * TODO
-         * Provare con doctrine query builder per eseguire meno query
-         */
+        //$reservation                = $this->_repository->find($id);
 
-        $reservation                = $this->_repository->find($id);
+        $q = $this->_repository->createQueryBuilder('rese')
+            ->select('rese, a, c')
+            ->leftJoin('rese.area', 'a')
+            ->leftJoin('rese.customer', 'c')
+            ->where('rese.id = :reservationid')
+            ->setParameter('reservationid', $id)
+            ->getQuery();
 
-        if ($reservation) {
+        $reservation = $q->getSingleResult();
 
-            // Il ristorante della prenotazione
-            $reservationRestaurant  = $reservation->getArea()->getRestaurant();
-
-            // I ristoranti nei quali lavora lo user
-            $userRestaurants        = $this->_user->getRestaurants();
-
-            // Ciclo i ristoranti dello user
-            foreach ($userRestaurants as $restaurant) {
-
-                // Se la prenotazione appartiene a un ristorante dello user, la restituisco
-                if ($reservationRestaurant->getId() == $restaurant->getId())
-                    return $reservation;
-
-            }
+        if (false === $this->_securityContext->isGranted('view', $reservation)) {
+            throw new AccessDeniedException('Accesso non autorizzato!');
         }
 
-        return null;
+        return $reservation;
     }
 
     /**

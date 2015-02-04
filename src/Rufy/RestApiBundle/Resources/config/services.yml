@@ -46,3 +46,12 @@ services:
     rufy_api.fosrest_serializer:
         class: Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler
         arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
+
+    ###########################################
+    ##  Voter
+    security.access.reservation_voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\ReservationVoter
+        arguments:  [@doctrine.orm.entity_manager]
+        public:     false
+        tags:
+            - { name: security.voter }
