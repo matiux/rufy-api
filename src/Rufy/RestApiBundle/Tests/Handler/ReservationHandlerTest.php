@@ -37,7 +37,6 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('phone', $jsonResponse);
         $this->assertArrayHasKey('area', $jsonResponse);
         $this->assertArrayHasKey('tableName', $jsonResponse);
-        $this->assertArrayHasKey('turn', $jsonResponse);
         $this->assertArrayHasKey('people', $jsonResponse);
         $this->assertArrayHasKey('date', $jsonResponse);
         $this->assertArrayHasKey('time', $jsonResponse);

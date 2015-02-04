@@ -1,12 +1,14 @@
 <?php namespace Rufy\RestApiBundle\Repository;
 
 use Rufy\RestApiBundle\Entity\Reservation;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
+
+use Symfony\Component\Security\Core\User\UserInterface,
+    Symfony\Component\Security\Core\User\UserProviderInterface,
+    Symfony\Component\Security\Core\Exception\UsernameNotFoundException,
+    Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+
+use Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\NoResultException;
 /**
  * UserRepository
  *
@@ -33,8 +35,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         $q = $this
             ->createQueryBuilder('u')
-            ->select('u, r')
-            ->leftJoin('u.roles', 'r')
+            ->addSelect('u, ro, re')
+            ->leftJoin('u.roles', 'ro')
+            ->leftJoin('u.restaurants', 're')
             ->where('u.username = :username OR u.email = :email')
             ->setParameter('username', $username)
             ->setParameter('email', $username)

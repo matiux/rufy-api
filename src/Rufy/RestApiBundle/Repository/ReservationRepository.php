@@ -20,6 +20,7 @@ class ReservationRepository extends EntityRepository
     {
         /**
          * Utilizzando $this->getRef() non è più necessario istanziare l'oggetto completo
+         * per relazionare un oggetto a un'entità
          */
         //$area           = $this->getRepo('Area')->findOneById($params['area_id']);
         //$user           = $this->getRepo('User')->findOneById(\Auth::user()->getId());
@@ -165,5 +166,30 @@ class ReservationRepository extends EntityRepository
 
         // TODO
         //Prende solo le prenotazioni del ristorante corrente
+    }
+
+    /**
+     * Find a reservation by id
+     * 
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findCustom($id)
+    {
+        //$reservation                = $this->_repository->find($id);
+
+        $q = $this->createQueryBuilder('rese')
+            ->select('rese, a, c')
+            ->leftJoin('rese.area', 'a')
+            ->leftJoin('rese.customer', 'c')
+            ->where('rese.id = :reservationid')
+            ->setParameter('reservationid', $id)
+            ->getQuery();
+
+        $reservation = $q->getSingleResult();
+
+        return $reservation;
     }
 }

@@ -15,10 +15,10 @@ class ReservationHandler implements ReservationHandlerInterface
     /**
      * @var \Rufy\RestApiBundle\Entity\Reservation
      */
-    private $_entityClass;
+    private $_reservationClass;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var \Rufy\RestApiBundle\Repository\ReservationRepository
      */
     private $_repository;
 
@@ -28,7 +28,7 @@ class ReservationHandler implements ReservationHandlerInterface
     private $_om;
 
     /**
-     * @var \Rufy\RestApiBundle\Entity\User
+     * @var \Rufy\RestApiBundle\Repository\UserRepository
      */
     private $_user;
 
@@ -40,7 +40,7 @@ class ReservationHandler implements ReservationHandlerInterface
     public function __construct(ObjectManager $om, Reservation $entityClass, SecurityContextInterface $securityContext)
     {
         $this->_om                      = $om;
-        $this->_entityClass             = $entityClass;
+        $this->_reservationClass        = $entityClass;
         $this->_securityContext         = $securityContext;
         $this->_user                    = $securityContext->getToken()->getUser();
 
@@ -61,17 +61,7 @@ class ReservationHandler implements ReservationHandlerInterface
      */
     public function get($id)
     {
-        //$reservation                = $this->_repository->find($id);
-
-        $q = $this->_repository->createQueryBuilder('rese')
-            ->select('rese, a, c')
-            ->leftJoin('rese.area', 'a')
-            ->leftJoin('rese.customer', 'c')
-            ->where('rese.id = :reservationid')
-            ->setParameter('reservationid', $id)
-            ->getQuery();
-
-        $reservation = $q->getSingleResult();
+        $reservation = $this->_repository->findCustom($id);
 
         if (false === $this->_securityContext->isGranted('view', $reservation)) {
             throw new AccessDeniedException('Accesso non autorizzato!');

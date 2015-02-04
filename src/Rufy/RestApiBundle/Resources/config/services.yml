@@ -3,20 +3,12 @@ parameters:
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
 
 services:
-#    rufy_rest_api.example:
-#        class: Rufy\RestApiBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
-
 
     string:
         class: Rufy\RestApiBundle\Utility\String
 
-    rufy_api.custom.fractal.serializer:
-        class: Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer
-
     ###########################################
     ## Modelli
-
     rufy_api.reservation.class:
         class: %rufy_api.reservation.class%
 
@@ -25,12 +17,10 @@ services:
 
     ###########################################
     ## Handler dei modelli
-
     rufy_api.reservation.handler:
         class: %rufy_api.reservation.handler.class%
         arguments: [@doctrine.orm.entity_manager, @rufy_api.reservation.class, @security.context]
     ## Fine Handler dei modelli
-
     #############################################
 
 
@@ -38,6 +28,9 @@ services:
     # Transformer
     rufy_api.reservation.transformer:
         class: Rufy\RestApiBundle\Transformer\Fractal\ReservationTransformer
+
+    rufy_api.custom.fractal.serializer:
+        class: Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer
     ## Fine Transformer
     #############################################
 

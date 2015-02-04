@@ -35,6 +35,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setName('Matteo');
         $user->setEmail('m.galacci@gmail.com');
         $user->addRestaurant($this->getReference('restaurant1'));
+        $user->addRestaurant($this->getReference('restaurant3'));
         $this->addReference('user_matteo', $user);
 
         $user       = new User();

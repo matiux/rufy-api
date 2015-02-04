@@ -45,12 +45,8 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      */
     public function getAction($id)
     {
-        //        if (!$this->get('security.context')->isGranted('ROLE_USER'))
-        //            throw new AccessDeniedException();
-        //
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
-        }
 
         $reservation = $this->getOr404($id);
 
