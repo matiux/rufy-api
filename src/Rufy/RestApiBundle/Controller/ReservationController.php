@@ -15,9 +15,9 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      * Get single Reservation.
      *
      * @ApiDoc(
-     *   resource = true,
-     *   description = "Gets a Reservation for a given id",
-     *   output = "Rufy\RestApiBundle\Entity\Reservation",
+     *  resource = true,
+     *  description = "Gets a Reservation for a given id",
+     *  output = "Rufy\RestApiBundle\Entity\Reservation",
      *  requirements={
      *      {
      *          "name"="id",

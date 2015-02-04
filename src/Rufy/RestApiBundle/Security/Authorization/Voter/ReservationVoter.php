@@ -102,6 +102,7 @@ class ReservationVoter implements VoterInterface
         }
 
         /**
+         * TODO
          * Capire se il metodo hasReservation può accettare solo reservation
          */
         switch($attribute) {

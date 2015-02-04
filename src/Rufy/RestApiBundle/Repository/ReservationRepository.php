@@ -126,36 +126,36 @@ class ReservationRepository extends EntityRepository
         return;
     }
 
-    /**
-     * @param $name
-     * @param $restaurantId
-     * @param string $surname
-     * @param string $date
-     * @return array
-     */
-    public function findByCustomerName($name, $restaurantId, $surname = '', $date = '')
-    {
-        $date = '' == $date ? Date::now('Europe/Rome')->format('Y-m-d') : Date::createFromFormat('d/m/Y', $date,'Europe/Rome')->format('Y-m-d');
-        //$time = Date::now('Europe/Rome')->format('H:i');
-
-        $q = $this->createQueryBuilder('r')
-            ->select('r', 'c')
-            ->innerJoin('r.customer', 'c')
-            ->where('c.name LIKE :name')
-            ->andWhere('r.date >= :date')
-            ->andWhere('c.restaurant = :restaurant_id')
-            ->setParameter('name', $name)
-            ->setParameter('date', $date)
-            ->setParameter('restaurant_id', $restaurantId)
-            //->andWhere('r.time >= :time')
-            //->setParameter('time', $time)
-        ;
-
-        if ('' != $surname)
-            $q->andWhere('c.surname = :surname')->setParameter('surname', $surname);
-
-        return $q->getQuery()->getResult();
-    }
+//    /**
+//     * @param $name
+//     * @param $restaurantId
+//     * @param string $surname
+//     * @param string $date
+//     * @return array
+//     */
+//    public function findByCustomerName($name, $restaurantId, $surname = '', $date = '')
+//    {
+//        $date = '' == $date ? Date::now('Europe/Rome')->format('Y-m-d') : Date::createFromFormat('d/m/Y', $date,'Europe/Rome')->format('Y-m-d');
+//        //$time = Date::now('Europe/Rome')->format('H:i');
+//
+//        $q = $this->createQueryBuilder('r')
+//            ->select('r', 'c')
+//            ->innerJoin('r.customer', 'c')
+//            ->where('c.name LIKE :name')
+//            ->andWhere('r.date >= :date')
+//            ->andWhere('c.restaurant = :restaurant_id')
+//            ->setParameter('name', $name)
+//            ->setParameter('date', $date)
+//            ->setParameter('restaurant_id', $restaurantId)
+//            //->andWhere('r.time >= :time')
+//            //->setParameter('time', $time)
+//        ;
+//
+//        if ('' != $surname)
+//            $q->andWhere('c.surname = :surname')->setParameter('surname', $surname);
+//
+//        return $q->getQuery()->getResult();
+//    }
 
     public function findByDate($name)
     {
@@ -170,7 +170,7 @@ class ReservationRepository extends EntityRepository
 
     /**
      * Find a reservation by id
-     * 
+     *
      * @param $id
      * @return mixed
      * @throws \Doctrine\ORM\NoResultException
@@ -178,7 +178,7 @@ class ReservationRepository extends EntityRepository
      */
     public function findCustom($id)
     {
-        //$reservation                = $this->_repository->find($id);
+        //$reservation                = $this->find($id);
 
         $q = $this->createQueryBuilder('rese')
             ->select('rese, a, c')

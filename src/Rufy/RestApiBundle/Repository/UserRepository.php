@@ -46,11 +46,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         try {
             // Il metodo Query::getSingleResult() lancia un'eccezione se nessuna riga corrisponde ai criteri
             $user = $q->getSingleResult();
+
         } catch (NoResultException $e) {
+
             $message = sprintf(
                 'Impossibile trovare un oggetto RufyRestApiBundle:User identificato da  "%s".',
                 $username
             );
+
             throw new UsernameNotFoundException($message, 0, $e);
         }
 

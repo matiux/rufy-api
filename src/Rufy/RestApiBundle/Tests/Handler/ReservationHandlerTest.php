@@ -32,7 +32,7 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertJson(json_encode($jsonResponse));
 
-        $this->assertArrayHasKey('id', $jsonResponse);
+        $this->assertArrayHasKey('data', $jsonResponse);
         $this->assertArrayHasKey('name', $jsonResponse);
         $this->assertArrayHasKey('phone', $jsonResponse);
         $this->assertArrayHasKey('area', $jsonResponse);
