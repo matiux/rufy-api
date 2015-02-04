@@ -3,7 +3,8 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Rufy\RestApiBundle\Model\RoleInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface as SymfonyRoleInterface;
 
 /**
  * Rufy\RestApiBundle\Entity\Role
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Role implements RoleInterface
+class Role implements SymfonyRoleInterface, RoleInterface
 {
     /**
      * @ORM\Column(name="id", type="integer")

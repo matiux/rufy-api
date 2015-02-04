@@ -3,14 +3,15 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\RestaurantInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="restaurant", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Restaurant {
-
+class Restaurant implements RestaurantInterface
+{
     public function __construct() {
 
         $this->users            = new ArrayCollection();

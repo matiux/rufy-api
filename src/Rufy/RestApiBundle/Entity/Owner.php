@@ -3,13 +3,14 @@
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Rufy\RestApiBundle\Model\OwnerInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="owner", options={"collate"="utf8_general_ci", "charset"="utf8"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Owner
+class Owner implements OwnerInterface
 {
     /**
      * @ORM\Id
