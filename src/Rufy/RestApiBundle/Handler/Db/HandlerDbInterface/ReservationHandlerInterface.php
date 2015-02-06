@@ -17,12 +17,14 @@ interface ReservationHandlerInterface
     /**
      * Get a list of Reservations.
      *
-     * @param int $limit  the limit of the result
-     * @param int $offset starting from the offset
+     * @param int $restaurantId     the restaurant's id
+     * @param int $limit            the limit of the result
+     * @param int $offset           starting from the offset
+     * @param array $params         filter params
      *
      * @return array
      */
-    public function all($limit = 5, $offset = 0);
+    public function all($restaurantId, $limit = 5, $offset = 0, $params = array());
     /**
      * Post Reservation, creates a new Reservation.
      *

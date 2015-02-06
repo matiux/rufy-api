@@ -74,14 +74,22 @@ class ReservationHandler implements ReservationHandlerInterface
     /**
      * Get a list of Reservations.
      *
-     * @param int $limit the limit of the result
-     * @param int $offset starting from the offset
+     * @param int $restaurantId     the restaurant's id
+     * @param int $limit            the limit of the result
+     * @param int $offset           starting from the offset
+     * @param array $params         filter params
      *
      * @return array
      */
-    public function all($limit = 5, $offset = 0)
+    public function all($restaurantId, $limit = 5, $offset = 0, $params = array())
     {
-        return $this->_repository->findBy(array(), null, $limit, $offset);
+        $reservations = $this->_repository->findReservations($restaurantId, $limit, $offset, $params);
+
+        if (0 < count($reservations))
+            if (false === $this->_authChecker->isGranted('listing', current($reservations)))
+                throw new AccessDeniedException('Accesso non autorizzato!');
+
+        return $reservations;
     }
 
     /**

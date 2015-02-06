@@ -1,11 +1,18 @@
 <?php namespace Rufy\RestApiBundle\Security\Authorization\Voter; 
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Rufy\RestApiBundle\Entity\Reservation;
 
-class ReservationVoter implements VoterInterface
+/**
+ * See http://symfony.com/blog/new-in-symfony-2-6-simpler-security-voters
+ *
+ * Class ReservationVoter
+ * @package Rufy\RestApiBundle\Security\Authorization\Voter
+ */
+class ReservationVoter extends AbstractVoter
 {
     const VIEW      = 'view';
     const EDIT      = 'edit';
@@ -24,77 +31,46 @@ class ReservationVoter implements VoterInterface
     }
 
     /**
-     * Checks if the voter supports the given attribute.
+     * Return an array of supported classes. This will be called by supportsClass
      *
-     * @param string $attribute An attribute
-     *
-     * @return bool true if this Voter supports the attribute, false otherwise
+     * @return array an array of supported classes, i.e. array('Acme\DemoBundle\Model\Product')
      */
-    public function supportsAttribute($attribute)
+    protected function getSupportedClasses()
     {
-        return in_array($attribute, [
-                                self::VIEW,
-                                self::EDIT,
-                                self::CREATE,
-                                self::DELETE,
-                                self::LISTING,
-                            ]);
+        return array('Rufy\RestApiBundle\Entity\Reservation');
     }
 
     /**
-     * Checks if the voter supports the given class.
+     * Return an array of supported attributes. This will be called by supportsAttribute
      *
-     * @param string $class A class name
-     *
-     * @return bool true if this Voter can process the class
+     * @return array an array of supported attributes, i.e. array('CREATE', 'READ')
      */
-    public function supportsClass($class)
+    protected function getSupportedAttributes()
     {
-        $supportedClass = 'Rufy\RestApiBundle\Entity\Reservation';
-
-        return $supportedClass === $class || is_subclass_of($class, $supportedClass);
+        return [
+            self::CREATE,
+            self::DELETE,
+            self::EDIT,
+            self::LISTING,
+            self::VIEW,
+        ];
     }
 
     /**
-     * Returns the vote for the given parameters.
+     * Perform a single access check operation on a given attribute, object and (optionally) user
+     * It is safe to assume that $attribute and $object's class pass supportsAttribute/supportsClass
+     * $user can be one of the following:
+     *   a UserInterface object (fully authenticated user)
+     *   a string               (anonymously authenticated user)
      *
-     * This method must return one of the following constants:
-     * ACCESS_GRANTED, ACCESS_DENIED, or ACCESS_ABSTAIN.
+     * @param string $attribute
+     * @param Reservation $resource
+     * @param UserInterface|string $user
      *
-     * @param TokenInterface $token A TokenInterface instance
-     * @param \Rufy\RestApiBundle\Entity\Reservation $reservation The object to secure
-     * @param array $attributes An array of attributes associated with the method being invoked
-     *
-     * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
-     *
-     * @throws InvalidArgumentException
+     * @return bool
      */
-    public function vote(TokenInterface $token, $reservation, array $attributes)
+    protected function isGranted($attribute, $resource, $user = null)
     {
-        // verifica se la classe di questo oggetto sia supportata da questo votante
-        if (!$this->supportsClass(get_class($reservation))) {
-            return VoterInterface::ACCESS_ABSTAIN;
-        }
-
-        // verifica se il votante è usato correttamente, consente un singolo attributo
-        // questo non è un requisito, ma solo un modo semplice per
-        // progettare un votante
-        if(1 !== count($attributes)) {
-            throw new InvalidArgumentException(
-                'È consentito un solo attributo per VIEW, EDIT, CREATE o DELETE'
-            );
-        }
-
-        // imposta l'attributo da verificare
-        $attribute = $attributes[0];
-
-        // verifica se l'attributo dato sia coperto da questo votante
-        if (!$this->supportsAttribute($attribute)) {
-            return VoterInterface::ACCESS_ABSTAIN;
-        }
-
-        // ottiene l'utente corrente
-        $user = $token->getUser();
 
         // si assicura che ci sia un utente (che abbia fatto login)
         if (!$user instanceof UserInterface) {
@@ -107,11 +83,15 @@ class ReservationVoter implements VoterInterface
          */
         switch($attribute) {
             case self::VIEW:
-                if ($this->_om->getRepository('RufyRestApiBundle:User')->hasReservation($reservation, $user))
+                if ($this->_om->getRepository('RufyRestApiBundle:User')->hasReservation($resource, $user))
+                    return VoterInterface::ACCESS_GRANTED;
+                break;
+            case self::LISTING:
+                if ($this->_om->getRepository('RufyRestApiBundle:User')->hasReservation($resource, $user))
                     return VoterInterface::ACCESS_GRANTED;
                 break;
         }
 
-        return VoterInterface::ACCESS_DENIED;
+        return false;
     }
 }

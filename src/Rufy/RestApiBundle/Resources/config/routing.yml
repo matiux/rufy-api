@@ -8,3 +8,9 @@ reservations:
     prefix: v1
     resource: Rufy\RestApiBundle\Controller\ReservationController
     name_prefix:  api_v1_
+
+restaurants:
+    type: rest
+    prefix: v1
+    resource: Rufy\RestApiBundle\Controller\RestaurantController
+    name_prefix:  api_v1_

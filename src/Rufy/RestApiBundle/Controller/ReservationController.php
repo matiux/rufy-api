@@ -1,7 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
 use FOS\RestBundle\Controller\FOSRestController,
-    FOS\RestBundle\Routing\ClassResourceInterface,
+    //FOS\RestBundle\Routing\ClassResourceInterface,
     FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -9,7 +9,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ReservationController extends FOSRestController implements ClassResourceInterface
+class ReservationController extends FOSRestController
 {
     /**
      * Get single Reservation.
@@ -26,9 +26,6 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      *          "description"="Reservation ID"
      *      }
      *  },
-     *   parameters={
-     *      {"name"="id", "dataType"="integer", "required"=true, "format"="", "description"="Reservation ID"}
-     *   },
      *
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -43,7 +40,7 @@ class ReservationController extends FOSRestController implements ClassResourceIn
      * @throws NotFoundHttpException when reservation not exist
      * @throws AccessDeniedException when role is not allowed
      */
-    public function getAction($id)
+    public function getReservationAction($id)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
@@ -53,17 +50,8 @@ class ReservationController extends FOSRestController implements ClassResourceIn
         return $reservation;
     }
 
-    public function cgetAction()
-    {
-        $reservation = $this->getDoctrine()->getRepository('\Rufy\RestApiBundle\Entity\Reservation')->findAll();
-        //$reservation = $this->get('doctrine.orm.default_entity_manager')->getRepository('\Rufy\RestApiBundle\Entity\Reservation')->find($id);
-
-        return new Response('<html><body>Numero: '.rand(5, 10).'</body></html>');
-    }
-
-
     /**
-     * Fetch a Page or throw an 404 Exception.
+     * Fetch a Reservation or throw an 404 Exception.
      *
      * @param mixed $id
      *

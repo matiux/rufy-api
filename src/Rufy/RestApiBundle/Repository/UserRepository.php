@@ -105,11 +105,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * Controlla se una prenotazione appartiene
      *
-     * @param Reservation $reservation
+     * @param Reservation|Collection $reservation
      * @return bool
      */
-    public function hasReservation(Reservation $reservation, $user)
+    public function hasReservation($reservation, $user)
     {
+        $reservation = is_array($reservation) ? current($reservation) : $reservation;
+
         // Il ristorante della prenotazione
         $reservationRestaurant  = $reservation->getArea()->getRestaurant();
 

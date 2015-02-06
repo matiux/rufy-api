@@ -192,4 +192,27 @@ class ReservationRepository extends EntityRepository
 
         return $reservation;
     }
+
+    /**
+     * TODO
+     * @param $restaurantId
+     * @param $limit
+     * @param $offset
+     * @param $params
+     * @return array
+     */
+    public function findReservations($restaurantId, $limit, $offset, $params)
+    {
+        $q = $this->createQueryBuilder('rese')
+            ->addSelect('a, rest')
+            ->leftJoin('rese.area', 'a')
+            ->leftJoin('a.restaurant', 'rest')
+            ->where('rest.id = :restaurantid')
+            ->setParameter('restaurantid', $restaurantId)
+            ->getQuery();
+
+        $reservations = $q->getResult();
+
+        return $reservations;
+    }
 }
