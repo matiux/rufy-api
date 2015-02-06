@@ -195,6 +195,8 @@ class ReservationRepository extends EntityRepository
 
     /**
      * TODO
+     * Implementare limiti - offset - altrei filtri
+     *
      * @param $restaurantId
      * @param $limit
      * @param $offset
