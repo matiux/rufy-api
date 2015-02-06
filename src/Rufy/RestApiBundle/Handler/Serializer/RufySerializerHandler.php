@@ -27,7 +27,7 @@ class RufySerializerHandler
         $type = is_array($resource) ? 'COLLECTION' : 'ITEM';
 
         switch ($type) {
-            case 'MODEL':
+            case 'ITEM':
                 return $this->serializeItem($resource);
                 break;
             case 'COLLECTION':
