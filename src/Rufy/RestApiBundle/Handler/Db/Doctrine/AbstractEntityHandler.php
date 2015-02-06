@@ -15,6 +15,7 @@ abstract class AbstractEntityHandler
 
     /**
      * @var \Rufy\RestApiBundle\Repository\ReservationRepository
+     * @var \Rufy\RestApiBundle\Repository\RestaurantRepository
      */
     protected $repository;
 
@@ -33,7 +34,11 @@ abstract class AbstractEntityHandler
      */
     protected $authChecker;
 
-    abstract public function setEntityClass($entityClass);
+    public function setEntityClass($entityClass)
+    {
+        $this->entityClass              = $entityClass;
+        $this->repository               = $this->om->getRepository(get_class($entityClass));
+    }
 
     public function setObjectManagerAndEntity(ObjectManager $om)
     {

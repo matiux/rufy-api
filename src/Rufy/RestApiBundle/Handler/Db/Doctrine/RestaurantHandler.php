@@ -3,24 +3,15 @@
 
 class RestaurantHandler extends AbstractEntityHandler implements HandlerInterface
 {
-
-    public function setEntityClass($entityClass)
-    {
-
-    }
-
-    /**
-     * Get a Entity given the identifier
-     *
-     * @api
-     *
-     * @param int $id
-     *
-     * @return Entity
-     */
     public function get($id)
     {
+        $restaurant = $this->repository->findCustom($id);
 
+//        if (false === $this->authChecker->isGranted('view', $reservation)) {
+//            throw new AccessDeniedException('Accesso non autorizzato!');
+//        }
+
+        return $restaurant;
     }
 
     /**

@@ -100,10 +100,4 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
     {
         return $this->entityClass;
     }
-
-    public function setEntityClass($entityClass)
-    {
-        $this->entityClass              = $entityClass;
-        $this->repository               = $this->om->getRepository(get_class($entityClass));
-    }
 }

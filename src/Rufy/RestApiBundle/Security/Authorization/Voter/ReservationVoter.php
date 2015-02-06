@@ -12,14 +12,8 @@ use Rufy\RestApiBundle\Entity\Reservation;
  * Class ReservationVoter
  * @package Rufy\RestApiBundle\Security\Authorization\Voter
  */
-class ReservationVoter extends AbstractVoter
+class ReservationVoter extends AbstractVoter implements RufyVoretInterface
 {
-    const VIEW      = 'view';
-    const EDIT      = 'edit';
-    const CREATE    = 'create';
-    const DELETE    = 'delete';
-    const LISTING   = 'listing';
-
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
      */
