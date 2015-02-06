@@ -1,17 +1,15 @@
-<?php namespace Rufy\RestApiBundle\Handler\Db\HandlerDbInterface;
+<?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Rufy\RestApiBundle\Model\ReservationInterface;
-
-interface ReservationHandlerInterface
+interface HandlerInterface
 {
     /**
-     * Get a Reservation given the identifier
+     * Get a Entity given the identifier
      *
      * @api
      *
      * @param int $id
      *
-     * @return ReservationInterface
+     * @return Entity
      */
     public function get($id);
     /**
@@ -26,37 +24,37 @@ interface ReservationHandlerInterface
      */
     public function all($restaurantId, $limit = 5, $offset = 0, $params = array());
     /**
-     * Post Reservation, creates a new Reservation.
+     * Post Entity, creates a new Entity.
      *
      * @api
      *
      * @param array $parameters
      *
-     * @return ReservationInterface
+     * @return Entity
      */
     public function post(array $parameters);
 
     /**
-     * Edit a Reservation.
+     * Edit a Entity.
      *
      * @api
      *
-     * @param ReservationInterface   $reservation
+     * @param $entity
      * @param array           $parameters
      *
-     * @return ReservationInterface
+     * @return Entity
      */
-    public function put(ReservationInterface $reservation, array $parameters);
+    public function put($entity, array $parameters);
 
     /**
      * Partially update a Reservation.
      *
      * @api
      *
-     * @param ReservationInterface   $reservation
+     * @param $entity
      * @param array           $parameters
      *
-     * @return ReservationInterface
+     * @return Entity
      */
-    public function patch(ReservationInterface $reservation, array $parameters);
+    public function patch($entity, array $parameters);
 }

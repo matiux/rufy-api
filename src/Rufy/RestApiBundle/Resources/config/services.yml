@@ -1,6 +1,8 @@
 parameters:
     rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\ReservationHandler
+    rufy_api.restaurant.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\RestaurantHandler
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
+    rufy_api.restaurant.class: Rufy\RestApiBundle\Entity\Restaurant
 
 services:
 
@@ -12,14 +14,33 @@ services:
     rufy_api.reservation.class:
         class: %rufy_api.reservation.class%
 
+    rufy_api.restaurant.class:
+        class: %rufy_api.restaurant.class%
+
     ## Fine Modelli
     #############################################
 
     ###########################################
     ## Handler dei modelli
+    rufy_api.entity_handler:
+        abstract: true
+        calls:
+            - [setObjectManagerAndEntity, [@doctrine.orm.entity_manager]]
+            - [setUser, [@security.token_storage]]
+            - [setAuthorizationChecker, [@security.authorization_checker]]
+
     rufy_api.reservation.handler:
         class: %rufy_api.reservation.handler.class%
-        arguments: [@doctrine.orm.entity_manager, @rufy_api.reservation.class, @security.token_storage, @security.authorization_checker]
+        parent: rufy_api.entity_handler
+        calls:
+            - [setEntityClass, [@rufy_api.reservation.class]]
+
+    rufy_api.restaurant.handler:
+        class: %rufy_api.restaurant.handler.class%
+        parent: rufy_api.entity_handler
+        calls:
+            - [setEntityClass, [@rufy_api.restaurant.class]]
+
     ## Fine Handler dei modelli
     #############################################
 
