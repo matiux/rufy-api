@@ -46,7 +46,8 @@ class RestaurantRepository extends EntityRepository
 
     public function hasUser(Restaurant $restaurant, User $user)
     {
-        $restaurantUsers = $restaurant->getUsers();
+        //$restaurant         = is_array($restaurant) ? current($restaurant) : $restaurant;
+        $restaurantUsers    = $restaurant->getUsers();
 
         if ($restaurantUsers) {
 

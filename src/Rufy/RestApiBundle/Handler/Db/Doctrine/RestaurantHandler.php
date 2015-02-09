@@ -35,9 +35,13 @@ class RestaurantHandler extends AbstractEntityHandler implements HandlerInterfac
      */
     public function all($limit = 5, $offset = 0, $params = array())
     {
-        $params['userId']   = $this->user->getId();
+        $params['userId'] = $this->user->getId();
 
-        $restaurants        = $this->repository->findRestaurants($limit, $offset, $params);
+        $restaurants = $this->repository->findRestaurants($limit, $offset, $params);
+
+        if (0 < count($restaurants))
+            if (false === $this->authChecker->isGranted('LISTING', current($restaurants)))
+                throw new AccessDeniedException('Accesso non autorizzato!');
 
         return $restaurants;
     }

@@ -100,11 +100,11 @@ class RestaurantController extends FOSRestController
     }
 
     /**
-     * List all user's restaurants
+     * List all the logged user's restaurants
      *
      * @ApiDoc(
      *  resource        = true,
-     *  description     = "List all user's restaurants",
+     *  description     = "List all the logged user's restaurants",
      *  requirements={
      *  },
      *
