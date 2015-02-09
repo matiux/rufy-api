@@ -10,7 +10,8 @@ class RestaurantTransformer extends Fractal\TransformerAbstract
 
         return [
 
-            'id'            => $restaurant->getName(),
+            'id'            => $restaurant->getid(),
+            'name'          => $restaurant->getName(),
             'restDate'      => $restaurant->getRestDate()
         ];
     }

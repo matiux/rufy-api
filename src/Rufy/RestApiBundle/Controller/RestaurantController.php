@@ -89,9 +89,51 @@ class RestaurantController extends FOSRestController
         $offset         = null == $offset ? 0 : $offset;
         $limit          = $paramFetcher->get('limit');
 
-        $restaurantReservations   = $this->container->get('rufy_api.reservation.handler')->all($restaurantId, $limit, $offset);
+        $params         = [
+
+            'restaurantId' => $restaurantId
+        ];
+
+        $restaurantReservations   = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $params);
 
         return $restaurantReservations;
+    }
+
+    /**
+     * List all user's restaurants
+     *
+     * @ApiDoc(
+     *  resource        = true,
+     *  description     = "List all user's restaurants",
+     *  requirements={
+     *  },
+     *
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *   }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing reservations.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return.")
+     *
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return array
+     *
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function getRestaurantsAction(ParamFetcherInterface $paramFetcher)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $offset         = $paramFetcher->get('offset');
+        $offset         = null == $offset ? 0 : $offset;
+        $limit          = $paramFetcher->get('limit');
+
+        $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
+
+        return $restaurants;
     }
 
     /**

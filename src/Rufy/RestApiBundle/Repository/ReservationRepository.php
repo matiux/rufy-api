@@ -164,8 +164,6 @@ class ReservationRepository extends EntityRepository
 
     public function getAll() {
 
-        // TODO
-        //Prende solo le prenotazioni del ristorante corrente
     }
 
     /**
@@ -197,14 +195,15 @@ class ReservationRepository extends EntityRepository
      * TODO
      * Implementare limiti - offset - altri filtri
      *
-     * @param $restaurantId
      * @param $limit
      * @param $offset
      * @param $params
      * @return array
      */
-    public function findReservations($restaurantId, $limit, $offset, $params)
+    public function findReservations($limit, $offset, $params)
     {
+        $restaurantId = $params['restaurantId'];
+
         $q = $this->createQueryBuilder('rese')
             ->addSelect('a, rest')
             ->leftJoin('rese.area', 'a')

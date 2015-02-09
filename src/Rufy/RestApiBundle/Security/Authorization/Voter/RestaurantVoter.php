@@ -1,13 +1,25 @@
 <?php namespace Rufy\RestApiBundle\Security\Authorization\Voter;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Rufy\RestApiBundle\Entity\Reservation;
 
-class RestaurantVoter extends AbstractVoter implements RufyVoretInterface
+class RestaurantVoter extends AbstractVoter implements RufyVoterInterface
 {
+    use RufyVoterTrait;
+
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+
+    public function __construct(ObjectManager $om)
+    {
+        $this->om                      = $om;
+    }
+
     /**
      * Return an array of supported classes. This will be called by supportsClass
      *
@@ -15,17 +27,7 @@ class RestaurantVoter extends AbstractVoter implements RufyVoretInterface
      */
     protected function getSupportedClasses()
     {
-
-    }
-
-    /**
-     * Return an array of supported attributes. This will be called by supportsAttribute
-     *
-     * @return array an array of supported attributes, i.e. array('CREATE', 'READ')
-     */
-    protected function getSupportedAttributes()
-    {
-
+        return array('Rufy\RestApiBundle\Entity\Restaurant');
     }
 
     /**
@@ -36,13 +38,25 @@ class RestaurantVoter extends AbstractVoter implements RufyVoretInterface
      *   a string               (anonymously authenticated user)
      *
      * @param string $attribute
-     * @param object $object
+     * @param object $resource
      * @param UserInterface|string $user
      *
      * @return bool
      */
-    protected function isGranted($attribute, $object, $user = null)
+    protected function isGranted($attribute, $resource, $user = null)
     {
+        // si assicura che ci sia un utente (che abbia fatto login)
+        if (!$user instanceof UserInterface) {
+            return VoterInterface::ACCESS_DENIED;
+        }
 
+        switch($attribute) {
+
+            case self::VIEW:
+                if ($this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUSer($resource, $user))
+                    return VoterInterface::ACCESS_GRANTED;
+                break;
+
+        }
     }
 }

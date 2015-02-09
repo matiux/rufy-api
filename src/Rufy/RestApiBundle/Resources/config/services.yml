@@ -63,8 +63,15 @@ services:
 
     ###########################################
     ##  Voter
-    security.access.reservation_voter:
+    security.access.reservation.voter:
         class:      Rufy\RestApiBundle\Security\Authorization\Voter\ReservationVoter
+        arguments:  [@doctrine.orm.entity_manager]
+        public:     false
+        tags:
+            - { name: security.voter }
+
+    security.access.restaurant.voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\RestaurantVoter
         arguments:  [@doctrine.orm.entity_manager]
         public:     false
         tags:

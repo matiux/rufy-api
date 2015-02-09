@@ -22,7 +22,7 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
     {
         $reservation = $this->repository->findCustom($id);
 
-        if (false === $this->authChecker->isGranted('view', $reservation)) {
+        if (false === $this->authChecker->isGranted('VIEW', $reservation)) {
             throw new AccessDeniedException('Accesso non autorizzato!');
         }
 
@@ -32,19 +32,18 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
     /**
      * Get a list of Reservations.
      *
-     * @param int $restaurantId     the restaurant's id
      * @param int $limit            the limit of the result
      * @param int $offset           starting from the offset
      * @param array $params         filter params
      *
      * @return array
      */
-    public function all($restaurantId, $limit = 5, $offset = 0, $params = array())
+    public function all($limit = 5, $offset = 0, $params = array())
     {
-        $reservations = $this->repository->findReservations($restaurantId, $limit, $offset, $params);
+        $reservations = $this->repository->findReservations($limit, $offset, $params);
 
         if (0 < count($reservations))
-            if (false === $this->authChecker->isGranted('listing', current($reservations)))
+            if (false === $this->authChecker->isGranted('LISTING', current($reservations)))
                 throw new AccessDeniedException('Accesso non autorizzato!');
 
         return $reservations;

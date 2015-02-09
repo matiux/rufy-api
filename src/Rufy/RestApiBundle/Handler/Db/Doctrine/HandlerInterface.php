@@ -11,18 +11,19 @@ interface HandlerInterface
      *
      * @return Entity
      */
+
     public function get($id);
     /**
-     * Get a list of Reservations.
+     * Get a list of Entity
      *
-     * @param int $restaurantId     the restaurant's id
      * @param int $limit            the limit of the result
      * @param int $offset           starting from the offset
      * @param array $params         filter params
      *
      * @return array
      */
-    public function all($restaurantId, $limit = 5, $offset = 0, $params = array());
+    public function all($limit = 5, $offset = 0, $params = array());
+
     /**
      * Post Entity, creates a new Entity.
      *
@@ -47,7 +48,7 @@ interface HandlerInterface
     public function put($entity, array $parameters);
 
     /**
-     * Partially update a Reservation.
+     * Partially update a Entity.
      *
      * @api
      *

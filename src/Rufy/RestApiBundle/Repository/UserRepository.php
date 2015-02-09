@@ -105,7 +105,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * Controlla se una prenotazione appartiene
      *
-     * @param Reservation|Collection $reservation
+     * @param Reservation|Collection of $reservation
+     * @param User $user
      * @return bool
      */
     public function hasReservation($reservation, $user)

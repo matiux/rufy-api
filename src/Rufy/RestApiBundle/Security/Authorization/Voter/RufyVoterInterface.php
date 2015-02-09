@@ -3,9 +3,9 @@
 
 interface RufyVoterInterface {
 
-    const VIEW      = 'view';
-    const EDIT      = 'edit';
-    const CREATE    = 'create';
-    const DELETE    = 'delete';
-    const LISTING   = 'listing';
+    const VIEW      = 'VIEW';
+    const EDIT      = 'EDIT';
+    const CREATE    = 'CREATE';
+    const DELETE    = 'DELETE';
+    const LISTING   = 'LISTING';
 }

@@ -1,7 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Doctrine\Common\Persistence\ObjectManager,
-    Doctrine\ORM\NoResultException;
+use Doctrine\Common\Persistence\ObjectManager;
+
+use Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Entity\Restaurant,
+    Rufy\RestApiBundle\Repository\ReservationRepository,
+    Rufy\RestApiBundle\Repository\RestaurantRepository,
+    Rufy\RestApiBundle\Repository\UserRepository;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage,
     Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -9,23 +14,22 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage,
 abstract class AbstractEntityHandler
 {
     /**
-     * @var \Rufy\RestApiBundle\Entity\Reservation
+     * @var Reservation|Restaurant
      */
     protected $entityClass;
 
     /**
-     * @var \Rufy\RestApiBundle\Repository\ReservationRepository
-     * @var \Rufy\RestApiBundle\Repository\RestaurantRepository
+     * @var ReservationRepository|RestaurantRepository
      */
     protected $repository;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var ObjectManager
      */
     protected $om;
 
     /**
-     * @var \Rufy\RestApiBundle\Repository\UserRepository
+     * @var UserRepository
      */
     protected $user;
 
