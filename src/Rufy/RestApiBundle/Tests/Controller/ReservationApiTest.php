@@ -1,11 +1,9 @@
-<?php namespace Rufy\RestApiBundle\Tests\Handler;
+<?php namespace Rufy\RestApiBundle\Tests\Controller;
 
 use Guzzle\Service\Client;
 
 class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 {
-    const RESERVATION_CLASS = 'Rufy\RestApiBundle\Tests\Handler\DummyReservation';
-
     /**
      * @var \Guzzle\Service\Client
      */
@@ -57,6 +55,7 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 
         //C'è la chiave data
         $this->assertArrayHasKey('data', $jsonResponse);
+
     }
 
     private function analyzeReservation($reservation)
@@ -64,9 +63,11 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('name', $reservation);
         $this->assertArrayHasKey('phone', $reservation);
         $this->assertArrayHasKey('area', $reservation);
+        $this->assertArrayHasKey('areaId', $reservation);
         $this->assertArrayHasKey('tableName', $reservation);
         $this->assertArrayHasKey('people', $reservation);
         $this->assertArrayHasKey('date', $reservation);
+        $this->assertArrayHasKey('note', $reservation);
         $this->assertArrayHasKey('time', $reservation);
         $this->assertArrayHasKey('confirmed', $reservation);
         $this->assertArrayHasKey('waiting', $reservation);
@@ -74,5 +75,6 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('drawingHeight', $reservation);
         $this->assertArrayHasKey('drawingPosX', $reservation);
         $this->assertArrayHasKey('drawingPosY', $reservation);
+        $this->assertArrayHasKey('reservationOptions', $reservation);
     }
 }

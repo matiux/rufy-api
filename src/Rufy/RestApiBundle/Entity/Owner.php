@@ -40,7 +40,7 @@ class Owner implements OwnerInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":1})
+     * @ORM\Column(type="boolean", options={"default":1})
      */
     private $active;
 

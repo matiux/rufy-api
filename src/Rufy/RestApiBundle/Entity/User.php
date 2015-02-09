@@ -43,7 +43,7 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface
     private $name;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean", options={"unsigned":true, "default":1})
+     * @ORM\Column(name="is_active", type="boolean", options={"default":1})
      */
     private $isActive;
 

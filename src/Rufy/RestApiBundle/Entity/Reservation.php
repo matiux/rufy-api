@@ -38,14 +38,19 @@ class Reservation implements ReservationInterface
 
     /**
      * Is reservation confirmed
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":1}, nullable=false)
+     * @ORM\Column(type="boolean", options={"default":1}, nullable=false)
      */
     private $confirmed;
 
     /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0}, nullable=false)
+     * @ORM\Column(type="boolean", options={"default":0}, nullable=false)
      */
     private $waiting;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $note;
 
     /**
      * @ORM\Column(type="string", nullable=false, unique=false)
@@ -89,6 +94,12 @@ class Reservation implements ReservationInterface
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
      */
     private $customer;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ReservationOption", inversedBy="reservations")
+     * @ORM\JoinTable(name="reservations_options")
+     */
+    private $reservationOptions;
 
     /**
      * @var datetime $created
@@ -499,5 +510,68 @@ class Reservation implements ReservationInterface
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     * @return Reservation
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string 
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservationOptions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reservationOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     * @return Reservation
+     */
+    public function addReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    {
+        $this->reservationOptions[] = $reservationOptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservationOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     */
+    public function removeReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    {
+        $this->reservationOptions->removeElement($reservationOptions);
+    }
+
+    /**
+     * Get reservationOptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservationOptions()
+    {
+        return $this->reservationOptions;
     }
 }

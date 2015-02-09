@@ -48,6 +48,11 @@ class Reservation implements ReservationInterface
     private $waiting;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $note;
+
+    /**
      * @ORM\Column(type="string", nullable=false, unique=false)
      */
     private $table_name;
@@ -91,10 +96,10 @@ class Reservation implements ReservationInterface
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Turn", inversedBy="reservations")
-     * @ORM\JoinColumn(name="turn_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToMany(targetEntity="ReservationOption", inversedBy="reservations")
+     * @ORM\JoinTable(name="reservations_options")
      */
-    private $turn;
+    private $reservationOptions;
 
     /**
      * @var datetime $created
@@ -189,8 +194,6 @@ class Reservation implements ReservationInterface
     {
         return $this->waiting;
     }
-
-
 
     /**
      * Set drawingWidth
@@ -385,30 +388,6 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * Set turn
-     *
-     * @param Turn $turn
-     *
-     * @return Reservation
-     */
-    public function setTurn(Turn $turn)
-    {
-        $this->turn = $turn;
-
-        return $this;
-    }
-
-    /**
-     * Get turn
-     *
-     * @return \Turn
-     */
-    public function getTurn()
-    {
-        return $this->turn;
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -531,5 +510,68 @@ class Reservation implements ReservationInterface
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     * @return Reservation
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string 
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservationOptions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reservationOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     * @return Reservation
+     */
+    public function addReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    {
+        $this->reservationOptions[] = $reservationOptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservationOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     */
+    public function removeReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    {
+        $this->reservationOptions->removeElement($reservationOptions);
+    }
+
+    /**
+     * Get reservationOptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservationOptions()
+    {
+        return $this->reservationOptions;
     }
 }

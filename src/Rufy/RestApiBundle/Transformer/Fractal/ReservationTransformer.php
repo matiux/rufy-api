@@ -6,8 +6,14 @@ use Rufy\RestApiBundle\Entity\Reservation;
 
 class ReservationTransformer extends Fractal\TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'reservationOptions'
+    ];
+
     public function transform(Reservation $reservation) {
 
+//        $opts = $reservation->getReservationOptions();
+//        $a = 1;
         return [
 
             'id'            => $reservation->getId(),
@@ -19,12 +25,21 @@ class ReservationTransformer extends Fractal\TransformerAbstract
             'people'        => $reservation->getPeople(),
             'date'          => $reservation->getDate()->format('d-m-Y'),
             'time'          => $reservation->getTime()->format('H:i'),
+            'note'          => $reservation->getNote(),
             'confirmed'     => (int) $reservation->getConfirmed(),
             'waiting'       => (int) $reservation->getWaiting(),
+            //'options'       => $reservation->getReservationOptions(),
             'drawingWidth'  => $reservation->getDrawingWidth(),
             'drawingHeight' => $reservation->getDrawingHeight(),
             'drawingPosX'   => $reservation->getDrawingPosX(),
             'drawingPosY'   => $reservation->getDrawingPosY(),
         ];
+    }
+
+    public function includeReservationOptions(Reservation $reservation)
+    {
+        $opts = $reservation->getReservationOptions();
+
+        return $this->collection($opts, new ReservationOptionTransformer);
     }
 }

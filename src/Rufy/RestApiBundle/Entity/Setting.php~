@@ -2,13 +2,14 @@
 
 use Doctrine\ORM\Mapping AS ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\SettingInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="setting", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Setting
+class Setting implements SettingInterface
 {
     /**
      * @ORM\Id

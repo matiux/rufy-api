@@ -3,6 +3,7 @@
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Rufy\RestApiBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class User implements AdvancedUserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable, UserInterface
 {
     /**
      * @ORM\Id
@@ -32,7 +33,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=128)
      */
     private $password;
 
@@ -42,12 +43,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     */
-    private $roles;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean", options={"unsigned":true, "default":1})
+     * @ORM\Column(name="is_active", type="boolean", options={"default":1})
      */
     private $isActive;
 
@@ -62,6 +58,12 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\JoinTable(name="users_restaurants")
      **/
     private $restaurants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="users_roles")
+     */
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="user", cascade={"persist"})
@@ -96,6 +98,8 @@ class User implements AdvancedUserInterface, \Serializable
         $this->restaurants              = new ArrayCollection();
         $this->reservations             = new ArrayCollection();
         $this->roles                    = new ArrayCollection();
+
+        $this->salt                     = md5(uniqid(null, true));
     }
 
     /**
@@ -412,7 +416,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function getSalt()
     {
-        return null;
+        /**
+         * TODO
+         * Migliorare
+         */
+        return 'matteo';
     }
 
     /**

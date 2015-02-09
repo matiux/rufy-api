@@ -45,12 +45,12 @@ class Customer implements CustomerInterface
     private $email;
 
     /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     private $privacy;
 
     /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     private $newsletter;
 

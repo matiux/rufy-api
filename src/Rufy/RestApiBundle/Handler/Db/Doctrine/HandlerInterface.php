@@ -13,6 +13,7 @@ interface HandlerInterface
      */
 
     public function get($id);
+
     /**
      * Get a list of Entity
      *
@@ -45,6 +46,7 @@ interface HandlerInterface
      *
      * @return Entity
      */
+
     public function put($entity, array $parameters);
 
     /**

@@ -8,18 +8,19 @@ use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer;
 
 class RufySerializerHandler
 {
-    const TRANSFORMER_PATH = 'Rufy\RestApiBundle\Transformer\Fractal\\';
+    const TRANSFORMER_PATH      = 'Rufy\RestApiBundle\Transformer\Fractal\\';
+    const TRANSFORMER_SUFFIX    = 'Transformer';
 
-    private $_resourceClassName;
-    private $_transformer;
+    private $resourceClassName;
+    private $transformer;
 
-    private $_fractalManager;
-    private $_customFractalSerializer;
+    private $fractalManager;
+    private $customFractalSerializer;
 
     public function __construct(Manager $fractalManager, CustomSerializer $customFractalSerializer) {
 
-        $this->_fractalManager                  = $fractalManager;
-        $this->_customFractalSerializer         = $customFractalSerializer;
+        $this->fractalManager                  = $fractalManager;
+        $this->customFractalSerializer         = $customFractalSerializer;
     }
 
     public function serialize($resource, $type)
@@ -40,9 +41,9 @@ class RufySerializerHandler
     {
         $this->initManager($resource);
 
-        $resource = new Item($resource, $this->_transformer);
+        $resource = new Item($resource, $this->transformer);
 
-        return $this->_fractalManager->createData($resource)->toJson();
+        return $this->fractalManager->createData($resource)->toJson();
     }
 
     private function serializeCollection($resource)
@@ -51,27 +52,26 @@ class RufySerializerHandler
             $this->initManager(current($resource));
         }
 
-        $resource = new Collection($resource, $this->_transformer);
+        $resource = new Collection($resource, $this->transformer);
 
-        return $this->_fractalManager->createData($resource)->toJson();
+        return $this->fractalManager->createData($resource)->toJson();
     }
 
     private function initManager($resource)
     {
-
         $entity = get_class($resource);
 
         $dirs                               = explode('\\', $entity);
-        $this->_resourceClassName           = $dirs[count($dirs) - 1];
+        $this->resourceClassName            = $dirs[count($dirs) - 1];
 
-        $this->_fractalManager->setSerializer($this->_customFractalSerializer);
+        $this->fractalManager->setSerializer($this->customFractalSerializer);
 
-        $this->_transformer = $this->getTransformer();
+        $this->transformer = $this->getTransformer();
     }
 
     private function getTransformer() {
 
-        $class = static::TRANSFORMER_PATH.$this->_resourceClassName.'Transformer';
+        $class = static::TRANSFORMER_PATH.$this->resourceClassName.static::TRANSFORMER_SUFFIX;
 
         return new $class();
 

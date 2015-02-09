@@ -21,33 +21,30 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area = new Area();
         $area->setName('2° Piano  - Terrazzo');
         $area->setRestaurant($this->getReference('restaurant1'));
-        $area->setOutside(true);
-        $area->setSmokers(true);
-        $area->setFull(false);
-        $area->setInvalids(false);
-        $area->setAnimals(true);
+        $area->setFull(0);
+        $area->addAreaOption($this->getReference('reservationOption_outside'));
+        $area->addAreaOption($this->getReference('reservationOption_invalids'));
+        $area->addAreaOption($this->getReference('reservationOption_animals'));
         $this->setReference('area_1', $area);
         $restaurant1->addArea($area);
 
         $area = new Area();
         $area->setName('1° Piano  - Sala Grande');
+        $area->setFull(0);
         $area->setRestaurant($this->getReference('restaurant1'));
-        $area->setOutside(false);
-        $area->setSmokers(false);
-        $area->setFull(true);
-        $area->setInvalids(true);
-        $area->setAnimals(false);
+        $area->addAreaOption($this->getReference('reservationOption_outside'));
+        $area->addAreaOption($this->getReference('reservationOption_invalids'));
+        $area->addAreaOption($this->getReference('reservationOption_smokers'));
+        $area->addAreaOption($this->getReference('reservationOption_animals'));
         $this->setReference('area_2', $area);
         $restaurant1->addArea($area);
 
         $area = new Area();
         $area->setName('Corridoio Esterno');
+        $area->setFull(0);
         $area->setRestaurant($this->getReference('restaurant2'));
-        $area->setOutside(false);
-        $area->setSmokers(false);
-        $area->setFull(true);
-        $area->setInvalids(true);
-        $area->setAnimals(false);
+        $area->addAreaOption($this->getReference('reservationOption_invalids'));
+        $area->addAreaOption($this->getReference('reservationOption_animals'));
         $this->setReference('area_3', $area);
         $restaurant2->addArea($area);
     }

@@ -30,27 +30,7 @@ class Area implements AreaInterface
     private $name;
 
     /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
-     */
-    private $outside;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
-     */
-    private $smokers;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
-     */
-    private $invalids;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
-     */
-    private $animals;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0})
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     private $full;
 
@@ -64,6 +44,12 @@ class Area implements AreaInterface
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="area", cascade={"remove"})
      */
     private $reservations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ReservationOption", inversedBy="areas")
+     * @ORM\JoinTable(name="areas_options")
+     */
+    private $areaOptions;
 
     /**
      * @var datetime $created
@@ -108,102 +94,6 @@ class Area implements AreaInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set outside
-     *
-     * @param boolean $outside
-     *
-     * @return Area
-     */
-    public function setOutside($outside)
-    {
-        $this->outside = $outside;
-
-        return $this;
-    }
-
-    /**
-     * Get outside
-     *
-     * @return boolean
-     */
-    public function getOutside()
-    {
-        return $this->outside;
-    }
-
-    /**
-     * Set smokers
-     *
-     * @param boolean $smokers
-     *
-     * @return Area
-     */
-    public function setSmokers($smokers)
-    {
-        $this->smokers = $smokers;
-
-        return $this;
-    }
-
-    /**
-     * Get smokers
-     *
-     * @return boolean
-     */
-    public function getSmokers()
-    {
-        return $this->smokers;
-    }
-
-    /**
-     * Set invalids
-     *
-     * @param boolean $invalids
-     *
-     * @return Area
-     */
-    public function setInvalids($invalids)
-    {
-        $this->invalids = $invalids;
-
-        return $this;
-    }
-
-    /**
-     * Get invalids
-     *
-     * @return boolean
-     */
-    public function getInvalids()
-    {
-        return $this->invalids;
-    }
-
-    /**
-     * Set animals
-     *
-     * @param boolean $animals
-     *
-     * @return Area
-     */
-    public function setAnimals($animals)
-    {
-        $this->animals = $animals;
-
-        return $this;
-    }
-
-    /**
-     * Get animals
-     *
-     * @return boolean
-     */
-    public function getAnimals()
-    {
-        return $this->animals;
     }
 
     /**
@@ -379,5 +269,38 @@ class Area implements AreaInterface
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Add areaOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $areaOptions
+     * @return Area
+     */
+    public function addAreaOption(\Rufy\RestApiBundle\Entity\ReservationOption $areaOptions)
+    {
+        $this->areaOptions[] = $areaOptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove areaOptions
+     *
+     * @param \Rufy\RestApiBundle\Entity\ReservationOption $areaOptions
+     */
+    public function removeAreaOption(\Rufy\RestApiBundle\Entity\ReservationOption $areaOptions)
+    {
+        $this->areaOptions->removeElement($areaOptions);
+    }
+
+    /**
+     * Get areaOptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAreaOptions()
+    {
+        return $this->areaOptions;
     }
 }

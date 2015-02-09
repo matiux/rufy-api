@@ -1,7 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
 use FOS\RestBundle\Controller\FOSRestController,
-    //FOS\RestBundle\Routing\ClassResourceInterface,
     FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;

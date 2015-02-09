@@ -22,8 +22,11 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setPeople(6);
         $reservation->setTime(new \DateTime('20:45'));
         $reservation->setDate(new \DateTime('31-12-2014'));
+        $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setConfirmed(false);
         $reservation->setWaiting(false);
+        $reservation->addReservationOption($this->getReference('reservationOption_outside'));
+        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
         $reservation->setTableName('5');
         $reservation->setDrawingWidth(20);
         $reservation->setDrawingHeight(10);
@@ -40,7 +43,10 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setTime(new \DateTime('21:30'));
         $reservation->setDate(new \DateTime('31-12-2014'));
         $reservation->setConfirmed(true);
+        $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setWaiting(false);
+        $reservation->addReservationOption($this->getReference('reservationOption_outside'));
+        $reservation->addReservationOption($this->getReference('reservationOption_smokers'));
         $reservation->setTableName('12');
         $reservation->setDrawingWidth(50);
         $reservation->setDrawingHeight(10);
@@ -58,6 +64,8 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setDate(new \DateTime('31-12-2014'));
         $reservation->setConfirmed(true);
         $reservation->setWaiting(false);
+        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
+        $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setTableName('12');
         $reservation->setDrawingWidth(50);
         $reservation->setDrawingHeight(10);

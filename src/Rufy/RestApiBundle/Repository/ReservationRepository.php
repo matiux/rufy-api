@@ -179,9 +179,10 @@ class ReservationRepository extends EntityRepository
         //$reservation                = $this->find($id);
 
         $q = $this->createQueryBuilder('rese')
-            ->select('rese, a, c')
+            ->select('rese, a, c, opt')
             ->leftJoin('rese.area', 'a')
             ->leftJoin('rese.customer', 'c')
+            ->leftJoin('rese.reservationOptions', 'opt')
             ->where('rese.id = :reservationid')
             ->setParameter('reservationid', $id)
             ->getQuery();
