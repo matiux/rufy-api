@@ -55,7 +55,6 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
 
         //C'è la chiave data
         $this->assertArrayHasKey('data', $jsonResponse);
-
     }
 
     private function analyzeReservation($reservation)
