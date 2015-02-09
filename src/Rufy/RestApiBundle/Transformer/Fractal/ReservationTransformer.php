@@ -10,10 +10,8 @@ class ReservationTransformer extends Fractal\TransformerAbstract
         'reservationOptions'
     ];
 
-    public function transform(Reservation $reservation) {
-
-//        $opts = $reservation->getReservationOptions();
-//        $a = 1;
+    public function transform(Reservation $reservation)
+    {
         return [
 
             'id'            => $reservation->getId(),
@@ -28,7 +26,6 @@ class ReservationTransformer extends Fractal\TransformerAbstract
             'note'          => $reservation->getNote(),
             'confirmed'     => (int) $reservation->getConfirmed(),
             'waiting'       => (int) $reservation->getWaiting(),
-            //'options'       => $reservation->getReservationOptions(),
             'drawingWidth'  => $reservation->getDrawingWidth(),
             'drawingHeight' => $reservation->getDrawingHeight(),
             'drawingPosX'   => $reservation->getDrawingPosX(),
