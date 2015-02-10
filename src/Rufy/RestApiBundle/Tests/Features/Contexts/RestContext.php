@@ -46,35 +46,54 @@ abstract class RestContext extends \PHPUnit_Framework_TestCase
         $this->resource         = $resource;
     }
 
-    /**
-     * @Given /^I request a resource$/
-     */
-    public function iRequestAResource()
-    {
-        $this->buildUrl("/{$this->resource}");
+//    /**
+//     * @Given /^I request a resource$/
+//     */
+//    public function iRequestAResource()
+//    {
+//        $this->buildUrl("/{$this->resource}");
+//
+//        $request            = $this->client->createRequest($this->requestMethod, $this->url, ['body' =>  json_encode($this->params)]);
+//
+//        //$request->setBody(new StreamIn);
+//        $request->setHeader('Accept', 'application/vnd.rufy.v1+json');
+//        $request->setHeader('Content-Type', 'application/json');
+//
+//        //echo $request->getUrl();
+//
+//        $this->response     = $this->client->send($request);
+//
+//        $this->assertNotEquals(null, $this->response, "The response is null");
+//        $this->assertTrue(is_a($this->response, 'Guzzle\Http\Message\Response'), 'The response is not of GuzzleHttp\Message\Response type');
+//    }
+//
+//    protected function buildUrl($url) {
+//
+//        $this->url = $this->baseUrl."$url";
+//
+//        if (0 != $this->resource_id)
+//            $this->url .= "/".$this->resource_id;
+//
+//    }
 
-        $request            = $this->client->createRequest($this->requestMethod, $this->url, ['body' =>  json_encode($this->params)]);
 
-        //$request->setBody(new StreamIn);
-        $request->setHeader('Accept', 'application/vnd.rufy.v1+json');
-        $request->setHeader('Content-Type', 'application/json');
 
-        //echo $request->getUrl();
 
-        $this->response     = $this->client->send($request);
 
-        $this->assertNotEquals(null, $this->response, "The response is null");
-        $this->assertTrue(is_a($this->response, 'Guzzle\Http\Message\Response'), 'The response is not of GuzzleHttp\Message\Response type');
-    }
 
-    protected function buildUrl($url) {
 
-        $this->url = $this->baseUrl."$url";
 
-        if (0 != $this->resource_id)
-            $this->url .= "/".$this->resource_id;
 
-    }
+
+
+
+
+
+
+
+
+
+
 
 //    const METHOD_DELETE     = 'DELETE';
 //

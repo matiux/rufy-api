@@ -7,6 +7,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * Provare a creare un controller come servizio con metodi condivisi
  * Base Voter per metodi condivisi
  * Allineare Test
+ *      - PhpSpec per unitari
+ *      - Behat per funzionali
  *
  * Class RufyRestApiBundle
  * @package Rufy\RestApiBundle
