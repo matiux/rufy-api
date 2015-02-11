@@ -208,4 +208,31 @@ class String
         else
             return md5($this->_str);
     }
+
+    /**
+     * Data una stringa in dotted notation, questo metodo cerca in un array &$arr il percorso indicato dalla stringa e lo ritorna.
+     * Se impostato il parametro $value, viene settato il valore nel percorso indicato dalla stringa
+     *
+     * @param $arr
+     * @param null $value
+     * @return null
+     */
+    public function pathToArray($arr, $value = null)
+    {
+        $keys = explode('.', $this->_str);
+
+        while (NULL != ($key = array_shift($keys))) {
+
+            if (is_numeric($key))
+                $key = intval($key);
+
+            $arr = &$arr[$key];
+        }
+
+
+        if ($value)
+            $arr = $value;
+
+        return $arr;
+    }
 }

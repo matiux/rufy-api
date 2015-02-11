@@ -1,2 +1,24 @@
-imports:
-    - src/Rufy/RestApiBundle/Resources/config/behat.yml
+default:
+    suites:
+        rufy_restapibundle.reservation:
+            type: symfony_bundle
+            bundle: RufyRestApiBundle
+            paths:
+                - %paths.base%/features
+            contexts:
+                - FeatureReservationContext:
+                    guzzleClient: '@guzzle.client'
+                    baseUrl: 'http://rufysf.local/api'
+
+        rufy_restapibundle.restaurant:
+            type: symfony_bundle
+            bundle: RufyRestApiBundle
+            paths:
+                - %paths.base%/features/restaurant
+            contexts:
+                - FeatureRestaurantContext:
+                    guzzleClient: '@guzzle.client'
+                    baseUrl: 'http://rufysf.local/api'
+    extensions:
+        Behat\Symfony2Extension: ~
+

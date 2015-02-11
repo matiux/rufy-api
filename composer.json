@@ -30,8 +30,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
         "phpunit/phpunit": "3.7.*",
         "behat/symfony2-extension": "dev-master",
-        "phpspec/phpspec": "dev-master",
-        "phpspec/symfony2-extension": "dev-master"
+        "phpspec/phpspec": "dev-master"
 
     },
     "scripts": {
