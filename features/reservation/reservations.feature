@@ -76,3 +76,22 @@ Feature: Testing Reservation API
         drawingPosY
         reservationOptions
         """
+
+  @createreservation
+  Scenario: Creating a New Reservation
+    Given that I want to add a new "reservation" with values:
+      #| user_id        |  |
+      | area_id        | 1 |
+      | customer_id    | 2 |
+      | people         | 4 |
+      | time           | 21:15 |
+      | date           | 02/03/2015 |
+      | confirmed      | 1 |
+      | waiting        | 0 |
+      | note           | Hanno un passeggino |
+      | table_name     | 12 |
+      #| drawing_width  |  |
+      #| drawing_height |  |
+      #| drawing_pos_x  |  |
+      #| drawing_pos_y  |  |
+

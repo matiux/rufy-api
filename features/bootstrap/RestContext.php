@@ -4,7 +4,8 @@ use Behat\Behat\Tester\Exception\PendingException,
     Behat\Behat\Context\Context,
     Behat\Behat\Context\SnippetAcceptingContext;
 
-use Behat\Gherkin\Node\PyStringNode;
+use Behat\Gherkin\Node\PyStringNode,
+    Behat\Gherkin\Node\TableNode;
 
 use Rufy\RestApiBundle\Utility\String;
 
@@ -68,6 +69,16 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
         $this->resource         = $resource;
 
         //throw new PendingException();
+    }
+
+    /**
+     * @Given that I want to add a new :resource with values:
+     */
+    public function thatIWantToAddANewWithValues($resource, TableNode $table)
+    {
+        $this->requestMethod    = self::METHOD_POST;
+
+        throw new PendingException();
     }
 
     /**
