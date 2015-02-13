@@ -447,6 +447,11 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface
         return $this;
     }
 
+    public function isPasswordLegal()
+    {
+        return $this->username != $this->password && $this->email != $this->password;
+    }
+
     /**
      * Checks whether the user's account has expired.
      *

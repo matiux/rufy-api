@@ -58,4 +58,9 @@ abstract class AbstractEntityHandler
     {
         $this->authChecker              = $authChecker;
     }
+
+    protected function createResource()
+    {
+        return new $this->entityClass();
+    }
 }

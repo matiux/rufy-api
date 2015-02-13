@@ -34,7 +34,7 @@ class ReservationController extends FOSRestController
      *
      * @param int $id Reservation id
      *
-     * @return array
+     * @return json
      *
      * @throws NotFoundHttpException when reservation not exist
      * @throws AccessDeniedException when role is not allowed
@@ -47,6 +47,27 @@ class ReservationController extends FOSRestController
         $reservation = $this->getOr404($id);
 
         return $reservation;
+    }
+
+    /**
+     * Create a Reservation from the sended data.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new reservation from the sended data.",
+     *   input = "Rufy\RestApiBundle\Transformer\Fractal\ReservationTransformer",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     400 = "Returned when the data has errors"
+     *   }
+     * )
+     *
+     *
+     * @return json
+     */
+    public function postReservationAction()
+    {
+
     }
 
     /**

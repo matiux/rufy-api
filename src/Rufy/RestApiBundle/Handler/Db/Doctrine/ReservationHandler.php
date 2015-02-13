@@ -60,7 +60,7 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
      */
     public function post(array $parameters)
     {
-        $reservation = $this->createReservation();
+        $reservation = $this->createResource();
 
         return $this->processForm($reservation, $parameters, 'POST');
     }
@@ -93,10 +93,5 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
     public function patch($reservation, array $parameters)
     {
         return $this->processForm($reservation, $parameters, 'PATCH');
-    }
-
-    private function createReservation()
-    {
-        return $this->entityClass;
     }
 }
