@@ -14,14 +14,24 @@ class ReservationController extends FOSRestController
      * Get single Reservation.
      *
      * @ApiDoc(
-     *  resource = true,
+     *  resource = false,
      *  description = "Gets a Reservation for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Reservation",
+     *  output = {
+     *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
+     *      "param" = {
+     *          {
+                    "name" = "altro"
+     *          }
+     *      },
+     *      "parsers" = {
+     *          "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+     *          "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *      }
+     *  },
      *  requirements={
      *      {
      *          "name"="id",
      *          "dataType"="integer",
-     *          "requirement"="\d+",
      *          "description"="Reservation ID"
      *      }
      *  },
@@ -53,9 +63,8 @@ class ReservationController extends FOSRestController
      * Create a Reservation from the sended data.
      *
      * @ApiDoc(
-     *   resource = true,
      *   description = "Creates a new reservation from the sended data.",
-     *   input = "Rufy\RestApiBundle\Transformer\Fractal\ReservationTransformer",
+     *   input = "Rufy\RestApiBundle\Entity\Reservation",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the data has errors"

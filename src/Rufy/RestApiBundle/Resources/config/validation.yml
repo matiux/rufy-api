@@ -1,3 +1,18 @@
+Rufy\RestApiBundle\Entity\Restaurant:
+  properties:
+    id:
+      - Type:
+          type: integer
+          message: area_id deve essere passato come integer
+    name:
+      - Type:
+          type: string
+          message: note deve essere passato come string
+    rest_date:
+      - Type:
+          type: integer
+          message: area_id deve essere passato come integer
+
 Rufy\RestApiBundle\Entity\Reservation:
   properties:
     area:

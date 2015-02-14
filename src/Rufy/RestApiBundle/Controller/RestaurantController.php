@@ -15,7 +15,7 @@ class RestaurantController extends FOSRestController
      * Get single Restaurant.
      *
      * @ApiDoc(
-     *  resource = true,
+     *  resource = false,
      *  description = "Gets a Restaurant for a given id",
      *  output = "Rufy\RestApiBundle\Entity\Restaurant",
      *  requirements={
@@ -23,10 +23,9 @@ class RestaurantController extends FOSRestController
      *          "name"="id",
      *          "dataType"="integer",
      *          "requirement"="\d+",
-     *          "description"="Restaurant ID"
+     *          "description"="The restaurant ID"
      *      }
      *  },
-     *
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the reservation is not found"
@@ -35,7 +34,7 @@ class RestaurantController extends FOSRestController
      *
      * @param int $id Restaurant id
      *
-     * @return array
+     * @return json
      *
      * @throws NotFoundHttpException when restaurant not exist
      * @throws AccessDeniedException when role is not allowed
@@ -54,24 +53,31 @@ class RestaurantController extends FOSRestController
      * List all reservations by a given restaurant
      *
      * @ApiDoc(
-     *  resource        = true,
-     *  description     = "List all reservations by a given restaurant",
+     *  description     = "Returns a collection of Reservation",
+     *  output={
+            "class"="Rufy\RestApiBundle\Entity\Reservation",
+     *      "parser"={
+
+     * "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
+     * }
+     * },
      *  requirements={
      *      {
      *          "name"="restaurantId",
-     *          "dataType"="integer",
      *          "requirement"="\d+",
+     *          "dataType"="integer",
      *          "description"="Restaurant ID"
      *      }
      *  },
-     *
-     *   statusCodes = {
+     *  filters={
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "description"="Offset from which to start listing reservations."},
+     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."}
+     *  },
+     *  statusCodes = {
      *     200 = "Returned when successful",
-     *   }
+     *     404 = "Returned when restaurant not found"
+     *  }
      * )
-     *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing reservations.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return.")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -103,18 +109,19 @@ class RestaurantController extends FOSRestController
      * List all the logged user's restaurants
      *
      * @ApiDoc(
-     *  resource        = true,
-     *  description     = "List all the logged user's restaurants",
+     *  resource = true,
+     *  description = "List all the logged user's restaurants",
+     *  output="Rufy\RestApiBundle\Entity\Restaurant",
      *  requirements={
      *  },
-     *
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *   }
+     *  filters={
+     *      {"name"="offset", "dataType"="integer", "nullable"="true", "description"="Offset from which to start listing restaurants."},
+     *      {"name"="limit", "dataType"="integer", "nullable"="false", "default"="5", "description"="How many restaurants to return."}
+     *  },
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *  }
      * )
-     *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing reservations.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return.")
      *
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
