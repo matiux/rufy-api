@@ -1,6 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Rufy\RestApiBundle\Model\ReservationInterface;
+use Rufy\RestApiBundle\Exception\InvalidFormException,
+    Rufy\RestApiBundle\Form\ReservationType,
+    Rufy\RestApiBundle\Model\ReservationInterface;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -78,17 +80,17 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
      */
     private function processForm($resource, array $parameters, $method = 'POST')
     {
-        $form = $this->formFactory->create(new PageType(), $resource, array('method' => $method));
+        $form = $this->formFactory->create(new ReservationType(), $resource, array('method' => $method));
 
         $form->submit($parameters, 'PATCH' !== $method);
 
         if ($form->isValid()) {
 
-            $page = $form->getData();
-            $this->om->persist($page);
-            $this->om->flush($page);
+            $resource = $form->getData();
+            $this->om->persist($resource);
+            $this->om->flush($resource);
 
-            return $page;
+            return $resource;
         }
 
         throw new InvalidFormException('Invalid submitted data', $form);

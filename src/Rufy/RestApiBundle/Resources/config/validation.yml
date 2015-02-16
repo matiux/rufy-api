@@ -23,48 +23,48 @@ Rufy\RestApiBundle\Entity\Reservation:
       - GreaterThan:
           value: 0
           message: "Area id non valido"
-    customer:
-      - NotBlank: ~
-      - Type:
-          type: integer
-          message: customer_id deve essere passato come integer
-      - GreaterThan:
-          value: 0
-          message: "Customer id non valido"
-    people:
-      - NotBlank: ~
-      - Type:
-          type: integer
-          message: people deve essere passato come integer
-      - GreaterThan:
-          value: 0
-          message: "Numero persone non valido non valido"
-    time:
-      - NotBlank: ~
-      - Time:
-          message: "Formato ora non valido. Usare HH:MM:SS"
-    date:
-      - NotBlank: ~
-      - Date:
-          message: "Formato data non valido. Usare YYYY-MM-DD"
-    confirmed:
-      - NotBlank: ~
-      - Type:
-          type: bool
-          message: confirmed deve essere passato come bool
-    waiting:
-      - NotBlank: ~
-      - Type:
-          type: bool
-          message: waiting deve essere passato come bool
-    note:
-      - Type:
-          type: string
-          message: note deve essere passato come string
-    table_name:
-      - Type:
-          type: string
-          message: table_name deve essere passato come string
+#    customer:
+#      - NotBlank: ~
+#      - Type:
+#          type: integer
+#          message: customer_id deve essere passato come integer
+#      - GreaterThan:
+#          value: 0
+#          message: "Customer id non valido"
+#    people:
+#      - NotBlank: ~
+#      - Type:
+#          type: integer
+#          message: people deve essere passato come integer
+#      - GreaterThan:
+#          value: 0
+#          message: "Numero persone non valido non valido"
+#    time:
+#      - NotBlank: ~
+#      - Time:
+#          message: "Formato ora non valido. Usare HH:MM:SS"
+#    date:
+#      - NotBlank: ~
+#      - Date:
+#          message: "Formato data non valido. Usare YYYY-MM-DD"
+#    confirmed:
+#      - NotBlank: ~
+#      - Type:
+#          type: bool
+#          message: confirmed deve essere passato come bool
+#    waiting:
+#      - NotBlank: ~
+#      - Type:
+#          type: bool
+#          message: waiting deve essere passato come bool
+#    note:
+#      - Type:
+#          type: string
+#          message: note deve essere passato come string
+#    table_name:
+#      - Type:
+#          type: string
+#          message: table_name deve essere passato come string
 
 #Rufy\RestApiBundle\Entity\Reservation:
 #  getters:

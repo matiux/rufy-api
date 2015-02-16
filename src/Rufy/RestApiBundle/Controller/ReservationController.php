@@ -6,8 +6,7 @@ use FOS\RestBundle\Controller\FOSRestController,
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
-    Symfony\Component\HttpFoundation\Request;
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationController extends FOSRestController
 {
@@ -66,7 +65,7 @@ class ReservationController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   description = "Creates a new reservation from the sended data.",
-     *   input = "Rufy\RestApiBundle\Entity\Reservation",
+     *   input = "Rufy\RestApiBundle\Form\",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the data has errors"

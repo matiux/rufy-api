@@ -303,4 +303,9 @@ class Area implements AreaInterface
     {
         return $this->areaOptions;
     }
+
+    public function __toString()
+    {
+        return $this->id;
+    }
 }
