@@ -53,14 +53,14 @@ class RestaurantController extends FOSRestController
      * List all reservations by a given restaurant
      *
      * @ApiDoc(
+     *  resource = true,
      *  description     = "Returns a collection of Reservation",
      *  output={
-            "class"="Rufy\RestApiBundle\Entity\Reservation",
+     *      "class"="Rufy\RestApiBundle\Entity\Reservation",
      *      "parser"={
-
-     * "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
-     * }
-     * },
+     *          "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
+     *      }
+     *  },
      *  requirements={
      *      {
      *          "name"="restaurantId",
@@ -70,7 +70,7 @@ class RestaurantController extends FOSRestController
      *      }
      *  },
      *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "description"="Offset from which to start listing reservations."},
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="1", "description"="Offset from which to start listing reservations."},
      *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."}
      *  },
      *  statusCodes = {
@@ -78,6 +78,9 @@ class RestaurantController extends FOSRestController
      *     404 = "Returned when restaurant not found"
      *  }
      * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="1", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -115,13 +118,16 @@ class RestaurantController extends FOSRestController
      *  requirements={
      *  },
      *  filters={
-     *      {"name"="offset", "dataType"="integer", "nullable"="true", "description"="Offset from which to start listing restaurants."},
+     *      {"name"="offset", "dataType"="integer", "nullable"="true", "default"="1", "description"="Offset from which to start listing restaurants."},
      *      {"name"="limit", "dataType"="integer", "nullable"="false", "default"="5", "description"="How many restaurants to return."}
      *  },
      *  statusCodes = {
      *      200 = "Returned when successful",
      *  }
      * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="1", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
      *
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *

@@ -5,6 +5,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * TODO
  * Provare a creare un controller come servizio con metodi condivisi
+ * Rifattorizzare l'utilizzo dell'handler nei controller
  * Base Voter per metodi condivisi
  * Allineare Test
  *      - PhpSpec per unitari

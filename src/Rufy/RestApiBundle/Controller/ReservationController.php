@@ -6,7 +6,8 @@ use FOS\RestBundle\Controller\FOSRestController,
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
+    Symfony\Component\HttpFoundation\Request;
 
 class ReservationController extends FOSRestController
 {
@@ -63,6 +64,7 @@ class ReservationController extends FOSRestController
      * Create a Reservation from the sended data.
      *
      * @ApiDoc(
+     *   resource = true,
      *   description = "Creates a new reservation from the sended data.",
      *   input = "Rufy\RestApiBundle\Entity\Reservation",
      *   statusCodes = {
@@ -71,11 +73,24 @@ class ReservationController extends FOSRestController
      *   }
      * )
      *
+     * @throws AccessDeniedException if user is not logged in
      *
      * @return json
      */
     public function postReservationAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $status = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
+
+//        try {
+//
+//            $params = $this->container->get('request')->request->all();
+//
+//        } catch (\Exception $e) {
+//
+//        }
 
     }
 

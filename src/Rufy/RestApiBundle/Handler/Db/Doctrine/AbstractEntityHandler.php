@@ -9,7 +9,8 @@ use Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Repository\UserRepository;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage,
-    Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+    Symfony\Component\Security\Core\Authorization\AuthorizationChecker,
+    Symfony\Component\Form\FormFactory;
 
 abstract class AbstractEntityHandler
 {
@@ -38,6 +39,11 @@ abstract class AbstractEntityHandler
      */
     protected $authChecker;
 
+    /**
+     * @var FormFactory
+     */
+    protected $formFactory;
+
     public function setEntityClass($entityClass)
     {
         $this->entityClass              = $entityClass;
@@ -57,6 +63,11 @@ abstract class AbstractEntityHandler
     public function setAuthorizationChecker(AuthorizationChecker $authChecker)
     {
         $this->authChecker              = $authChecker;
+    }
+
+    public function setFormFactory($formFactory)
+    {
+        $this->formFactory = $formFactory;
     }
 
     protected function createResource()

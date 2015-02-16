@@ -37,6 +37,8 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
      * @param array $params         filter params
      *
      * @return array
+     *
+     * @throws AccessDeniedException if the resource is not accessible
      */
     public function all($limit = 5, $offset = 0, $params = array())
     {
@@ -63,6 +65,33 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
         $reservation = $this->createResource();
 
         return $this->processForm($reservation, $parameters, 'POST');
+    }
+
+    /**
+     * Processes the form.
+     *
+     * @param $resource
+     * @param array $parameters
+     * @param string $method
+     * @return mixed
+     * @throws InvalidFormException
+     */
+    private function processForm($resource, array $parameters, $method = 'POST')
+    {
+        $form = $this->formFactory->create(new PageType(), $resource, array('method' => $method));
+
+        $form->submit($parameters, 'PATCH' !== $method);
+
+        if ($form->isValid()) {
+
+            $page = $form->getData();
+            $this->om->persist($page);
+            $this->om->flush($page);
+
+            return $page;
+        }
+
+        throw new InvalidFormException('Invalid submitted data', $form);
     }
 
     /**

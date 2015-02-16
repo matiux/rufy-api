@@ -28,6 +28,7 @@ services:
             - [setObjectManagerAndEntity, [@doctrine.orm.entity_manager]]
             - [setUser, [@security.token_storage]]
             - [setAuthorizationChecker, [@security.authorization_checker]]
+            - [setFormFactory, [@form.factory]]
 
     rufy_api.reservation.handler:
         class: %rufy_api.reservation.handler.class%
