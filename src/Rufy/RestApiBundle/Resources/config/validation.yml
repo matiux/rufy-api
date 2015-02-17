@@ -16,55 +16,69 @@ Rufy\RestApiBundle\Entity\Restaurant:
 Rufy\RestApiBundle\Entity\Reservation:
   properties:
     area:
-      - NotBlank: ~
+      - NotBlank:
+          message: Indicare l'area della prenotazione
       - Type:
           type: integer
           message: area_id deve essere passato come integer
       - GreaterThan:
           value: 0
           message: "Area id non valido"
-#    customer:
-#      - NotBlank: ~
+    customer:
+      - NotBlank:
+          message: Seleziona un cliente
+      - Type:
+          type: integer
+          message: customer_id deve essere passato come integer
+      - GreaterThan:
+          value: 0
+          message: "Customer id non valido"
+#    user:
+#      - NotBlank:
+#          message: E' necessario indicare un utente
 #      - Type:
 #          type: integer
-#          message: customer_id deve essere passato come integer
+#          message: user deve essere passato come integer
 #      - GreaterThan:
 #          value: 0
-#          message: "Customer id non valido"
-#    people:
-#      - NotBlank: ~
-#      - Type:
-#          type: integer
-#          message: people deve essere passato come integer
-#      - GreaterThan:
-#          value: 0
-#          message: "Numero persone non valido non valido"
-#    time:
-#      - NotBlank: ~
-#      - Time:
-#          message: "Formato ora non valido. Usare HH:MM:SS"
-#    date:
-#      - NotBlank: ~
-#      - Date:
-#          message: "Formato data non valido. Usare YYYY-MM-DD"
-#    confirmed:
-#      - NotBlank: ~
-#      - Type:
-#          type: bool
-#          message: confirmed deve essere passato come bool
-#    waiting:
-#      - NotBlank: ~
-#      - Type:
-#          type: bool
-#          message: waiting deve essere passato come bool
-#    note:
-#      - Type:
-#          type: string
-#          message: note deve essere passato come string
-#    table_name:
-#      - Type:
-#          type: string
-#          message: table_name deve essere passato come string
+#          message: "User id non valido"
+    people:
+      - NotBlank:
+          message: Inserire il numero di persone
+      - Type:
+          type: integer
+          message: people deve essere passato come integer
+      - GreaterThan:
+          value: 0
+          message: "Numero persone non valido non valido"
+    time:
+      - NotBlank:
+          message: Impostare l'orario
+      - Time:
+          message: "Formato ora non valido. Usare HH:MM:SS"
+    date:
+      - NotBlank:
+          message: Impostare la data
+      - Date:
+          message: "Formato data non valido. Usare YYYY-MM-DD"
+    confirmed:
+      - NotBlank: ~
+      - Type:
+          type: bool
+          message: confirmed deve essere passato come bool
+    waiting:
+      - NotBlank: ~
+      - Type:
+          type: bool
+          message: waiting deve essere passato come bool
+    note:
+      - Type:
+          type: string
+          message: note deve essere passato come string
+    table_name:
+      - Type:
+          type: string
+          message: table_name deve essere passato come string
 
 #Rufy\RestApiBundle\Entity\Reservation:
 #  getters:

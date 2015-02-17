@@ -1,10 +1,10 @@
-<?php namespace Rufy\RestApiBundle\Form; 
+<?php namespace Rufy\RestApiBundle\Form;
 
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReservationType extends AbstractType
+class UserType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -12,18 +12,7 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('people')
-            ->add('note')
-            ->add('confirmed')
-            ->add('waiting')
-            ->add('table_name')
-            ->add('drawing_width')
-            ->add('drawing_height')
-            ->add('drawing_pos_x')
-            ->add('drawing_pos_y')
-            ->add('user')
-            ->add('customer')
-            ->add('area_id')
+            ->add('username')
         ;
     }
 
@@ -33,7 +22,7 @@ class ReservationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'        => 'Rufy\RestApiBundle\Entity\Reservation',
+            'data_class'        => 'Rufy\RestApiBundle\Entity\User',
             'csrf_protection'   => false,
         ));
     }
