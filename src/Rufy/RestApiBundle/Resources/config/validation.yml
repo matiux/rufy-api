@@ -3,82 +3,96 @@ Rufy\RestApiBundle\Entity\Restaurant:
     id:
       - Type:
           type: integer
-          message: area_id deve essere passato come integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
     name:
       - Type:
           type: string
-          message: note deve essere passato come string
+          message: Il valore {{ value }} non è un {{ type }} valido.
     rest_date:
       - Type:
           type: integer
-          message: area_id deve essere passato come integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
 
 Rufy\RestApiBundle\Entity\Reservation:
   properties:
-    area:
-      - NotBlank:
-          message: Indicare l'area della prenotazione
-      - Type:
-          type: integer
-          message: area_id deve essere passato come integer
-      - GreaterThan:
-          value: 0
-          message: "Area id non valido"
-    customer:
-      - NotBlank:
-          message: Seleziona un cliente
-      - Type:
-          type: integer
-          message: customer_id deve essere passato come integer
-      - GreaterThan:
-          value: 0
-          message: "Customer id non valido"
-#    user:
-#      - NotBlank:
-#          message: E' necessario indicare un utente
-#      - Type:
-#          type: integer
-#          message: user deve essere passato come integer
-#      - GreaterThan:
-#          value: 0
-#          message: "User id non valido"
     people:
       - NotBlank:
           message: Inserire il numero di persone
       - Type:
           type: integer
-          message: people deve essere passato come integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
       - GreaterThan:
           value: 0
-          message: "Numero persone non valido non valido"
+          message: "Il numero persone deve essere maggiore di zero"
     time:
+      - Type:
+          type: string
+          message: Il valore {{ value }} non è un {{ type }} valido.
       - NotBlank:
-          message: Impostare l'orario
-      - Time:
-          message: "Formato ora non valido. Usare HH:MM:SS"
+          message: E' necessario impostare l'orario della prenotazione nel formato HH:MM:SS"
     date:
       - NotBlank:
           message: Impostare la data
       - Date:
           message: "Formato data non valido. Usare YYYY-MM-DD"
-    confirmed:
-      - NotBlank: ~
-      - Type:
-          type: bool
-          message: confirmed deve essere passato come bool
-    waiting:
-      - NotBlank: ~
-      - Type:
-          type: bool
-          message: waiting deve essere passato come bool
     note:
       - Type:
           type: string
           message: note deve essere passato come string
+    confirmed:
+      - NotBlank:
+          message: Confirmed deve essere fornito, 0 o 1
+      - Type:
+          type: bool
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    waiting:
+      - NotBlank:
+          message: Waiting deve essere fornito, 0 o 1
+      - Type:
+          type: bool
+          message: Il valore {{ value }} non è un {{ type }} valido.
     table_name:
+      - NotBlank:
+          message: Inserire il tavolo
       - Type:
           type: string
-          message: table_name deve essere passato come string
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    customer:
+      - NotBlank:
+          message: Seleziona un cliente
+#      - Type:
+#          type: integer
+#          message: Il valore {{ value }} non è un {{ type }} valido.
+#      - GreaterThan:
+#          value: 0
+#          message: Customer id non valido
+    area:
+      - NotBlank:
+          message: Indicare l'area della prenotazione
+#      - Type:
+#          type: integer
+#          message: Il valore {{ value }} non è un {{ type }} valido.
+#      - GreaterThan:
+#          value: 0
+#          message: "Area id non valido"
+#    reservationOptions:
+#      - Collection:
+#          fields:
+#              slug:
+#                  - Type:
+#                      type: string
+#                      message: note deve essere passato come string
+#          allowMissingFields: true
+
+#    user:
+#      - NotBlank:
+#          message: E' necessario indicare un utente
+#      - Type:
+#          type: integer
+#          message: Il valore {{ value }} non è un {{ type }} valido.
+#      - GreaterThan:
+#          value: 0
+#          message: "User id non valido"
 
 #Rufy\RestApiBundle\Entity\Reservation:
 #  getters:

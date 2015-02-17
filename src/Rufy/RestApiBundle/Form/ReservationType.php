@@ -13,17 +13,21 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('people')
+            ->add('time', 'text')
+            ->add('date', 'text')
             ->add('note')
             ->add('confirmed')
             ->add('waiting')
             ->add('table_name')
-            ->add('drawing_width')
-            ->add('drawing_height')
-            ->add('drawing_pos_x')
-            ->add('drawing_pos_y')
-            ->add('user')
-            ->add('customer')
-            ->add('area_id')
+//            ->add('drawing_width')
+//            ->add('drawing_height')
+//            ->add('drawing_pos_x')
+//            ->add('drawing_pos_y')
+//            ->add('user', 'entity', array('class' => 'RufyRestApiBundle:User', 'property' => 'id'))
+            ->add('customer', 'entity', array('class' => 'RufyRestApiBundle:Customer', 'property' => 'id'))
+            ->add('area', 'entity', array('class' => 'RufyRestApiBundle:Area', 'property' => 'id'))
+            ->add('reservationOptions', 'entity', array('class' => 'RufyRestApiBundle:ReservationOption', 'property' => 'slug', 'expanded' => true ,
+                'multiple' => true , ))
         ;
     }
 

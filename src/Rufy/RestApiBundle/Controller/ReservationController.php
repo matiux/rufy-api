@@ -1,9 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
 use FOS\RestBundle\Controller\FOSRestController,
-    FOS\RestBundle\Controller\Annotations;
+    FOS\RestBundle\Controller\Annotations,
+    FOS\RestBundle\Util\Codes;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+use Rufy\RestApiBundle\Exception\InvalidFormException;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -65,7 +68,10 @@ class ReservationController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   description = "Creates a new reservation from the sended data.",
-     *   input = "Rufy\RestApiBundle\Form\",
+     *   input = "Rufy\RestApiBundle\Form\ReservationType",
+     *  output = {
+     *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
+     *  },
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the data has errors"
@@ -81,16 +87,21 @@ class ReservationController extends FOSRestController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
 
-        $status = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
+        try {
 
-//        try {
-//
-//            $params = $this->container->get('request')->request->all();
-//
-//        } catch (\Exception $e) {
-//
-//        }
+            $reservation    = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
+            $routeOptions   = array(
 
+                'id'        => $reservation->getId(),
+                '_format'   => $this->container->get('request')->get('_format')
+            );
+
+            return $this->forward('RufyRestApiBundle:Reservation:getReservation', $routeOptions);
+
+        } catch (InvalidFormException $exception) {
+
+            return array('form' => $exception->getForm());
+        }
     }
 
     /**

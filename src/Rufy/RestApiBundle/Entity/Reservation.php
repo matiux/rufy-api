@@ -1,13 +1,17 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
 use Gedmo\Mapping\Annotation as Gedmo;
+
 use Rufy\RestApiBundle\Model\ReservationInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation implements ReservationInterface
 {
@@ -121,6 +125,31 @@ class Reservation implements ReservationInterface
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservationOptions   = new ArrayCollection();
+
+        $this->drawing_height       = 1;
+        $this->drawing_width        = 1;
+        $this->drawing_pos_x        = 0;
+        $this->drawing_pos_y        = 0;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist()
+    {
+        if (is_string($this->time))
+            $this->time = new \DateTime($this->time);
+
+        if (is_string($this->date))
+            $this->date = new \DateTime($this->date);
+    }
 
     /**
      * Set people
@@ -469,7 +498,7 @@ class Reservation implements ReservationInterface
     /**
      * Set time
      *
-     * @param \DateTime $time
+     * @param $time
      * @return Reservation
      */
     public function setTime($time)
@@ -534,21 +563,14 @@ class Reservation implements ReservationInterface
     {
         return $this->note;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservationOptions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add reservationOptions
      *
-     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     * @param ReservationOption $reservationOptions
      * @return Reservation
      */
-    public function addReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    public function addReservationOption(ReservationOption $reservationOptions)
     {
         $this->reservationOptions[] = $reservationOptions;
 

@@ -87,19 +87,14 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
         if ($form->isValid()) {
 
             $resource = $form->getData();
-//            $this->om->persist($resource);
-//            $this->om->flush($resource);
-//
-//            return $resource;
+            $resource->setUser($this->om->getReference('RufyRestApiBundle:User', $this->user->getId()));
+            $this->om->persist($resource);
+            $this->om->flush();
 
-            return 'valido';
-
-        } else {
-            //return 'non valido';
-            throw new InvalidFormException('Invalid submitted data', $form);
+            return $resource;
         }
-//
-//        throw new InvalidFormException('Invalid submitted data', $form);
+
+        throw new InvalidFormException('Invalid submitted data', $form);
     }
 
     /**

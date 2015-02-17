@@ -9,7 +9,8 @@ class InvalidFormException extends \RuntimeException
 
     public function __construct($message, Form $form = null)
     {
-        $children = $form->all();
+        $children   = $form->all();
+        $errors     = array();
 
         foreach ($children as $child) {
             if (!$child->isValid()) {

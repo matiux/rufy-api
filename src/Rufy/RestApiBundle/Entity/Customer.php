@@ -6,7 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Rufy\RestApiBundle\Model\CustomerInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Rufy\Data\Repositories\Doctrine\CustomerRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="customer", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */

@@ -64,32 +64,32 @@ class ReservationRepository extends EntityRepository
         return $reservation->getId();
     }
 
-    public function update ($id, $params)
-    {
-        $reservation = $this->find($id);
-
-        if (!$reservation)
-            throw new Exception('Prenotazione non trovata con id '.$id);
-
-        foreach($params as $key => $value) {
-
-            $method = 'set' . ucfirst($key);
-
-            /**
-             * TODO
-             * Togliere il controllo su XDEBUG?
-             */
-
-            if (method_exists($reservation, $method))
-                $reservation->$method($value);
-            else if ($key != 'XDEBUG_SESSION_START')
-                throw new Exception('Setter non valido');
-        }
-
-        $this->_em->flush();
-
-        return true;
-    }
+//    public function update ($id, $params)
+//    {
+//        $reservation = $this->find($id);
+//
+//        if (!$reservation)
+//            throw new Exception('Prenotazione non trovata con id '.$id);
+//
+//        foreach($params as $key => $value) {
+//
+//            $method = 'set' . ucfirst($key);
+//
+//            /**
+//             * TODO
+//             * Togliere il controllo su XDEBUG?
+//             */
+//
+//            if (method_exists($reservation, $method))
+//                $reservation->$method($value);
+//            else if ($key != 'XDEBUG_SESSION_START')
+//                throw new Exception('Setter non valido');
+//        }
+//
+//        $this->_em->flush();
+//
+//        return true;
+//    }
 
     /**
      * @param \Reservation $reservation
@@ -97,21 +97,21 @@ class ReservationRepository extends EntityRepository
      * @param int $height
      * @return void
      */
-    private function setTableDimension(\Reservation $reservation, $people, $height = 1)
-    {
-        $base = (($people % 2) == 0) ? ($people / 2) - 1 : floor($people / 2) ;
-
-        if (0 >= $base)
-            $base = 1;
-
-        if ($height > 1)
-            $base -= $height;
-
-        $reservation->setDrawingWidth($base);
-        $reservation->setDrawingHeight($height);
-
-        return;
-    }
+//    private function setTableDimension(\Reservation $reservation, $people, $height = 1)
+//    {
+//        $base = (($people % 2) == 0) ? ($people / 2) - 1 : floor($people / 2) ;
+//
+//        if (0 >= $base)
+//            $base = 1;
+//
+//        if ($height > 1)
+//            $base -= $height;
+//
+//        $reservation->setDrawingWidth($base);
+//        $reservation->setDrawingHeight($height);
+//
+//        return;
+//    }
 
     /**
      * TODO
