@@ -62,6 +62,12 @@ class ReservationVoter extends AbstractVoter implements RufyVoterInterface
                 if ($this->om->getRepository('RufyRestApiBundle:User')->hasReservation($resource, $user))
                     return VoterInterface::ACCESS_GRANTED;
                 break;
+
+            case self::CREATE:
+                if ($this->om->getRepository('RufyRestApiBundle:User')->hasArea($resource, $user) &&
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource->getArea()->getRestaurant(), $resource->getCustomer()))
+                    return VoterInterface::ACCESS_GRANTED;
+                break;
         }
 
         return false;

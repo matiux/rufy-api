@@ -87,6 +87,10 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
         if ($form->isValid()) {
 
             $resource = $form->getData();
+
+            if (false === $this->authChecker->isGranted('CREATE', $resource))
+                throw new AccessDeniedException('Accesso non autorizzato!');
+
             $resource->setUser($this->om->getReference('RufyRestApiBundle:User', $this->user->getId()));
             $this->om->persist($resource);
             $this->om->flush();

@@ -1,6 +1,9 @@
 <?php namespace Rufy\RestApiBundle\Repository;
 
-use Rufy\RestApiBundle\Entity\Reservation;
+use Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Entity\User,
+    Rufy\RestApiBundle\Entity\Restaurant,
+    Rufy\RestApiBundle\Entity\Area;
 
 use Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\User\UserProviderInterface,
@@ -103,15 +106,15 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
 
     /**
-     * Controlla se una prenotazione appartiene
+     * Controlla se una prenotazione appartiene all'utente che cerca di visualizzarla
      *
-     * @param Reservation|Collection of $reservation
+     * @param Reservation|array $reservation
      * @param User $user
      * @return bool
      */
     public function hasReservation($reservation, $user)
     {
-        $reservation = is_array($reservation) ? current($reservation) : $reservation;
+        $reservation            = is_array($reservation) ? current($reservation) : $reservation;
 
         // Il ristorante della prenotazione
         $reservationRestaurant  = $reservation->getArea()->getRestaurant();
@@ -122,10 +125,38 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         // Ciclo i ristoranti dello user
         foreach ($userRestaurants as $restaurant) {
 
-            // Se la prenotazione appartiene a un ristorante dello user, la restituisco
+            /**
+             * @var $restaurant Restaurant
+             *
+             * Se la prenotazione appartiene a un ristorante dello user, la restituisco
+             */
             if ($reservationRestaurant->getId() == $restaurant->getId())
                 return true;
+        }
 
+        return false;
+    }
+
+    /**
+     * Controlla se un utente ha determinate aree
+     *
+     * @param Reservation $reservation
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function hasArea($reservation, $user)
+    {
+        $reservationArea    = $reservation->getArea();
+        $userRestaurants    = $user->getRestaurants();
+
+        foreach ($userRestaurants as $restaurant) {
+
+            /**
+             * @var $restaurant Restaurant
+             */
+            if ($this->getEntityManager()->getRepository('RufyRestApiBundle:Restaurant')->hasArea($restaurant, $reservationArea))
+                return true;
         }
 
         return false;

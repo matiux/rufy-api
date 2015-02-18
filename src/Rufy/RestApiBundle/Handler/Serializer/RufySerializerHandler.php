@@ -48,9 +48,7 @@ class RufySerializerHandler
 
     private function serializeCollection($resource)
     {
-        if (0 < count($resource)) {
-            $this->initManager(current($resource));
-        }
+        $this->initManager($resource);
 
         $resource = new Collection($resource, $this->transformer);
 
@@ -59,14 +57,53 @@ class RufySerializerHandler
 
     private function initManager($resource)
     {
-        $entity = get_class($resource);
+        if (is_array($resource) && 0 < count($resource)) {
 
-        $dirs                               = explode('\\', $entity);
-        $this->resourceClassName            = $dirs[count($dirs) - 1];
+            $collection = $resource;
+            $resource   = current($collection);
+        }
+
+        if ($this->isRufyValidEntity($resource)) {
+
+            $entity = get_class($resource);
+
+            $dirs                               = explode('\\', $entity);
+            $this->resourceClassName            = $dirs[count($dirs) - 1];
+
+        } else if (isset($collection) && is_array($collection)) {
+
+            /**
+             * TODO
+             * Potrebbe essere il caso di migliorare questo else.
+             * Qui si entra quando ci sono errori di validazione nel form
+             */
+            $resource = isset($collection) ? $collection : $resource;
+
+            if ($this->isFormErrorsArray($resource))
+                $this->resourceClassName        = 'FormError';
+
+        } else {
+
+            $this->resourceClassName        = 'NotFound';
+        }
+
 
         $this->fractalManager->setSerializer($this->customFractalSerializer);
 
         $this->transformer = $this->getTransformer();
+    }
+
+    private function isFormErrorsArray($resource)
+    {
+        return array_key_exists('form_errors', $resource);
+    }
+
+    private function isRufyValidEntity($resource)
+    {
+        if (is_object($resource) && FALSE !== ($class = get_class($resource)) && strstr($class, 'Rufy'))
+            return class_exists($class);
+
+        return false;
     }
 
     private function getTransformer() {

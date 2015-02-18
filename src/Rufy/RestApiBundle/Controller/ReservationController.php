@@ -8,6 +8,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -100,7 +101,10 @@ class ReservationController extends FOSRestController
 
         } catch (InvalidFormException $exception) {
 
-            return array('form' => $exception->getForm());
+            //$form       = $exception->getForm();
+            $errors     = $exception->getErrors();
+
+            return $errors;
         }
     }
 

@@ -29,6 +29,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -101,7 +102,11 @@ fos_rest:
     #   serialize_null: false
     service:
         serializer: rufy_api.fosrest_serializer
-        #view_handler: rufy_api.view_handler
+#    exception:
+#        codes:
+#            'Rufy\RestApiBundle\Exception\ResourceNotFoundException': 404
+#        messages:
+#            'Rufy\RestApiBundle\Exception\ResourceNotFoundException': true
     routing_loader:
         default_format: json
         include_format: false
@@ -111,6 +116,5 @@ fos_rest:
     allowed_methods_listener: true
     view:
         view_response_listener: 'force'
-
         templating_formats:
             html: false

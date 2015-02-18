@@ -1,9 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Repository; 
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\NoResultException;
 
-use Rufy\RestApiBundle\Entity\Restaurant;
-use Rufy\RestApiBundle\Entity\User;
+use Rufy\RestApiBundle\Entity\Restaurant,
+    Rufy\RestApiBundle\Entity\User,
+    Rufy\RestApiBundle\Entity\Area,
+    Rufy\RestApiBundle\Entity\Customer;
 
 class RestaurantRepository extends EntityRepository
 {
@@ -49,15 +52,66 @@ class RestaurantRepository extends EntityRepository
         //$restaurant         = is_array($restaurant) ? current($restaurant) : $restaurant;
         $restaurantUsers    = $restaurant->getUsers();
 
-        if ($restaurantUsers) {
-
-            foreach ($restaurantUsers as $restaurantUser) {
-
+        if ($restaurantUsers)
+            foreach ($restaurantUsers as $restaurantUser)
                 if ($restaurantUser->getId() == $user->getId())
                     return true;
-            }
+
+        return false;
+    }
+
+    /**
+     * Controlla se un ristorante possiede una determinata area
+     *
+     * @param Restaurant $restaurant
+     * @param Area $reservationArea
+     *
+     * @return bool
+     */
+    public function hasArea(Restaurant $restaurant, Area $reservationArea)
+    {
+        $restaurantAreas = $restaurant->getAreas();
+
+        foreach ($restaurantAreas as $area) {
+
+            /**
+             * @var $area Area
+             */
+            if ($area->getId() == $reservationArea->getId())
+                return true;
         }
 
         return false;
+    }
+
+    /**
+     * Controlla se un ristorante possiede un determinato Customer
+     *
+     * @param Restaurant $restaurant
+     * @param Customer $customer
+     *
+     * @return bool
+     */
+    public function hasCustomer(Restaurant $restaurant, Customer $customer)
+    {
+        $q = $this->createQueryBuilder('r')
+            ->select('c.id')
+            ->leftJoin('r.customers', 'c')
+            ->where('c.id = :customerid')
+            ->andWhere('r.id = :restaurantid')
+            ->setParameter('customerid', $customer->getId())
+            ->setParameter('restaurantid', $restaurant->getId())
+            ->getQuery();
+
+        try {
+
+            $customer = $q->getSingleResult();
+
+            return true;
+
+        } catch (NoResultException $e) {
+
+            return false;
+        }
     }
 }

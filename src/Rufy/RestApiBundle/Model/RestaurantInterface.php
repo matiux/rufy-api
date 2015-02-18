@@ -92,13 +92,6 @@ interface RestaurantInterface
     public function setCustomer(\Rufy\RestApiBundle\Entity\Customer $customer);
 
     /**
-     * Get customer
-     *
-     * @return \Customer
-     */
-    public function getCustomer();
-
-    /**
      * Add setting
      *
      * @param \Rufy\RestApiBundle\Entity\Setting $setting

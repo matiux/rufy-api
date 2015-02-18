@@ -208,16 +208,6 @@ class Restaurant implements RestaurantInterface
     }
 
     /**
-     * Get customer
-     *
-     * @return \Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
      * Add setting
      *
      * @param \Rufy\RestApiBundle\Entity\Setting $setting
