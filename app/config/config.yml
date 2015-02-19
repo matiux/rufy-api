@@ -102,11 +102,6 @@ fos_rest:
     #   serialize_null: false
     service:
         serializer: rufy_api.fosrest_serializer
-#    exception:
-#        codes:
-#            'Rufy\RestApiBundle\Exception\ResourceNotFoundException': 404
-#        messages:
-#            'Rufy\RestApiBundle\Exception\ResourceNotFoundException': true
     routing_loader:
         default_format: json
         include_format: false

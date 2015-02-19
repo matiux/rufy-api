@@ -91,20 +91,20 @@ class ReservationController extends FOSRestController
         try {
 
             $reservation    = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
-            $routeOptions   = array(
 
+            $routeOptions   = [
                 'id'        => $reservation->getId(),
                 '_format'   => $this->container->get('request')->get('_format')
-            );
+            ];
 
             return $this->forward('RufyRestApiBundle:Reservation:getReservation', $routeOptions);
 
         } catch (InvalidFormException $exception) {
 
             //$form       = $exception->getForm();
-            $errors     = $exception->getErrors();
+            //$errors     = $exception->getErrors();
 
-            return $errors;
+            return $exception;
         }
     }
 

@@ -4,7 +4,8 @@ use League\Fractal\Manager,
     League\Fractal\Resource\Item,
     League\Fractal\Resource\Collection;
 
-use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer;
+use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer,
+    Rufy\RestApiBundle\Exception\InvalidFormException;
 
 class RufySerializerHandler
 {
@@ -59,8 +60,8 @@ class RufySerializerHandler
     {
         if (is_array($resource) && 0 < count($resource)) {
 
-            $collection = $resource;
-            $resource   = current($collection);
+            //$collection = $resource;
+            $resource   = current($resource);
         }
 
         if ($this->isRufyValidEntity($resource)) {
@@ -70,37 +71,23 @@ class RufySerializerHandler
             $dirs                               = explode('\\', $entity);
             $this->resourceClassName            = $dirs[count($dirs) - 1];
 
-        } else if (isset($collection) && is_array($collection)) {
+        } else if (is_a($resource, 'Rufy\RestApiBundle\Exception\InvalidFormException')) {
 
-            /**
-             * TODO
-             * Potrebbe essere il caso di migliorare questo else.
-             * Qui si entra quando ci sono errori di validazione nel form
-             */
-            $resource = isset($collection) ? $collection : $resource;
-
-            if ($this->isFormErrorsArray($resource))
-                $this->resourceClassName        = 'FormError';
+            $this->resourceClassName        = 'FormError';
 
         } else {
 
             $this->resourceClassName        = 'NotFound';
         }
 
-
         $this->fractalManager->setSerializer($this->customFractalSerializer);
 
         $this->transformer = $this->getTransformer();
     }
 
-    private function isFormErrorsArray($resource)
-    {
-        return array_key_exists('form_errors', $resource);
-    }
-
     private function isRufyValidEntity($resource)
     {
-        if (is_object($resource) && FALSE !== ($class = get_class($resource)) && strstr($class, 'Rufy'))
+        if (is_object($resource) && FALSE !== ($class = get_class($resource)) && strstr($class, 'RestApiBundle\Entity'))
             return class_exists($class);
 
         return false;
