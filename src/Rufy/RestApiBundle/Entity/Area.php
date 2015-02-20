@@ -6,7 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Rufy\RestApiBundle\Model\AreaInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\AreaRepository")
  * @ORM\Table(name="area", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */

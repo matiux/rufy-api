@@ -33,7 +33,7 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area->setFull(0);
         $area->setRestaurant($this->getReference('restaurant1'));
         $area->addAreaOption($this->getReference('reservationOption_outside'));
-        $area->addAreaOption($this->getReference('reservationOption_invalids'));
+        //$area->addAreaOption($this->getReference('reservationOption_invalids'));
         $area->addAreaOption($this->getReference('reservationOption_smokers'));
         $area->addAreaOption($this->getReference('reservationOption_animals'));
         $this->setReference('area_2', $area);
