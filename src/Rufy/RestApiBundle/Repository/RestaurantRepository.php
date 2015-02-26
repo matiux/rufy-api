@@ -20,7 +20,9 @@ class RestaurantRepository extends EntityRepository
      */
     public function findCustom($id)
     {
-        return $this->find($id);
+        $restaurant = $this->find($id);
+
+        return $restaurant;
     }
 
     /**

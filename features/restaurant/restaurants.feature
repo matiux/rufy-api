@@ -28,7 +28,7 @@ Feature: Testing Restaurant API
       """
 
   @collectionrestaurant
-  Scenario: Get a Restaurant by ID
+  Scenario: Get all user's restaurants
     Given that I want to find a "/v1/restaurants"
     When I request a resource
     Then the response status code should be 200

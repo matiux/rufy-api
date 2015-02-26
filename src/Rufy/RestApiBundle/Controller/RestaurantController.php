@@ -103,7 +103,7 @@ class RestaurantController extends FOSRestController
             'restaurantId' => $restaurantId
         ];
 
-        $restaurantReservations   = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $params);
+        $restaurantReservations   = $this->getAllOr404($limit, $offset, $params);
 
         return $restaurantReservations;
     }
@@ -150,6 +150,27 @@ class RestaurantController extends FOSRestController
     }
 
     /**
+     * Fetch a Restaurant reservations or throw an 404 Exception.
+     *
+     * @param int $limit
+     * @param int $offset
+     * @param mixed $params
+     *
+     * @return RestaurantInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    private function getAllOr404($limit, $offset, $params)
+    {
+        if (!($restaurantReservations = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $params))) {
+
+            throw new NotFoundHttpException(sprintf('The reservations was not found for restaurant  \'%s\'.', $params['restaurantId']));
+        }
+
+        return $restaurantReservations;
+    }
+
+    /**
      * Fetch a Restaurant or throw an 404 Exception.
      *
      * @param mixed $id
@@ -162,7 +183,7 @@ class RestaurantController extends FOSRestController
     {
         if (!($reservation = $this->get('rufy_api.restaurant.handler')->get($id))) {
 
-            throw new NotFoundHttpException(sprintf('The Restaurant \'%s\' was not found for your Restaurant.', $id));
+            throw new NotFoundHttpException(sprintf('The Restaurant \'%s\' was not found.', $id));
         }
 
         return $reservation;

@@ -1,6 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\NoResultException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * ReservationRepository
@@ -187,9 +189,16 @@ class ReservationRepository extends EntityRepository
             ->setParameter('reservationid', $id)
             ->getQuery();
 
-        $reservation = $q->getSingleResult();
+        try {
 
-        return $reservation;
+            $reservation = $q->getSingleResult();
+
+            return $reservation;
+
+        } catch (NoResultException $e) {
+
+            return false;
+        }
     }
 
     /**
@@ -215,6 +224,6 @@ class ReservationRepository extends EntityRepository
 
         $reservations = $q->getResult();
 
-        return $reservations;
+        return $reservations ? $reservations : false;
     }
 }

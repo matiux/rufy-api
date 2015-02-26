@@ -17,7 +17,7 @@ class RestaurantHandler extends AbstractEntityHandler implements HandlerInterfac
     {
         $restaurant = $this->repository->findCustom($id);
 
-        if (false === $this->authChecker->isGranted('VIEW', $restaurant)) {
+        if ($restaurant && false === $this->authChecker->isGranted('VIEW', $restaurant)) {
             throw new AccessDeniedException('Accesso non autorizzato!');
         }
 

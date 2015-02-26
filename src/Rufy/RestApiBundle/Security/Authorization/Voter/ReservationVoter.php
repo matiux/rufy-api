@@ -64,9 +64,14 @@ class ReservationVoter extends AbstractVoter implements RufyVoterInterface
                 break;
 
             case self::CREATE:
-                if ($this->om->getRepository('RufyRestApiBundle:User')->hasArea($resource, $user) &&
+                if (
+                    // Controllo che l'area inserita appartenga a un ristorante dell'utente
+                    $this->om->getRepository('RufyRestApiBundle:User')->hasArea($resource, $user) &&
+                    // Controllo che il cliente per il quale si vuole fare la prenotazione appartenga al ristorante dell'utente
                     $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource->getArea()->getRestaurant(), $resource->getCustomer()) &&
-                    $this->om->getRepository('RufyRestApiBundle:Area')->hasOptions($resource))
+                    // Controllo che le opzioni dell'area appartengano all'area del ristorante dell'utente
+                    $this->om->getRepository('RufyRestApiBundle:Area')->hasOptions($resource)
+                )
                     return VoterInterface::ACCESS_GRANTED;
                 break;
         }

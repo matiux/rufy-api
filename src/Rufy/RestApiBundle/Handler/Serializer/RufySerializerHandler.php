@@ -7,6 +7,8 @@ use League\Fractal\Manager,
 use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer,
     Rufy\RestApiBundle\Exception\InvalidFormException;
 
+use FOS\RestBundle\Util\ExceptionWrapper;
+
 class RufySerializerHandler
 {
     const TRANSFORMER_PATH      = 'Rufy\RestApiBundle\Transformer\Fractal\\';
@@ -58,11 +60,10 @@ class RufySerializerHandler
 
     private function initManager($resource)
     {
-        if (is_array($resource) && 0 < count($resource)) {
-
-            //$collection = $resource;
+        if (is_array($resource) && 0 < count($resource))
             $resource   = current($resource);
-        }
+
+        $this->resourceClassName        = 'Generic';
 
         if ($this->isRufyValidEntity($resource)) {
 
@@ -73,11 +74,24 @@ class RufySerializerHandler
 
         } else if (is_a($resource, 'Rufy\RestApiBundle\Exception\InvalidFormException')) {
 
-            $this->resourceClassName        = 'FormError';
+            /**
+             * TODO
+             * @deprecate
+             */
+            //$this->resourceClassName        = 'FormError';
 
-        } else {
+        } else if (is_a($resource, 'FOS\RestBundle\Util\ExceptionWrapper')) {
 
-            $this->resourceClassName        = 'NotFound';
+            /**
+             * @var $resource ExceptionWrapper
+             */
+
+            switch ($resource->getCode()) {
+
+                case 400:
+                    $this->resourceClassName        = 'FormError';
+                    break;
+            }
         }
 
         $this->fractalManager->setSerializer($this->customFractalSerializer);

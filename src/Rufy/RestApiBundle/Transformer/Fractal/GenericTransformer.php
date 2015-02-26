@@ -3,7 +3,7 @@
 use FOS\RestBundle\Util\ExceptionWrapper;
 use League\Fractal;
 
-class NotFoundTransformer extends Fractal\TransformerAbstract
+class GenericTransformer extends Fractal\TransformerAbstract
 {
     public function transform(ExceptionWrapper $notFound)
     {

@@ -10,10 +10,15 @@ class AreaRepository extends EntityRepository
     {
         //$areaOptions            = $reservation->getArea()->getAreaOptions();
         $areaId                 = $reservation->getArea()->getId();
+        /**
+         * @var $area Area;
+         */
+        $area                   = $reservation->getArea();
+
         $reservationOptions     = $reservation->getReservationOptions()->toArray();
 
+        $options                = $area->getAreaOptions();
 
-
-        return;
+        return true;
     }
 }
