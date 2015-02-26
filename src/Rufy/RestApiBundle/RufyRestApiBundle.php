@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * Il posto dovrebbe restituire 201
  * Allineare Test
  *      - PhpSpec per unitari
- *      - Behat per funzionali
+ *      - Behat per funzionali - aggiungere casi con errori 403 - 404 - 400 ecc
  *-----------------------------------------------------------------------
  *
  *
