@@ -1,16 +1,16 @@
 <?php namespace Rufy\RestApiBundle\Transformer\Fractal;
 
-use FOS\RestBundle\Util\ExceptionWrapper;
 use League\Fractal;
 
 class GenericTransformer extends Fractal\TransformerAbstract
 {
-    public function transform(ExceptionWrapper $notFound)
+    public function transform($generic)
     {
         return [
-            'code'      => $notFound->getCode(),
-            'message'   => $notFound->getMessage(),
-            'errors'    => $notFound->getErrors(),
+
+            'code'      => $generic->getCode(),
+            'message'   => $generic->getMessage(),
+            'errors'    => $generic->getErrors(),
         ];
     }
 }

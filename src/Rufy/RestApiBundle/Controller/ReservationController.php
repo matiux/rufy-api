@@ -8,6 +8,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -97,8 +98,12 @@ class ReservationController extends FOSRestController
                 '_format'   => $this->container->get('request')->get('_format')
             ];
 
-            //return $this->routeRedirectView('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
-            return $this->redirectToRoute('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
+            $res = $this->routeRedirectView('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
+            //$res = $this->redirectToRoute('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
+            /**
+             * @var $res RedirectResponse
+             */
+            return $res->getContent();
             //return $this->forward('RufyRestApiBundle:Reservation:getReservation', $routeOptions);
             //return $reservation;
 
