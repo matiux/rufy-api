@@ -65,20 +65,14 @@ class RufySerializerHandler
 
         $this->resourceClassName        = 'Generic';
 
+        //is_a($resource, 'Rufy\RestApiBundle\Exception\InvalidFormException')
+
         if ($this->isRufyValidEntity($resource)) {
 
             $entity = get_class($resource);
 
             $dirs                               = explode('\\', $entity);
             $this->resourceClassName            = $dirs[count($dirs) - 1];
-
-        } else if (is_a($resource, 'Rufy\RestApiBundle\Exception\InvalidFormException')) {
-
-            /**
-             * TODO
-             * @deprecate
-             */
-            //$this->resourceClassName        = 'FormError';
 
         } else if (is_a($resource, 'FOS\RestBundle\Util\ExceptionWrapper')) {
 

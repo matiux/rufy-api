@@ -2,14 +2,12 @@
 
 use FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Controller\Annotations,
-    FOS\RestBundle\Util\Codes;
+    FOS\RestBundle\Controller\Annotations\View;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -75,14 +73,13 @@ class ReservationController extends FOSRestController
      *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
      *  },
      *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     400 = "Returned when the data has errors"
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the data is invalid or non-existent",
+     *     403 = "Returned when relationships are not allowed"
      *   }
      * )
      *
      * @throws AccessDeniedException if user is not logged in
-     *
-     * @return json
      */
     public function postReservationAction()
     {
@@ -93,19 +90,9 @@ class ReservationController extends FOSRestController
 
             $reservation    = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
 
-            $routeOptions   = [
-                'id'        => $reservation->getId(),
-                '_format'   => $this->container->get('request')->get('_format')
-            ];
+            return $this->view($reservation, 201);
 
-            $res = $this->routeRedirectView('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
-            //$res = $this->redirectToRoute('api_v1_get_reservation', $routeOptions, Codes::HTTP_CREATED);
-            /**
-             * @var $res RedirectResponse
-             */
-            return $res->getContent();
-            //return $this->forward('RufyRestApiBundle:Reservation:getReservation', $routeOptions);
-            //return $reservation;
+            //return $this->handleView($view);
 
         } catch (InvalidFormException $exception) {
 

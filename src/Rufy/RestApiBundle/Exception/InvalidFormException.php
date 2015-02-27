@@ -1,6 +1,5 @@
 <?php namespace Rufy\RestApiBundle\Exception;
 
-
 use Symfony\Component\Form\Form,
     Symfony\Component\Form\FormErrorIterator,
     Symfony\Component\Form\FormError;
