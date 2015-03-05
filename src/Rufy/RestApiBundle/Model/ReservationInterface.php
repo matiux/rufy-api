@@ -32,11 +32,4 @@ interface ReservationInterface {
     public function getTableName();
     public function setCustomer(Customer $customer);
     public function getCustomer();
-    public function getId();
-    public function setCreated($created);
-    public function getCreated();
-    public function setUpdated($updated);
-    public function getUpdated();
-    public function setDeletedAt($deletedAt);
-    public function getDeletedAt();
 }

@@ -1,16 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping AS ORM,
+    Doctrine\Common\Collections\ArrayCollection;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\AreaInterface;
+
+use Rufy\RestApiBundle\Model\AreaInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\AreaRepository")
  * @ORM\Table(name="area", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Area implements AreaInterface
+class Area implements AreaInterface, EntityInterface
 {
     public function __construct() {
 

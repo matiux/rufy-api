@@ -60,4 +60,14 @@ interface HandlerInterface
      * @return Entity
      */
     public function patch($entity, array $parameters);
+
+    /**
+     * Delete an entity
+     *
+     * @api
+     *
+     * @param $entity
+     * @return mixed
+     */
+    public function delete($entity);
 }

@@ -130,4 +130,17 @@ class ReservationHandler extends AbstractEntityHandler implements HandlerInterfa
     {
         return $this->processForm($reservation, $parameters, 'PATCH');
     }
+
+    /**
+     * Delete an entity
+     *
+     * @api
+     *
+     * @param $entity
+     * @return mixed
+     */
+    public function delete($entity)
+    {
+
+    }
 }

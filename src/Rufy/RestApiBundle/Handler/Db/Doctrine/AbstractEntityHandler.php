@@ -6,11 +6,12 @@ use Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Entity\Restaurant,
     Rufy\RestApiBundle\Repository\ReservationRepository,
     Rufy\RestApiBundle\Repository\RestaurantRepository,
-    Rufy\RestApiBundle\Repository\UserRepository;
+    Rufy\RestApiBundle\Repository\UserRepository,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage,
-    Symfony\Component\Security\Core\Authorization\AuthorizationChecker,
-    Symfony\Component\Form\FormFactory;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface,
+    Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface,
+    Symfony\Component\Form\FormFactoryInterface;
 
 abstract class AbstractEntityHandler
 {
@@ -44,7 +45,7 @@ abstract class AbstractEntityHandler
      */
     protected $formFactory;
 
-    public function setEntityClass($entityClass)
+    public function setEntityClass(EntityInterface $entityClass)
     {
         $this->entityClass              = $entityClass;
         $this->repository               = $this->om->getRepository(get_class($entityClass));
@@ -55,17 +56,17 @@ abstract class AbstractEntityHandler
         $this->om                       = $om;
     }
 
-    public function setUser(TokenStorage $tokenStorage)
+    public function setUser(TokenStorageInterface $tokenStorage)
     {
         $this->user                     = $tokenStorage->getToken()->getUser();
     }
 
-    public function setAuthorizationChecker(AuthorizationChecker $authChecker)
+    public function setAuthorizationChecker(AuthorizationCheckerInterface $authChecker)
     {
         $this->authChecker              = $authChecker;
     }
 
-    public function setFormFactory($formFactory)
+    public function setFormFactory(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
     }

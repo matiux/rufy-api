@@ -5,7 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Rufy\RestApiBundle\Model\ReservationInterface;
+use Rufy\RestApiBundle\Model\ReservationInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\ReservationRepository")
@@ -13,7 +14,7 @@ use Rufy\RestApiBundle\Model\ReservationInterface;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\HasLifecycleCallbacks()
  */
-class Reservation implements ReservationInterface
+class Reservation implements ReservationInterface, EntityInterface
 {
     /**
      * Reservation ID
