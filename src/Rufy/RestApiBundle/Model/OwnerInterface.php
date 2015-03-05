@@ -3,13 +3,6 @@
 interface OwnerInterface
 {
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId();
-
-    /**
      * Set name
      *
      * @param string $name
@@ -83,51 +76,6 @@ interface OwnerInterface
      * @return boolean
      */
     public function getActive();
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return \Rufy\RestApiBundle\Entity\Owner
-     */
-    public function setCreated($created);
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated();
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return \Rufy\RestApiBundle\Entity\Owner
-     */
-    public function setUpdated($updated);
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated();
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     * @return \Rufy\RestApiBundle\Entity\Owner
-     */
-    public function setDeletedAt($deletedAt);
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt();
 
     /**
      * Add users

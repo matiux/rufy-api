@@ -22,11 +22,6 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     protected $baseApiUrl;
 
     /**
-     * @var array
-     */
-    protected $params = [];
-
-    /**
      * @var string
      */
     protected $requestMethod;
@@ -42,6 +37,11 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     protected $response;
 
     protected $body;
+
+    /**
+     * @var array
+     */
+    protected $postData = [];
 
     public function __construct($guzzleClient, $baseUrl)
     {
@@ -77,8 +77,23 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     public function thatIWantToAddANewWithValues($resource, TableNode $table)
     {
         $this->requestMethod    = self::METHOD_POST;
+        $this->resource         = $resource;
+        $this->postData         = $this->preparePostData($table->getColumnsHash());
+    }
 
-        throw new PendingException();
+    private function preparePostData($postData)
+    {
+        $postArray = [];
+
+        foreach ($postData as $index => $data) {
+
+            if ('reservationOptions' == $data['field'])
+                $data['value'] = explode(',', $data['value']);
+
+            $postArray[$data['field']] = $data['value'];
+        }
+
+        return json_encode($postArray);
     }
 
     /**
@@ -88,7 +103,15 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     {
         $url                = $this->baseApiUrl.$this->resource;
 
-        $request            = $this->client->createRequest($this->requestMethod, $url, ['body' =>  json_encode($this->params)]);
+        if ('POST' == $this->requestMethod) {
+
+            $request     = $this->client->post($url, ['content-type' => 'application/json'], []);
+            $request->setBody($this->postData);
+
+        } else {
+
+            $request            = $this->client->createRequest($this->requestMethod, $url);
+        }
 
         $this->response     = $this->client->send($request);
         $this->body         = $this->response->json();

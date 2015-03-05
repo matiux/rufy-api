@@ -1,16 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\RestaurantInterface;
+
+use Rufy\RestApiBundle\Model\RestaurantInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\RestaurantRepository")
  * @ORM\Table(name="restaurant", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Restaurant implements RestaurantInterface
+class Restaurant implements RestaurantInterface, EntityInterface
 {
     public function __construct() {
 

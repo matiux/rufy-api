@@ -6,13 +6,6 @@ use Rufy\RestApiBundle\Entity\User;
 interface UserInterface
 {
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId();
-
-    /**
      * Set username
      *
      * @param string $username
@@ -56,51 +49,6 @@ interface UserInterface
      * @return boolean
      */
     public function getIsActive();
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return User
-     */
-    public function setCreated($created);
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated();
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return User
-     */
-    public function setUpdated($updated);
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated();
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     * @return User
-     */
-    public function setDeletedAt($deletedAt);
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt();
 
     /**
      * Set owner

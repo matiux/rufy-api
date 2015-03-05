@@ -5,13 +5,6 @@ use Rufy\RestApiBundle\Entity\Role;
 interface RoleInterface
 {
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId();
-
-    /**
      * Set name
      *
      * @param string $name
@@ -62,49 +55,4 @@ interface RoleInterface
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers();
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Role
-     */
-    public function setCreated($created);
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated();
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Role
-     */
-    public function setUpdated($updated);
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated();
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     * @return Role
-     */
-    public function setDeletedAt($deletedAt);
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt();
 }

@@ -79,22 +79,52 @@ Feature: Testing Reservation API
 
   @createreservation
   Scenario: Creating a New Reservation
-    Given that I want to add a new "reservation" with values:
-      | user_id        | 1 |
-      | area_id        | 1 |
-      | customer_id    | 2 |
-      | people         | 4 |
-      | time           | 21:15 |
-      | date           | 02/03/2015 |
-      | confirmed      | 1 |
-      | waiting        | 0 |
-      | note           | Hanno un passeggino |
-      | table_name     | 12 |
+    Given that I want to add a new "/v1/reservations" with values:
+      | field             | value               |
+      | people            | 4                   |
+      | time              | 21:15               |
+      | date              | 2015-02-26          |
+      | note              | Hanno un passeggino |
+      | confirmed         | 1                   |
+      | waiting           | 0                   |
+      | table_name        | 12                  |
+      | customer          | 2                   |
+      | area              | 1                   |
+      |reservationOptions | 1,2                 |
       #| drawing_width  |  |
       #| drawing_height |  |
       #| drawing_pos_x  |  |
       #| drawing_pos_y  |  |
-    Then the response status code should be 200
-    And the response type should be "application/json"
-    And the response contains key "data"
+    When I request a resource
+    Then the response status code should be 201
+      And the response type should be "application/json"
+      And the response contains key "data"
+      And "data" contains:
+          """
+          name
+          phone
+          area
+          areaId
+          tableName
+          people
+          date
+          note
+          time
+          confirmed
+          waiting
+          drawingWidth
+          drawingHeight
+          drawingPosX
+          drawingPosY
+          reservationOptions
+          """
+      And "data.reservationOptions" contains:
+          """
+          data
+          """
+      And "data.reservationOptions.data.0" contains:
+          """
+          id
+          slug
+          """
 

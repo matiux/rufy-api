@@ -1,8 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Model;
 
-use Rufy\RestApiBundle\Entity\User;
-use Rufy\RestApiBundle\Entity\Area;
-use Rufy\RestApiBundle\Entity\Customer;
+use Rufy\RestApiBundle\Entity\User,
+    Rufy\RestApiBundle\Entity\Area,
+    Rufy\RestApiBundle\Entity\Customer;
 
 interface ReservationInterface {
 
