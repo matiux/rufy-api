@@ -1,0 +1,22 @@
+#staging
+deployment:
+  user: matiux
+  from: ./
+  to: /var/www/Project/RufyApi
+  excludes:
+    - .idea
+    - composer.lock
+    - rufysf.conf
+    - spec
+releases:
+  enabled: true
+  max: 5
+  symlink: current
+  directory: releases
+hosts:
+  - 192.241.178.210
+tasks:
+  pre-deploy:
+  on-deploy:
+  post-release:
+  post-deploy:
