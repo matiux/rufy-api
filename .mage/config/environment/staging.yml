@@ -15,8 +15,15 @@ releases:
   directory: releases
 hosts:
   - 192.241.178.210
+#    tasks:
+#      post-deploy:
+#        - database-clear
+#        - database-create
+#        - database-populate
 tasks:
   pre-deploy:
   on-deploy:
   post-release:
   post-deploy:
+    - clear-cache
+    - permissions-set-dirs
