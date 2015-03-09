@@ -1,29 +1,35 @@
 #staging
 deployment:
-  user: matiux
-  from: ./
-  to: /var/www/Project/RufyApi
-  excludes:
-    - .idea
-    - composer.lock
-    - rufysf.conf
-    - spec
-releases:
-  enabled: true
-  max: 5
-  symlink: current
-  directory: releases
-hosts:
-  - 192.241.178.210
-#    tasks:
-#      post-deploy:
-#        - database-clear
-#        - database-create
-#        - database-populate
-tasks:
-  pre-deploy:
-  on-deploy:
-  post-release:
-  post-deploy:
-    - clear-cache
-    - permissions-set-dirs
+    user: matiux
+    from: ./
+    to: /var/www/Project/RufyApi
+    excludes:
+        - .idea
+        - composer.lock
+        - rufysf.conf
+        - spec
+    releases:
+        enabled: true
+        max: 5
+        symlink: current
+        directory: releases
+    hosts:
+        - 192.241.178.210:
+            deployment:
+                to: /var/www/Project/RufyApi
+                user: matiux
+            releases:
+                max: 5
+                symlink: current
+            tasks:
+                post-deploy:
+                    - database-clear
+                    - database-create
+                    - database-populate
+    tasks:
+        pre-deploy:
+        on-deploy:
+        post-release:
+        post-deploy:
+            - clear-cache
+            - permissions-set-dirs

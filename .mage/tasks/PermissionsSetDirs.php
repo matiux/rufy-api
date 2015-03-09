@@ -26,15 +26,15 @@ class PermissionsSetDirs extends AbstractTask
      */
     public function run()
     {
-        $result     = $this->runCommandRemote("HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`");
+//        $result     = $this->runCommandRemote("HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`");
+//
+//        if ($result) {
 
-        if ($result) {
-
-            $result = $this->runCommandRemote('setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs');
+            $result = $this->runCommandRemote('setfacl -R -m u:"www-data":rwX -m u:`whoami`:rwX app/cache app/logs');
 
             if ($result) {
 
-                $result = $this->runCommandRemote('setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs');
+                $result = $this->runCommandRemote('setfacl -dR -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs');
 
                 return $result;
 
@@ -43,10 +43,10 @@ class PermissionsSetDirs extends AbstractTask
                 return $result;
             }
 
-        } else {
-
-            return $result;
-        }
+//        } else {
+//
+//            return $result;
+//        }
 
     }
 }
