@@ -10,6 +10,19 @@ imports:
 #        metadata_cache_driver: apc
 #        result_cache_driver: apc
 #        query_cache_driver: apc
+#       auto_mapping: true
+doctrine:
+    orm:
+        auto_mapping: true
+        metadata_cache_driver: apc
+        query_cache_driver:
+            type: service
+            id: my_doctrine_common_cache_service
+        result_cache_driver:
+            type: apc
+            host: localhost
+            port: 11211
+            instance_class: Apc
 
 monolog:
     handlers:
