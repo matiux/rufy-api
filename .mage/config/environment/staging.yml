@@ -10,7 +10,7 @@ deployment:
         - spec
 releases:
     enabled: true
-    max: 5
+    max: 3
     symlink: current
     directory: releases
 hosts:
@@ -25,3 +25,4 @@ tasks:
         - database-clear
         - database-create
         - database-populate
+        - composer-optimize

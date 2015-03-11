@@ -5,6 +5,12 @@ imports:
 #    validation:
 #        cache: apc
 
+nelmio_api_doc:
+    name: 'Rufy Rest API'
+    cache:
+        enabled: true
+        file: '%kernel.cache_dir%/api-doc.cache'
+
 doctrine:
     orm:
         metadata_cache_driver: apc

@@ -22,13 +22,15 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Misd\GuzzleBundle\MisdGuzzleBundle(),
             new SamJ\FractalBundle\SamJFractalBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
 
-            //Dev
+            //Dev - potrebbe andare nell'array sotto
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

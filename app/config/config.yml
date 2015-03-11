@@ -87,12 +87,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-nelmio_api_doc:
-    name: 'Rufy Rest API'
-    cache:
-        enabled: true
-        file: '%kernel.cache_dir%/api-doc.cache'
-
 sensio_framework_extra:
     view:    { annotations: false }
     router:  { annotations: false }
@@ -113,3 +107,11 @@ fos_rest:
         view_response_listener: 'force'
         templating_formats:
             html: false
+
+nelmio_cors:
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600

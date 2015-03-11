@@ -22,7 +22,8 @@
         "nelmio/api-doc-bundle": "@dev",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "misd/guzzle-bundle": "~1.0",
-        "samj/fractal-bundle": "dev-master"
+        "samj/fractal-bundle": "dev-master",
+        "nelmio/cors-bundle": "~1.4"
 
     },
     "require-dev": {
