@@ -23,7 +23,7 @@ class ReservationController extends FOSRestController
      *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
      *      "param" = {
      *          {
-                    "name" = "altro"
+     *               "name" = "altro"
      *          }
      *      },
      *      "parsers" = {
@@ -88,7 +88,7 @@ class ReservationController extends FOSRestController
 
         try {
 
-            $reservation    = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
+            $reservation = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
 
             return $this->view($reservation, 201);
 
