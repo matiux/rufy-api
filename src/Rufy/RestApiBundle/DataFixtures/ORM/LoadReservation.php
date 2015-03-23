@@ -21,7 +21,7 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setUser($this->getReference('user_matteo'));
         $reservation->setPeople(6);
         $reservation->setTime(new \DateTime('20:45'));
-        $reservation->setDate(new \DateTime('31-12-2014'));
+        $reservation->setDate(new \DateTime('28-03-2015'));
         $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setConfirmed(false);
         $reservation->setWaiting(false);
@@ -41,7 +41,7 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setUser($this->getReference('user_emanuele'));
         $reservation->setPeople(12);
         $reservation->setTime(new \DateTime('21:30'));
-        $reservation->setDate(new \DateTime('31-12-2014'));
+        $reservation->setDate(new \DateTime('30-04-2015'));
         $reservation->setConfirmed(true);
         $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setWaiting(false);

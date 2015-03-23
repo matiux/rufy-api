@@ -202,15 +202,16 @@ class ReservationRepository extends EntityRepository
     }
 
     /**
-     * TODO
-     * Implementare limiti - offset - altri filtri
      *
      * @param $limit
      * @param $offset
      * @param $params
+     * @param $filters
+     *
      * @return array
+     *
      */
-    public function findReservations($limit, $offset, $params)
+    public function findReservations($limit, $offset, $params, $filters = array())
     {
         $restaurantId = $params['restaurantId'];
 
@@ -219,8 +220,12 @@ class ReservationRepository extends EntityRepository
             ->leftJoin('rese.area', 'a')
             ->leftJoin('a.restaurant', 'rest')
             ->where('rest.id = :restaurantid')
-            ->setParameter('restaurantid', $restaurantId)
-            ->setMaxResults($limit)
+            ->setParameter('restaurantid', $restaurantId);
+
+        foreach ($filters as $filter => $value)
+            $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+
+        $q = $q->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery();
 

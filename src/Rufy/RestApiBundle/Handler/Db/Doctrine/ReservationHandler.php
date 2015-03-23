@@ -9,16 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ReservationHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
     /**
-     * Get a Reservation given the identifier and checking that the reservation belongs to the user who invokes
-     *
-     * @api
-     *
-     * @param int $id - Reservation ID
-     *
-     * @return ReservationInterface
-     * @return null
-     *
-     * @throws AccessDeniedException
+     * {@inheritdoc }
      */
     public function get($id)
     {
@@ -32,19 +23,11 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * Get a list of Reservations.
-     *
-     * @param int $limit            the limit of the result
-     * @param int $offset           starting from the offset
-     * @param array $params         filter params
-     *
-     * @return array
-     *
-     * @throws AccessDeniedException if the resource is not accessible
+     * {@inheritdoc }
      */
-    public function all($limit = 5, $offset = 0, $params = array())
+    public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
     {
-        $reservations = $this->repository->findReservations($limit, $offset, $params);
+        $reservations = $this->repository->findReservations($limit, $offset, $params, $filters);
 
         if (0 < count($reservations))
             if ($reservations && false === $this->authChecker->isGranted('LISTING', current($reservations)))

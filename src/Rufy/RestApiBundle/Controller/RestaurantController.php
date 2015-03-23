@@ -95,18 +95,14 @@ class RestaurantController extends BaseController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
 
-        $date = $paramFetcher->get('date');
-
-        $offset         = $paramFetcher->get('offset');
-        $offset         = null == $offset ? 0 : $offset;
-        $limit          = $paramFetcher->get('limit');
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
 
             'restaurantId' => $restaurantId
         ];
 
-        $restaurantReservations   = $this->getAllOr404($limit, $offset, $params);
+        $restaurantReservations   = $this->getAllOr404($limit, $offset, $filters, $params);
 
         return $restaurantReservations;
     }
@@ -163,9 +159,9 @@ class RestaurantController extends BaseController
      *
      * @throws NotFoundHttpException
      */
-    private function getAllOr404($limit, $offset, $params)
+    private function getAllOr404($limit, $offset, $filters, $params)
     {
-        if (!($restaurantReservations = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $params))) {
+        if (!($restaurantReservations = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $filters, $params))) {
 
             throw new NotFoundHttpException(sprintf('The reservations was not found for restaurant  \'%s\'.', $params['restaurantId']));
         }

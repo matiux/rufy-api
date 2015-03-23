@@ -5,8 +5,6 @@ interface EntityHandlerInterface
     /**
      * Get a Entity given the identifier
      *
-     * @api
-     *
      * @param int $id
      *
      * @return Entity
@@ -15,20 +13,21 @@ interface EntityHandlerInterface
     public function get($id);
 
     /**
-     * Get a list of Entity
+     * Get a list of Reservations.
      *
-     * @param int $limit            the limit of the result
-     * @param int $offset           starting from the offset
-     * @param array $params         filter params
+     * @param int $limit            The limit of the result
+     * @param int $offset           Starting from the offset
+     * @param array $filters        Array of filters
+     * @param array $params         Filter params
      *
      * @return array
+     *
+     * @throws AccessDeniedException if the resource is not accessible
      */
-    public function all($limit = 5, $offset = 0, $params = array());
+    public function all($limit = 5, $offset = 0, $filters = array(), $params = array());
 
     /**
      * Post Entity, creates a new Entity.
-     *
-     * @api
      *
      * @param array $parameters
      *
@@ -38,8 +37,6 @@ interface EntityHandlerInterface
 
     /**
      * Edit a Entity.
-     *
-     * @api
      *
      * @param $entity
      * @param array           $parameters
@@ -52,8 +49,6 @@ interface EntityHandlerInterface
     /**
      * Partially update a Entity.
      *
-     * @api
-     *
      * @param $entity
      * @param array           $parameters
      *
@@ -63,8 +58,6 @@ interface EntityHandlerInterface
 
     /**
      * Delete an entity
-     *
-     * @api
      *
      * @param $entity
      * @return mixed
