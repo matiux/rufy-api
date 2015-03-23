@@ -1,38 +1,37 @@
 <?php namespace Rufy\RestApiBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Rufy\RestApiBundle\Entity\Area;
-use Rufy\RestApiBundle\Entity\Reservation;
-use Rufy\RestApiBundle\Entity\ReservationOption;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\PersistentCollection;
+
+use Rufy\RestApiBundle\Entity\Area,
+    Rufy\RestApiBundle\Entity\Reservation;
 
 class AreaRepository extends EntityRepository
 {
     public function hasOptions(Reservation $reservation)
     {
-        $areaOptions            = $reservation->getArea()->getAreaOptions();
-
-        $areaId                 = $reservation->getArea()->getId();
-
         /**
-         * Ciclo le opzioni appartenenti all'area utilizzata per la prenotazione
+         * @var $area Area
+         * @var $areaOptions PersistentCollection - Le opzioni valide per una determinata Area
+         * @var $reservationAreaOptions ArrayCollection
          */
-        foreach ($areaOptions as $opt) {
-            /**
-             * @var $opt ReservationOption
-             */
-            $slug = $opt->getSlug();
+        $area                       = $reservation->getArea();
+        $areaOptions                = $area->getAreaOptions();
+        $reservationAreaOptions     = $reservation->getReservationOptions();
+
+        if (!$areaOptions->isEmpty()) {
+
+            //$col = $reservationAreaOptions->map(function($o) use ($areaOptions) {
+            //
+            //    return $areaOptions->contains($o);
+            //
+            //});
+            foreach ($reservationAreaOptions as $resOpt)
+                if (!$areaOptions->contains($resOpt))
+                    return false;
 
         }
-
-
-        /**
-         * @var $area Area;
-         */
-        $area                   = $reservation->getArea();
-
-        $reservationOptions     = $reservation->getReservationOptions()->toArray();
-
-        $options                = $area->getAreaOptions();
 
         return true;
     }

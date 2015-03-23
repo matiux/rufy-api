@@ -220,6 +220,8 @@ class ReservationRepository extends EntityRepository
             ->leftJoin('a.restaurant', 'rest')
             ->where('rest.id = :restaurantid')
             ->setParameter('restaurantid', $restaurantId)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->getQuery();
 
         $reservations = $q->getResult();

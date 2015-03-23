@@ -6,7 +6,7 @@ use Rufy\RestApiBundle\Exception\InvalidFormException,
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ReservationHandler extends AbstractEntityHandler implements HandlerInterface
+class ReservationHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
     /**
      * Get a Reservation given the identifier and checking that the reservation belongs to the user who invokes

@@ -2,7 +2,7 @@
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class RestaurantHandler extends AbstractEntityHandler implements HandlerInterface
+class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
     /**
      * Get a Entity given the identifier

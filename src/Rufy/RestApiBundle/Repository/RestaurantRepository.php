@@ -42,7 +42,9 @@ class RestaurantRepository extends EntityRepository
             ->leftJoin('r.users', 'u')
             ->where('u.id = :userid')
             ->setParameter('userid', $userId)
-            ->getQuery();
+            ->getQuery()
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
 
         $restaurants = $q->getResult();
 

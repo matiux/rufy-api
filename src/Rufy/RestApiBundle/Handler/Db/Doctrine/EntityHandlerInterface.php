@@ -1,6 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-interface HandlerInterface
+interface EntityHandlerInterface
 {
     /**
      * Get a Entity given the identifier

@@ -70,7 +70,7 @@ class RestaurantController extends FOSRestController
      *      }
      *  },
      *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="1", "description"="Offset from which to start listing reservations."},
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
      *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."}
      *  },
      *  statusCodes = {
@@ -79,7 +79,7 @@ class RestaurantController extends FOSRestController
      *  }
      * )
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="1", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
      *
      * @param int $restaurantId Restaurant id
@@ -118,7 +118,7 @@ class RestaurantController extends FOSRestController
      *  requirements={
      *  },
      *  filters={
-     *      {"name"="offset", "dataType"="integer", "nullable"="true", "default"="1", "description"="Offset from which to start listing restaurants."},
+     *      {"name"="offset", "dataType"="integer", "nullable"="true", "default"="0", "description"="Offset from which to start listing restaurants."},
      *      {"name"="limit", "dataType"="integer", "nullable"="false", "default"="5", "description"="How many restaurants to return."}
      *  },
      *  statusCodes = {
@@ -126,7 +126,7 @@ class RestaurantController extends FOSRestController
      *  }
      * )
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="1", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
      *
      * @param ParamFetcherInterface $paramFetcher param fetcher service
