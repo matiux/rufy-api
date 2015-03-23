@@ -1,7 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
-use FOS\RestBundle\Controller\FOSRestController,
-    FOS\RestBundle\Request\ParamFetcherInterface,
+use FOS\RestBundle\Request\ParamFetcherInterface,
     FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -9,7 +8,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class RestaurantController extends FOSRestController
+class RestaurantController extends BaseController
 {
     /**
      * Get single Restaurant.
@@ -71,7 +70,8 @@ class RestaurantController extends FOSRestController
      *  },
      *  filters={
      *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
-     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."}
+     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."},
+     *      {"name"="date", "dataType"="date", "requirements"="\d{4}-\d{2}-\d{2}","nullable"="false", "description"="Reservation date"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
@@ -81,6 +81,7 @@ class RestaurantController extends FOSRestController
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -93,6 +94,8 @@ class RestaurantController extends FOSRestController
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
+
+        $date = $paramFetcher->get('date');
 
         $offset         = $paramFetcher->get('offset');
         $offset         = null == $offset ? 0 : $offset;
