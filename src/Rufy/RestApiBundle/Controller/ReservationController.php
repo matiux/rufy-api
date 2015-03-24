@@ -101,42 +101,6 @@ class ReservationController extends FOSRestController
     }
 
     /**
-     * Update existing reservation from the submitted data
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   input = "Rufy\RestApiBundle\Form\ReservationType",
-     *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
-     *   }
-     * )
-     *
-     *
-     * @param int $id the reservation id
-     *
-     * @return FormTypeInterface
-     *
-     * @throws NotFoundHttpException when page not exist
-     */
-    public function patchReservationAction($id)
-    {
-        try {
-
-            $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
-                $this->getOr404($id),
-                $this->container->get('request')->request->all()
-            );
-
-            return $this->view($reservation, 204);
-
-        } catch(InvalidFormException $exception) {
-
-            return $exception->getForm();
-        }
-    }
-
-    /**
      * Fetch a Reservation or throw an 404 Exception.
      *
      * @param mixed $id
