@@ -26,9 +26,6 @@ class RestaurantRepository extends EntityRepository
     }
 
     /**
-     * TODO
-     * Implementare limit e offset
-     *
      * @param $limit
      * @param $offset
      * @param $params

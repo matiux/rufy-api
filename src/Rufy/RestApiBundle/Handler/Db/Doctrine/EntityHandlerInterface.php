@@ -50,7 +50,7 @@ interface EntityHandlerInterface
      * Partially update a Entity.
      *
      * @param $entity
-     * @param array           $parameters
+     * @param array $parameters
      *
      * @return Entity
      */

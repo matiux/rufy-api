@@ -11,7 +11,8 @@ use Rufy\RestApiBundle\Entity\Reservation,
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface,
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface,
-    Symfony\Component\Form\FormFactoryInterface;
+    Symfony\Component\Form\FormFactoryInterface,
+    Symfony\Component\Form\FormFactory;
 
 abstract class AbstractEntityHandler
 {

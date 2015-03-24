@@ -83,14 +83,14 @@ Feature: Testing Reservation API
       | field             | value               |
       | people            | 4                   |
       | time              | 21:15               |
-      | date              | 2015-02-26          |
+      | date              | 2015-05-26          |
       | note              | Hanno un passeggino |
       | confirmed         | 1                   |
       | waiting           | 0                   |
       | table_name        | 12                  |
       | customer          | 2                   |
       | area              | 1                   |
-      |reservationOptions | 1,2                 |
+      |reservationOptions | 5,2                 |
       #| drawing_width  |  |
       #| drawing_height |  |
       #| drawing_pos_x  |  |

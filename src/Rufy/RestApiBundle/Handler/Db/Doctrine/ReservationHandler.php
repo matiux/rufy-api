@@ -100,14 +100,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * Partially update a Reservation.
-     *
-     * @api
-     *
-     * @param ReservationInterface $reservation
-     * @param array $parameters
-     *
-     * @return ReservationInterface
+     * {@inheritdoc }
      */
     public function patch($reservation, array $parameters)
     {

@@ -5,13 +5,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
     /**
-     * Get a Entity given the identifier
-     *
-     * @api
-     *
-     * @param int $id
-     *
-     * @return Entity
+     * {@inheritdoc }
      */
     public function get($id)
     {
@@ -25,15 +19,9 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     }
 
     /**
-     * Get a list of Restaurants.
-     *
-     * @param int $limit the limit of the result
-     * @param int $offset starting from the offset
-     * @param array $params filter params
-     *
-     * @return array
+     * {@inheritdoc }
      */
-    public function all($limit = 5, $offset = 0, $params = array())
+    public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
     {
         $params['userId'] = $this->user->getId();
 
