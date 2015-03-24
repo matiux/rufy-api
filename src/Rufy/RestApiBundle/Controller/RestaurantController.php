@@ -75,7 +75,7 @@ class RestaurantController extends BaseController
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when restaurant not found"
+     *     404 = "Returned when no reservation has been foundd"
      *  }
      * )
      *
