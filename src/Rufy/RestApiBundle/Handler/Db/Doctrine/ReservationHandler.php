@@ -37,13 +37,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * Post Reservation, creates a new Reservation.
-     *
-     * @api
-     *
-     * @param array $parameters
-     *
-     * @return ReservationInterface
+     * {@inheritdoc }
      */
     public function post(array $parameters)
     {
@@ -85,14 +79,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * Edit a Reservation.
-     *
-     * @api
-     *
-     * @param ReservationInterface $reservation
-     * @param array $parameters
-     *
-     * @return ReservationInterface
+     * {@inheritdoc }
      */
     public function put($reservation, array $parameters)
     {
@@ -108,12 +95,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * Delete an entity
-     *
-     * @api
-     *
-     * @param $entity
-     * @return mixed
+     * {@inheritdoc }
      */
     public function delete($entity)
     {

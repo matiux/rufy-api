@@ -504,6 +504,8 @@ class Reservation implements ReservationInterface, EntityInterface
      */
     public function setTime($time)
     {
+        $time = is_a($time, 'DateTime') ? $time->format('H:i:s') : $time;
+
         $this->time = $time;
 
         return $this;
@@ -516,6 +518,8 @@ class Reservation implements ReservationInterface, EntityInterface
      */
     public function getTime()
     {
+        //$time = $this->time->format('H:i:s');
+
         return $this->time;
     }
 

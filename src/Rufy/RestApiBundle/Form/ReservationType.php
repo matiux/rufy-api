@@ -11,10 +11,11 @@ class ReservationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //['data_class' => 'DateTime']
         $builder
             ->add('people')
-            ->add('time', 'text')
-            ->add('date', 'text')
+            ->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
+            ->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'data_class' => 'DateTime'])
             ->add('note')
             ->add('confirmed')
             ->add('waiting')
@@ -37,8 +38,10 @@ class ReservationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
+
             'data_class'        => 'Rufy\RestApiBundle\Entity\Reservation',
             'csrf_protection'   => false,
+
         ));
     }
 
