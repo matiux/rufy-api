@@ -1,8 +1,11 @@
-<?php namespace Rufy\RestApiBundle\Form; 
+<?php namespace Rufy\RestApiBundle\Form;
+
+use Rufy\RestApiBundle\Form\DataTransformer\TimeToString;
 
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    Symfony\Component\OptionsResolver\OptionsResolverInterface,
+    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 
 class ReservationType extends AbstractType
 {
@@ -11,11 +14,15 @@ class ReservationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //['data_class' => 'DateTime']
+        $timeTransformer = new DateTimeToStringTransformer('Europe/Rome', 'Europe/Rome', 'H:i:s');
+        $dateTransformer = new DateTimeToStringTransformer('Europe/Rome', 'Europe/Rome', 'Y-m-d');
+
         $builder
             ->add('people')
-            ->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
-            ->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'data_class' => 'DateTime'])
+            //->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
+            ->add($builder->create('time', 'text')->addModelTransformer($timeTransformer))
+            //->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd'])
+            ->add($builder->create('date', 'text')->addModelTransformer($dateTransformer))
             ->add('note')
             ->add('confirmed')
             ->add('waiting')
