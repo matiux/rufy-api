@@ -30,7 +30,7 @@ class RestaurantController extends BaseController
      *  },
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the reservation is not found"
+     *     404 = "Returned when the restaurant is not found"
      *   }
      * )
      *
@@ -55,14 +55,8 @@ class RestaurantController extends BaseController
      * List all reservations by a given restaurant
      *
      * @ApiDoc(
-     *  resource = true,
-     *  description     = "Returns a collection of Reservation",
-     *  output={
-     *      "class"="Rufy\RestApiBundle\Entity\Reservation",
-     *      "parser"={
-     *          "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
-     *      }
-     *  },
+     *  description = "Returns a collection of Reservation",
+     *  output="Rufy\RestApiBundle\Entity\Reservation",
      *  requirements={
      *      {
      *          "name"="restaurantId",
@@ -114,14 +108,8 @@ class RestaurantController extends BaseController
      * List all areas by a given restaurant
      *
      * @ApiDoc(
-     *  resource = true,
-     *  description     = "Returns a collection of Area",
-     *  output={
-     *      "class"="Rufy\RestApiBundle\Entity\Area",
-     *      "parser"={
-     *          "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
-     *      }
-     *  },
+     *  description="Returns a collection of Area",
+     *  output="Rufy\RestApiBundle\Entity\Area",
      *  requirements={
      *      {
      *          "name"="restaurantId",
@@ -131,12 +119,12 @@ class RestaurantController extends BaseController
      *      }
      *  },
      *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
-     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."},
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing areas."},
+     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many areas to return."},
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when no reservation has been found"
+     *     404 = "Returned when no area has been found"
      *  }
      * )
      *
@@ -199,9 +187,7 @@ class RestaurantController extends BaseController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
 
-        $offset         = $paramFetcher->get('offset');
-        $offset         = null == $offset ? 0 : $offset;
-        $limit          = $paramFetcher->get('limit');
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
 
@@ -209,7 +195,7 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * Fetch a Restaurant reservations or throw an 404 Exception.
+     * Fetch a entioties or throw an 404 Exception.
      *
      * @param int $limit
      * @param int $offset
@@ -234,17 +220,17 @@ class RestaurantController extends BaseController
      *
      * @param mixed $id
      *
-     * @return RestaurantInterface
+     * @return RestaurantInterface|AreaInterface
      *
      * @throws NotFoundHttpException
      */
     private function getOr404($id)
     {
-        if (!($reservation = $this->get('rufy_api.restaurant.handler')->get($id))) {
+        if (!($entity = $this->get('rufy_api.restaurant.handler')->get($id))) {
 
             throw new NotFoundHttpException(sprintf('The Restaurant \'%s\' was not found.', $id));
         }
 
-        return $reservation;
+        return $entity;
     }
 }

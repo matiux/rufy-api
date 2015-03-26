@@ -17,7 +17,6 @@ class ReservationController extends FOSRestController
      * Get single Reservation.
      *
      * @ApiDoc(
-     *  resource = false,
      *  description = "Gets a Reservation for a given id",
      *  output = {
      *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
@@ -104,7 +103,6 @@ class ReservationController extends FOSRestController
      * Update existing reservation from the submitted data
      *
      * @ApiDoc(
-     *   resource = true,
      *   input = "Rufy\RestApiBundle\Form\ReservationType",
      *   statusCodes = {
      *     204 = "Returned when successful",

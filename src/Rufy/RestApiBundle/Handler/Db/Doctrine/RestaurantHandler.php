@@ -25,7 +25,7 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     {
         $params['userId'] = $this->user->getId();
 
-        return $this->all($limit, $offset, $filters, $params);
+        return parent::all($limit, $offset, $filters, $params);
     }
 
     /**
