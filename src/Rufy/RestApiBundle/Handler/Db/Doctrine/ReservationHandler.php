@@ -65,14 +65,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
 
         if ($form->isValid()) {
 
-            if ($method == 'PATCH') {
-
-                $resource->getReservationOptions()->clear();
-                $this->om->persist($resource);
-                $this->om->flush();
-            }
-
-
             /**
              * @var $resource Reservation
              */
@@ -104,6 +96,10 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      */
     public function patch($reservation, array $parameters)
     {
+        $reservation->getReservationOptions()->clear();
+        $this->om->persist($reservation);
+        $this->om->flush();
+
         return $this->processForm($reservation, $parameters, 'PATCH');
     }
 

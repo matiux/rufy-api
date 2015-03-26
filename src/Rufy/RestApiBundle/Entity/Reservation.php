@@ -39,16 +39,6 @@ class Reservation implements ReservationInterface, EntityInterface
     }
 
     /**
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        //$this->getReservationOptions()->isEmpty();
-        //$this->getReservationOptions()->clear();
-        //$a = 1;
-    }
-
-    /**
      * Reservation ID
      * @ORM\Id
      * @ORM\GeneratedValue
