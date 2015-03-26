@@ -1,4 +1,12 @@
-<?php namespace Rufy\RestApiBundle\Controller; 
+<?php namespace Rufy\RestApiBundle\Controller;
+
+use FOS\RestBundle\Request\ParamFetcherInterface,
+    FOS\RestBundle\Controller\Annotations;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AreaController extends BaseController
 {
@@ -6,7 +14,6 @@ class AreaController extends BaseController
      * Get single Area.
      *
      * @ApiDoc(
-     *  resource = false,
      *  description = "Gets an Area for a given id",
      *  output = "Rufy\RestApiBundle\Entity\Area",
      *  requirements={

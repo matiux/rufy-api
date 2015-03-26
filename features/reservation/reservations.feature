@@ -128,3 +128,14 @@ Feature: Testing Reservation API
           slug
           """
 
+  @updatereservation
+  Scenario: Update an existing Reservation
+    Given that I want update an existing "/v1/reservations/1" with values:
+      | field             | value               |
+      | people            | 5                   |
+      | time              | 21:30:00            |
+      | table_name        | 15                  |
+      | area              | 2                   |
+      |reservationOptions | 1,2                 |
+    When I request a resource
+    Then the response status code should be 204

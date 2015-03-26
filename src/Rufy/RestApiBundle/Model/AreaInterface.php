@@ -1,7 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Model;
 
-use Rufy\RestApiBundle\Entity\Area;
-use Rufy\RestApiBundle\Entity\Reservation;
+use Rufy\RestApiBundle\Entity\Area,
+    Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Entity\Restaurant;
 
 interface AreaInterface
 {
@@ -24,11 +25,11 @@ interface AreaInterface
     /**
      * Set restaurant
      *
-     * @param \Rufy\RestApiBundle\Entity\Restaurant $restaurant
+     * @param Restaurant $restaurant
      *
      * @return Area
      */
-    public function setRestaurant(\Rufy\RestApiBundle\Entity\Restaurant $restaurant);
+    public function setRestaurant(Restaurant $restaurant);
 
     /**
      * Get restaurant

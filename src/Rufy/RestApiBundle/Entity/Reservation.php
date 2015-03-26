@@ -26,17 +26,17 @@ class Reservation implements ReservationInterface, EntityInterface
         $this->drawing_pos_y        = 0;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        if (is_string($this->time))
-            $this->time = new \DateTime($this->time);
-
-        if (is_string($this->date))
-            $this->date = new \DateTime($this->date);
-    }
+    //    /**
+    //     * @ORM\PrePersist
+    //     */
+    //    public function onPrePersist()
+    //    {
+    //        if (is_string($this->time))
+    //            $this->time = new \DateTime($this->time);
+    //
+    //        if (is_string($this->date))
+    //            $this->date = new \DateTime($this->date);
+    //    }
 
     /**
      * Reservation ID

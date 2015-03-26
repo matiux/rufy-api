@@ -41,7 +41,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     /**
      * @var array
      */
-    protected $postData = [];
+    protected $toSendData = [];
 
     public function __construct($guzzleClient, $baseUrl)
     {
@@ -78,14 +78,24 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     {
         $this->requestMethod    = self::METHOD_POST;
         $this->resource         = $resource;
-        $this->postData         = $this->preparePostData($table->getColumnsHash());
+        $this->toSendData       = $this->prepareToSendData($table->getColumnsHash());
     }
 
-    private function preparePostData($postData)
+    /**
+     * @Given that I want update an existing :arg1 with values:
+     */
+    public function thatIWantUpdateAnExistingWithValues($resource, TableNode $table)
+    {
+        $this->requestMethod    = self::METHOD_PATCH;
+        $this->resource         = $resource;
+        $this->toSendData       = $this->prepareToSendData($table->getColumnsHash());
+    }
+
+    private function prepareToSendData($toSendData)
     {
         $postArray = [];
 
-        foreach ($postData as $index => $data) {
+        foreach ($toSendData as $index => $data) {
 
             if ('reservationOptions' == $data['field'])
                 $data['value'] = explode(',', $data['value']);
@@ -106,7 +116,12 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
         if ('POST' == $this->requestMethod) {
 
             $request     = $this->client->post($url, ['content-type' => 'application/json'], []);
-            $request->setBody($this->postData);
+            $request->setBody($this->toSendData);
+
+        } else if ('PATCH' == $this->requestMethod) {
+
+            $request     = $this->client->patch($url, ['content-type' => 'application/json'], []);
+            $request->setBody($this->toSendData);
 
         } else {
 

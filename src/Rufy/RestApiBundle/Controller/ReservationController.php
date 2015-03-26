@@ -17,22 +17,12 @@ class ReservationController extends BaseController
      *
      * @ApiDoc(
      *  description = "Gets a Reservation for a given id",
-     *  output = {
-     *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
-     *      "param" = {
-     *          {
-     *               "name" = "altro"
-     *          }
-     *      },
-     *      "parsers" = {
-     *          "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
-     *          "Nelmio\ApiDocBundle\Parser\ValidationParser"
-     *      }
-     *  },
+     *  output = "Rufy\RestApiBundle\Entity\Reservation",
      *  requirements={
      *      {
      *          "name"="id",
      *          "dataType"="integer",
+     *          "requirement"="\d+",
      *          "description"="Reservation ID"
      *      }
      *  },
@@ -67,9 +57,7 @@ class ReservationController extends BaseController
      *   resource = true,
      *   description = "Creates a new reservation from the sended data.",
      *   input = "Rufy\RestApiBundle\Form\ReservationType",
-     *   output = {
-     *      "class" = "Rufy\RestApiBundle\Entity\Reservation",
-     *   },
+     *   output = "Rufy\RestApiBundle\Entity\Reservation",
      *   statusCodes = {
      *     201 = "Returned when successful",
      *     400 = "Returned when the data is invalid or non-existent",

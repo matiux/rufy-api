@@ -34,7 +34,7 @@ class RestaurantController extends BaseController
      *   }
      * )
      *
-     * @param int $id Restaurant id
+     * @param int $id - Restaurant id
      *
      * @return json
      *
@@ -52,9 +52,10 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * List all reservations by a given restaurant
+     * List all reservations by a given id restaurant
      *
      * @ApiDoc(
+     *  resource = false,
      *  description = "Returns a collection of Reservation",
      *  output="Rufy\RestApiBundle\Entity\Reservation",
      *  requirements={
@@ -83,7 +84,7 @@ class RestaurantController extends BaseController
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
-     * @return array
+     * @return json
      *
      * @throws AccessDeniedException when role is not allowed
      */
@@ -105,9 +106,10 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * List all areas by a given restaurant
+     * List all areas by a given id restaurant
      *
      * @ApiDoc(
+     *  resource = false,
      *  description="Returns a collection of Area",
      *  output="Rufy\RestApiBundle\Entity\Area",
      *  requirements={

@@ -7,7 +7,13 @@ class AreaHandler extends AbstractEntityHandler implements EntityHandlerInterfac
      */
     public function get($id)
     {
+        $area = $this->repository->find($id);
 
+        if ($area && false === $this->authChecker->isGranted('VIEW', $area)) {
+            throw new AccessDeniedException('Accesso non autorizzato!');
+        }
+
+        return $area;
     }
 
     /**

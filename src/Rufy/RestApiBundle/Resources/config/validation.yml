@@ -1,3 +1,22 @@
+Rufy\RestApiBundle\Entity\Area:
+  properties:
+    id:
+      - Type:
+          type: integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    name:
+      - Type:
+          type: string
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    restaurant:
+      - Type:
+          type: integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    full:
+      - Type:
+          type: bool
+          message: Il valore {{ value }} non è un {{ type }} valido.
+
 Rufy\RestApiBundle\Entity\Restaurant:
   properties:
     id:

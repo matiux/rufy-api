@@ -2,7 +2,6 @@ rufy_rest_api_home:
     path:     /
     defaults: { _controller: RufyRestApiBundle:Default:index }
 
-
 reservations:
     type: rest
     prefix: v1

@@ -13,6 +13,21 @@ Feature: Testing Area API
   Background: Steps that run before each scenario
     Given im logged in with credentials "matiux" "281285"
 
+  @singlearea
+  Scenario: Get an Area by ID
+    Given that I want to find a "/v1/areas/1"
+    When I request a resource
+    Then the response status code should be 200
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" contains:
+      """
+      id
+      restaurant_id
+      name
+      full
+      """
+
   @collectionarea
   Scenario: Get a collection of Area by restaurant ID
     Given that I want to find a "/v1/restaurants/1/areas"
