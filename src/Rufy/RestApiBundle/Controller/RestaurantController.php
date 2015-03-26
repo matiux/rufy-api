@@ -5,6 +5,9 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Rufy\RestApiBundle\Model\RestaurantInterface,
+    Rufy\RestApiBundle\Model\AreaInterface;
+
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -75,7 +78,7 @@ class RestaurantController extends BaseController
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when no reservation has been foundd"
+     *     404 = "Returned when no reservation has been found"
      *  }
      * )
      *
@@ -102,9 +105,66 @@ class RestaurantController extends BaseController
             'restaurantId' => $restaurantId
         ];
 
-        $restaurantReservations   = $this->getAllOr404($limit, $offset, $filters, $params);
+        $restaurantReservations   = $this->getAllOr404($limit, $offset, $filters, $params, 'reservation');
 
         return $restaurantReservations;
+    }
+
+    /**
+     * List all areas by a given restaurant
+     *
+     * @ApiDoc(
+     *  resource = true,
+     *  description     = "Returns a collection of Area",
+     *  output={
+     *      "class"="Rufy\RestApiBundle\Entity\Area",
+     *      "parser"={
+     *          "Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler"
+     *      }
+     *  },
+     *  requirements={
+     *      {
+     *          "name"="restaurantId",
+     *          "requirement"="\d+",
+     *          "dataType"="integer",
+     *          "description"="Restaurant ID"
+     *      }
+     *  },
+     *  filters={
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
+     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."},
+     *  },
+     *  statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when no reservation has been found"
+     *  }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     *
+     * @param int $restaurantId Restaurant id
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return array
+     *
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function getRestaurantAreasAction($restaurantId, ParamFetcherInterface $paramFetcher)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+
+        $params         = [
+
+            'restaurantId' => $restaurantId
+        ];
+
+        $restaurantAreas   = $this->getAllOr404($limit, $offset, $filters, $params, 'area');
+
+        return $restaurantAreas;
     }
 
     /**
@@ -155,18 +215,18 @@ class RestaurantController extends BaseController
      * @param int $offset
      * @param mixed $params
      *
-     * @return RestaurantInterface
+     * @return RestaurantInterface|AreaInterface
      *
      * @throws NotFoundHttpException
      */
-    private function getAllOr404($limit, $offset, $filters, $params)
+    private function getAllOr404($limit, $offset, $filters, $params, $type)
     {
-        if (!($restaurantReservations = $this->container->get('rufy_api.reservation.handler')->all($limit, $offset, $filters, $params))) {
+        if (!($entities = $this->container->get("rufy_api.$type.handler")->all($limit, $offset, $filters, $params))) {
 
-            throw new NotFoundHttpException(sprintf('The reservations was not found for restaurant  \'%s\'.', $params['restaurantId']));
+            throw new NotFoundHttpException(sprintf("The {$type}s was not found for restaurant  '%s'", $params['restaurantId']));
         }
 
-        return $restaurantReservations;
+        return $entities;
     }
 
     /**

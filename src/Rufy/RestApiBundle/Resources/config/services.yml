@@ -1,8 +1,11 @@
 parameters:
     rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\ReservationHandler
     rufy_api.restaurant.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\RestaurantHandler
+    rufy_api.area.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\AreaHandler
+
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
     rufy_api.restaurant.class: Rufy\RestApiBundle\Entity\Restaurant
+    rufy_api.area.class: Rufy\RestApiBundle\Entity\Area
 
 services:
 
@@ -16,6 +19,9 @@ services:
 
     rufy_api.restaurant.class:
         class: %rufy_api.restaurant.class%
+
+    rufy_api.area.class:
+        class: %rufy_api.area.class%
 
     ## Fine Modelli
     #############################################
@@ -41,6 +47,12 @@ services:
         parent: rufy_api.entity_handler
         calls:
             - [setEntityClass, [@rufy_api.restaurant.class]]
+
+    rufy_api.area.handler:
+        class: %rufy_api.area.handler.class%
+        parent: rufy_api.entity_handler
+        calls:
+            - [setEntityClass, [@rufy_api.area.class]]
 
     ## Fine Handler dei modelli
     #############################################
@@ -73,6 +85,13 @@ services:
 
     security.access.restaurant.voter:
         class:      Rufy\RestApiBundle\Security\Authorization\Voter\RestaurantVoter
+        arguments:  [@doctrine.orm.entity_manager]
+        public:     false
+        tags:
+            - { name: security.voter }
+
+    security.access.area.voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\AreaVoter
         arguments:  [@doctrine.orm.entity_manager]
         public:     false
         tags:

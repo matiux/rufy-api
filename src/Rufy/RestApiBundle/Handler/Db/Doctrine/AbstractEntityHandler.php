@@ -12,7 +12,8 @@ use Rufy\RestApiBundle\Entity\Reservation,
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface,
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface,
     Symfony\Component\Form\FormFactoryInterface,
-    Symfony\Component\Form\FormFactory;
+    Symfony\Component\Form\FormFactory,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class AbstractEntityHandler
 {
@@ -75,5 +76,19 @@ abstract class AbstractEntityHandler
     protected function createResource()
     {
         return new $this->entityClass();
+    }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
+    {
+        $entities = $this->repository->findMore($limit, $offset, $params, $filters);
+
+        if (0 < count($entities))
+            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
+                throw new AccessDeniedException('Accesso non autorizzato!');
+
+        return $entities;
     }
 }

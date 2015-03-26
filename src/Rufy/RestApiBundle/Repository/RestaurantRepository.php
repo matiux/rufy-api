@@ -8,7 +8,7 @@ use Rufy\RestApiBundle\Entity\Restaurant,
     Rufy\RestApiBundle\Entity\Area,
     Rufy\RestApiBundle\Entity\Customer;
 
-class RestaurantRepository extends EntityRepository
+class RestaurantRepository extends EntityRepository implements EntityRepositoryInterface
 {
     /**
      * Find a restaurant by id
@@ -26,12 +26,9 @@ class RestaurantRepository extends EntityRepository
     }
 
     /**
-     * @param $limit
-     * @param $offset
-     * @param $params
-     * @return array
+     * {@inheritdoc }
      */
-    public function findRestaurants($limit, $offset, $params)
+    public function findMore($limit, $offset, $params, $filters = array())
     {
         $userId = $params['userId'];
 
