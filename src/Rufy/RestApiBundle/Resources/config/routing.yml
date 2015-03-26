@@ -14,3 +14,9 @@ restaurants:
     prefix: v1
     resource: Rufy\RestApiBundle\Controller\RestaurantController
     name_prefix:  api_v1_
+
+areas:
+    type: rest
+    prefix: v1
+    resource: Rufy\RestApiBundle\Controller\AreaController
+    name_prefix:  api_v1_

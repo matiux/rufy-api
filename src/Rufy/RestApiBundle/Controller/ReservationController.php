@@ -1,8 +1,7 @@
-<?php namespace Rufy\RestApiBundle\Controller; 
+<?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController,
-    FOS\RestBundle\Controller\Annotations,
-    FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcherInterface,
+    FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -11,7 +10,7 @@ use Rufy\RestApiBundle\Exception\InvalidFormException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ReservationController extends FOSRestController
+class ReservationController extends BaseController
 {
     /**
      * Get single Reservation.
@@ -56,7 +55,7 @@ class ReservationController extends FOSRestController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
 
-        $reservation = $this->getOr404($id);
+        $reservation = $this->getOr404($id, 'reservation');
 
         return $reservation;
     }
@@ -121,7 +120,7 @@ class ReservationController extends FOSRestController
         try {
 
             $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
-                $this->getOr404($id),
+                $this->getOr404($id, 'reservation'),
                 $this->container->get('request')->request->all()
             );
 
@@ -131,24 +130,5 @@ class ReservationController extends FOSRestController
 
             return $exception->getForm();
         }
-    }
-
-    /**
-     * Fetch a Reservation or throw an 404 Exception.
-     *
-     * @param mixed $id
-     *
-     * @return ReservationInterface
-     *
-     * @throws NotFoundHttpException
-     */
-    private function getOr404($id)
-    {
-        if (!($reservation = $this->get('rufy_api.reservation.handler')->get($id))) {
-
-            throw new NotFoundHttpException(sprintf('The Reservation \'%s\' was not found for your Restaurant.', $id));
-        }
-
-        return $reservation;
     }
 }

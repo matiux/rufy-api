@@ -46,7 +46,7 @@ class RestaurantController extends BaseController
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
             throw new AccessDeniedException();
 
-        $restaurant = $this->getOr404($id);
+        $restaurant = $this->getOr404($id, 'restaurant');
 
         return $restaurant;
     }
@@ -199,7 +199,9 @@ class RestaurantController extends BaseController
      *
      * @param int $limit
      * @param int $offset
+     * @param mixed $filters
      * @param mixed $params
+     * @param string $type
      *
      * @return RestaurantInterface|AreaInterface
      *
@@ -213,24 +215,5 @@ class RestaurantController extends BaseController
         }
 
         return $entities;
-    }
-
-    /**
-     * Fetch a Restaurant or throw an 404 Exception.
-     *
-     * @param mixed $id
-     *
-     * @return RestaurantInterface|AreaInterface
-     *
-     * @throws NotFoundHttpException
-     */
-    private function getOr404($id)
-    {
-        if (!($entity = $this->get('rufy_api.restaurant.handler')->get($id))) {
-
-            throw new NotFoundHttpException(sprintf('The Restaurant \'%s\' was not found.', $id));
-        }
-
-        return $entity;
     }
 }
