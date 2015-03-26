@@ -1,9 +1,11 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
+use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Exception\InvalidFormException,
     Rufy\RestApiBundle\Form\ReservationType,
     Rufy\RestApiBundle\Model\ReservationInterface;
 
+use Rufy\RestApiBundle\Model\EntityInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReservationHandler extends AbstractEntityHandler implements EntityHandlerInterface
@@ -63,6 +65,17 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
 
         if ($form->isValid()) {
 
+            if ($method == 'PATCH') {
+
+                $resource->getReservationOptions()->clear();
+                $this->om->persist($resource);
+                $this->om->flush();
+            }
+
+
+            /**
+             * @var $resource Reservation
+             */
             $resource = $form->getData();
 
             if (false === $this->authChecker->isGranted('CREATE', $resource))

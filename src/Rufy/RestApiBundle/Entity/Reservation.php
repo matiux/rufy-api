@@ -16,9 +16,6 @@ use Rufy\RestApiBundle\Model\ReservationInterface,
  */
 class Reservation implements ReservationInterface, EntityInterface
 {
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->reservationOptions   = new ArrayCollection();
@@ -47,8 +44,8 @@ class Reservation implements ReservationInterface, EntityInterface
     public function onPreUpdate()
     {
         //$this->getReservationOptions()->isEmpty();
-        $this->getReservationOptions()->clear();
-        $a = 1;
+        //$this->getReservationOptions()->clear();
+        //$a = 1;
     }
 
     /**
