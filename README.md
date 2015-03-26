@@ -12,3 +12,4 @@ Documentazione: [qui](https://bitbucket.org/rufyteam/rufy-rest-api/wiki)
 - Controllo numero query POST
 - Controllo numero query PATCH
 - Provare a togliere onPrePersist() da Reservation e quindi forse anche i trasformatori nel form
+- Voter hasUser() aree

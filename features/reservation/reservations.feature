@@ -82,7 +82,7 @@ Feature: Testing Reservation API
     Given that I want to add a new "/v1/reservations" with values:
       | field             | value               |
       | people            | 4                   |
-      | time              | 21:15               |
+      | time              | 21:15:00            |
       | date              | 2015-05-26          |
       | note              | Hanno un passeggino |
       | confirmed         | 1                   |

@@ -5,9 +5,10 @@ use Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\PersistentCollection;
 
 use Rufy\RestApiBundle\Entity\Area,
-    Rufy\RestApiBundle\Entity\Reservation;
+    Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Entity\User;
 
-class AreaRepository extends EntityRepository
+class AreaRepository extends EntityRepository implements EntityRepositoryInterface
 {
     public function hasOptions(Reservation $reservation)
     {
@@ -34,5 +35,47 @@ class AreaRepository extends EntityRepository
         }
 
         return true;
+    }
+
+    public function hasUser(Area $restaurant, User $user)
+    {
+//        $restaurantUsers    = $restaurant->getUsers();
+//
+//        if ($restaurantUsers)
+//            foreach ($restaurantUsers as $restaurantUser)
+//                if ($restaurantUser->getId() == $user->getId())
+//                    return true;
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function findMore($limit, $offset, $params, $filters = array())
+    {
+        $restaurantId = $params['restaurantId'];
+
+//        $q = $this->createQueryBuilder('rese')
+//            ->addSelect('a, rest')
+//            ->leftJoin('rese.area', 'a')
+//            ->leftJoin('a.restaurant', 'rest')
+//            ->where('rest.id = :restaurantid')
+//            ->setParameter('restaurantid', $restaurantId);
+
+        $q = $this->createQueryBuilder('area')
+            ->where('area.restaurant = :restaurantid')
+            ->setParameter('restaurantid', $restaurantId);
+
+        foreach ($filters as $filter => $value)
+            $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+
+        $q = $q->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery();
+
+        $areas = $q->getResult();
+
+        return $areas ? $areas : false;
     }
 }

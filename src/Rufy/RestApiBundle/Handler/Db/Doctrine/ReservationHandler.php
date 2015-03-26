@@ -27,20 +27,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     /**
      * {@inheritdoc }
      */
-    public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
-    {
-        $reservations = $this->repository->findReservations($limit, $offset, $params, $filters);
-
-        if (0 < count($reservations))
-            if ($reservations && false === $this->authChecker->isGranted('LISTING', current($reservations)))
-                throw new AccessDeniedException('Accesso non autorizzato!');
-
-        return $reservations;
-    }
-
-    /**
-     * {@inheritdoc }
-     */
     public function post(array $parameters)
     {
         $reservation = $this->createResource();
