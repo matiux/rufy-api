@@ -12,10 +12,45 @@ use Rufy\RestApiBundle\Model\ReservationInterface,
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  */
 class Reservation implements ReservationInterface, EntityInterface
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservationOptions   = new ArrayCollection();
+
+        $this->drawing_height       = 1;
+        $this->drawing_width        = 1;
+        $this->drawing_pos_x        = 0;
+        $this->drawing_pos_y        = 0;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        if (is_string($this->time))
+            $this->time = new \DateTime($this->time);
+
+        if (is_string($this->date))
+            $this->date = new \DateTime($this->date);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        //$this->getReservationOptions()->isEmpty();
+        $this->getReservationOptions()->clear();
+        $a = 1;
+    }
+
     /**
      * Reservation ID
      * @ORM\Id
@@ -126,31 +161,6 @@ class Reservation implements ReservationInterface, EntityInterface
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservationOptions   = new ArrayCollection();
-
-        $this->drawing_height       = 1;
-        $this->drawing_width        = 1;
-        $this->drawing_pos_x        = 0;
-        $this->drawing_pos_y        = 0;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function onPrePersist()
-    {
-        if (is_string($this->time))
-            $this->time = new \DateTime($this->time);
-
-        if (is_string($this->date))
-            $this->date = new \DateTime($this->date);
-    }
 
     /**
      * Set people
