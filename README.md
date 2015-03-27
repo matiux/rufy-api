@@ -11,3 +11,5 @@ Documentazione: [qui](https://bitbucket.org/rufyteam/rufy-rest-api/wiki)
 - Bloccare cors solo per il client
 - Controllare il numero di query durante POST
 - Controllare il numero di query durante PATCH
+
+- Usare sqllite per fixtures
