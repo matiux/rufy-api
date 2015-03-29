@@ -45,7 +45,6 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
 
             'smokers',
             'outside',
-            'full',
             'invalids',
             'animals'
         ];

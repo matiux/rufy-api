@@ -56,9 +56,9 @@ class ReservationRepository extends EntityRepository implements EntityRepository
 
         $q = $this->createQueryBuilder('rese')
             ->select('rese, a, c, opt')
-            ->leftJoin('rese.area', 'a')
-            ->leftJoin('rese.customer', 'c')
-            ->leftJoin('rese.reservationOptions', 'opt')
+            ->join('rese.area', 'a')
+            ->join('rese.customer', 'c')
+            ->join('rese.reservationOptions', 'opt')
             ->where('rese.id = :reservationid')
             ->setParameter('reservationid', $id)
             ->getQuery();
@@ -84,8 +84,8 @@ class ReservationRepository extends EntityRepository implements EntityRepository
 
         $q = $this->createQueryBuilder('rese')
             ->addSelect('a, rest')
-            ->leftJoin('rese.area', 'a')
-            ->leftJoin('a.restaurant', 'rest')
+            ->join('rese.area', 'a')
+            ->join('a.restaurant', 'rest')
             ->where('rest.id = :restaurantid')
             ->setParameter('restaurantid', $restaurantId);
 
