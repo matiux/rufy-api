@@ -43,19 +43,19 @@ Rufy\RestApiBundle\Entity\Reservation:
       - GreaterThan:
           value: 0
           message: "Il numero persone deve essere maggiore di zero"
-    time:
-      - Time:
-          message: Il valore {{ value }} non è un {{ type }} valido.
-      - NotBlank:
-          message: E' necessario impostare l'orario della prenotazione nel formato HH:MM:SS"
-    date:
-      - Type:
-          type: \DateTime
-          message: Il valore {{ value }} non è un {{ type }} valido.
-      - NotBlank:
-          message: Impostare la data
-      - Date:
-          message: "Formato data non valido. Usare YYYY-MM-DD"
+#    time:
+#      - Time:
+#          message: Il valore {{ value }} non è un {{ type }} valido.
+#      - NotBlank:
+#          message: E' necessario impostare l'orario della prenotazione nel formato HH:MM:SS"
+#    date:
+#      - Type:
+#          type: \DateTime
+#          message: Il valore {{ value }} non è un {{ type }} valido.
+#      - NotBlank:
+#          message: Impostare la data
+#      - Date:
+#          message: "Formato data non valido. Usare YYYY-MM-DD"
     note:
       - Type:
           type: string

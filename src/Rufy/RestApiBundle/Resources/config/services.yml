@@ -57,6 +57,15 @@ services:
     ## Fine Handler dei modelli
     #############################################
 
+    ###########################################
+    # Form
+    rufy_api.form.type.reservation:
+        class: Rufy\RestApiBundle\Form\ReservationType
+        arguments: [@security.token_storage]
+        tags:
+            - {name: form.type, alias: reservation_type }
+    ## Fine Form
+    #############################################
 
     ###########################################
     # Transformer

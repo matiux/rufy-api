@@ -33,7 +33,7 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
         $userId = $params['userId'];
 
         $q = $this->createQueryBuilder('r')
-            ->leftJoin('r.users', 'u')
+            ->join('r.users', 'u')
             ->where('u.id = :userid')
             ->setParameter('userid', $userId)
             ->getQuery()
@@ -87,29 +87,50 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
      *
      * @param Restaurant $restaurant
      * @param Customer $customer
+     * @param USer $user
      *
      * @return bool
      */
-    public function hasCustomer(Restaurant $restaurant, Customer $customer)
+    public function hasCustomer(Restaurant $restaurant, Customer $customer, User $user)
     {
-        $q = $this->createQueryBuilder('r')
-            ->select('c.id')
-            ->leftJoin('r.customers', 'c')
-            ->where('c.id = :customerid')
-            ->andWhere('r.id = :restaurantid')
-            ->setParameter('customerid', $customer->getId())
-            ->setParameter('restaurantid', $restaurant->getId())
-            ->getQuery();
+        /**
+         * "Restaurant $restaurant" non è più in uso da quando ho sotituito il controllo sul db con
+         * il codice attuale che si basa sui dati già presi dall'autenticazione. Vedi anche:
+         * Rufy/RestApiBundle/Security/Authorization/Voter/ReservationVoter.php
+         */
 
-        try {
+        $customers = $user->getRestaurants()->map(function($r) use ($customer) {
 
-            $customer = $q->getSingleResult();
+            /**
+             * @var $r Restaurant
+             */
+            return $r->getCustomers()->contains($customer);
 
-            return true;
+        })->exists(function($key, $value) {
 
-        } catch (NoResultException $e) {
+            return $value == true;
+        });
 
-            return false;
-        }
+        return $customers ? true : false;
+
+//        $q = $this->createQueryBuilder('r')
+//            ->select('c.id')
+//            ->join('r.customers', 'c')
+//            ->where('c.id = :customerid')
+//            ->andWhere('r.id = :restaurantid')
+//            ->setParameter('customerid', $customer->getId())
+//            ->setParameter('restaurantid', $restaurant->getId())
+//            ->getQuery();
+//
+//        try {
+//
+//            $customer = $q->getSingleResult();
+//
+//            return true;
+//
+//        } catch (NoResultException $e) {
+//
+//            return false;
+//        }
     }
 }

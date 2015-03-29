@@ -45,7 +45,11 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      */
     private function processForm($resource, array $parameters, $method = 'POST')
     {
-        $form = $this->formFactory->create(new ReservationType(), $resource, array('method' => $method));
+        /**
+         * Invece di new ReservationType() passo 'reservation_type' dato che ReservationType
+         * è registrato come servizio
+         */
+        $form = $this->formFactory->create('reservation_type', $resource, array('method' => $method));
 
         $form->submit($parameters, 'PATCH' !== $method);
 

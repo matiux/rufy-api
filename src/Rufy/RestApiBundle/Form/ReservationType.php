@@ -1,14 +1,25 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
-use Rufy\RestApiBundle\Form\DataTransformer\TimeToString;
+use Rufy\RestApiBundle\Entity\User;
 
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
+    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer,
+    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ReservationType extends AbstractType
 {
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function __construct(TokenStorage $tokenStorage)
+    {
+        $this->user                     = $tokenStorage->getToken()->getUser();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -59,6 +70,6 @@ class ReservationType extends AbstractType
      */
     public function getName()
     {
-        return '';
+        return 'reservation_type';
     }
 }
