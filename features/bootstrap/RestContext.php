@@ -65,7 +65,6 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     public function thatIWantToFindA($resource)
     {
         $this->requestMethod    = self::METHOD_GET;
-
         $this->resource         = $resource;
 
         //throw new PendingException();
@@ -79,6 +78,15 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
         $this->requestMethod    = self::METHOD_POST;
         $this->resource         = $resource;
         $this->toSendData       = $this->prepareToSendData($table->getColumnsHash());
+    }
+
+    /**
+     * @Given that I want delete a reservation :arg1:
+     */
+    public function thatIWantDeleteAReservation($resource)
+    {
+        $this->requestMethod    = self::METHOD_DELETE;
+        $this->resource         = $resource;
     }
 
     /**
@@ -115,15 +123,19 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         if ('POST' == $this->requestMethod) {
 
-            $request     = $this->client->post($url, ['content-type' => 'application/json'], []);
+            $request        = $this->client->post($url, ['content-type' => 'application/json'], []);
             $request->setBody($this->toSendData);
 
         } else if ('PATCH' == $this->requestMethod) {
 
-            $request     = $this->client->patch($url, ['content-type' => 'application/json'], []);
+            $request        = $this->client->patch($url, ['content-type' => 'application/json'], []);
             $request->setBody($this->toSendData);
 
-        } else {
+        } else if ('DELETE' == $this->requestMethod) {
+
+            $request        = $this->client->delete($url);
+        }
+        else {
 
             $request            = $this->client->createRequest($this->requestMethod, $url);
         }

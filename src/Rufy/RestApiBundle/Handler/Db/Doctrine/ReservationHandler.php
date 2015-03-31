@@ -78,7 +78,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      */
     public function put($reservation, array $parameters)
     {
-        return $this->processForm($reservation, $parameters, 'PUT');
+        //return $this->processForm($reservation, $parameters, 'PUT');
     }
 
     /**
@@ -94,10 +94,22 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
+     * TODO
+     * Finire metodo:
+     * Testare che non si possano cancellare prenotazioni di altri ristoranti
+     * Controllo cancellazione prenotazioni esistenti
      * {@inheritdoc }
      */
-    public function delete($entity)
+    public function delete($resource)
     {
 
+        if (false === $this->authChecker->isGranted('DELETE', $resource))
+            throw new AccessDeniedException('Accesso non autorizzato!');
+
+        //$status = $this->om->remove($this->om->getReference('RufyRestApiBundle:Reservation', $reservationId));
+        $status = $this->om->remove($resource);
+        $this->om->flush();
+
+        $a = 1;
     }
 }

@@ -118,6 +118,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
 
     /**
+     * TODO
+     * Migliorare utilizzando metodo Collection::exists()
+     *
      * Controlla se una prenotazione appartiene all'utente che cerca di visualizzarla
      *
      * @param Reservation|array $reservation

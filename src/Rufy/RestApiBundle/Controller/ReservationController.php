@@ -7,6 +7,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -105,6 +106,9 @@ class ReservationController extends BaseController
      */
     public function patchReservationAction($id)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
         try {
 
             $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
@@ -117,6 +121,47 @@ class ReservationController extends BaseController
         } catch(InvalidFormException $exception) {
 
             return $exception->getForm();
+        }
+    }
+
+    /**
+     * Delete existing reservation
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Reservation ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "Returned when the reservation is not found"
+     *   }
+     * )
+     *
+     * @param int $id Reservation id
+     *
+     *
+     * @throws NotFoundHttpException when reservation not exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function deleteReservationAction($id)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $reservation = $this->getOr404($id, 'reservation');
+
+        try {
+
+            $reservation = $this->container->get('rufy_api.reservation.handler')->delete($reservation);
+
+        } catch (Exception $e) {
+
+
         }
     }
 }
