@@ -139,6 +139,7 @@ class ReservationController extends BaseController
      *   statusCodes = {
      *     204 = "Returned when successful",
      *     404 = "Returned when the reservation is not found"
+     *     403 = "Returned when you try to delete a reservation of another restaurant"
      *   }
      * )
      *
@@ -155,13 +156,6 @@ class ReservationController extends BaseController
 
         $reservation = $this->getOr404($id, 'reservation');
 
-        try {
-
-            $reservation = $this->container->get('rufy_api.reservation.handler')->delete($reservation);
-
-        } catch (Exception $e) {
-
-
-        }
+        $this->container->get('rufy_api.reservation.handler')->delete($reservation);
     }
 }

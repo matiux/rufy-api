@@ -94,10 +94,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * TODO
-     * Finire metodo:
-     * Testare che non si possano cancellare prenotazioni di altri ristoranti
-     * Controllo cancellazione prenotazioni esistenti
      * {@inheritdoc }
      */
     public function delete($resource)
@@ -109,7 +105,5 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
         //$status = $this->om->remove($this->om->getReference('RufyRestApiBundle:Reservation', $reservationId));
         $status = $this->om->remove($resource);
         $this->om->flush();
-
-        $a = 1;
     }
 }

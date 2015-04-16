@@ -186,6 +186,6 @@ Feature: Testing Reservation API
 
   @deletereservation
   Scenario: Delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/1":
+    Given that I want delete a reservation "/v1/reservations/2":
     When I request a resource
     Then the response status code should be 204
