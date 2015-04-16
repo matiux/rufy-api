@@ -138,7 +138,7 @@ class ReservationController extends BaseController
      *  },
      *   statusCodes = {
      *     204 = "Returned when successful",
-     *     404 = "Returned when the reservation is not found"
+     *     404 = "Returned when the reservation is not found",
      *     403 = "Returned when you try to delete a reservation of another restaurant"
      *   }
      * )

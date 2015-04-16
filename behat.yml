@@ -1,16 +1,6 @@
 default:
     suites:
 
-        rufy_restapibundle.restaurant:
-            type: symfony_bundle
-            bundle: RufyRestApiBundle
-            paths:
-                - %paths.base%/features/restaurant
-            contexts:
-                - FeatureRestaurantContext:
-                    guzzleClient: '@guzzle.client'
-                    baseUrl: 'http://rufysf.local/api'
-
         rufy_restapibundle.reservation:
             type: symfony_bundle
             bundle: RufyRestApiBundle
@@ -19,7 +9,17 @@ default:
             contexts:
                 - FeatureReservationContext:
                     guzzleClient: '@guzzle.client'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufysf.local/app_dev.php/api'
+
+        rufy_restapibundle.restaurant:
+            type: symfony_bundle
+            bundle: RufyRestApiBundle
+            paths:
+                - %paths.base%/features/restaurant
+            contexts:
+                - FeatureRestaurantContext:
+                    guzzleClient: '@guzzle.client'
+                    baseUrl: 'http://rufysf.local/app_dev.php/api'
 
         rufy_restapibundle.area:
             type: symfony_bundle
@@ -29,6 +29,10 @@ default:
             contexts:
                 - FeatureReservationContext:
                     guzzleClient: '@guzzle.client'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufysf.local/app_dev.php/api'
     extensions:
         Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+            sessions:
+                my_session:
+                    goutte: ~

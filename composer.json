@@ -21,19 +21,19 @@
         "friendsofsymfony/rest-bundle": "dev-master",
         "nelmio/api-doc-bundle": "@dev",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
-        "misd/guzzle-bundle": "~1.0",
         "samj/fractal-bundle": "dev-master",
         "nelmio/cors-bundle": "~1.4"
-
     },
     "require-dev": {
+        "misd/guzzle-bundle": "~1.0",
         "sensio/generator-bundle": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
         "phpunit/phpunit": "3.7.*",
         "behat/symfony2-extension": "dev-master",
         "phpspec/phpspec": "dev-master",
-        "andres-montanez/magallanes": "~1.0.1"
-
+        "andres-montanez/magallanes": "~1.0.1",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.1"
     },
     "scripts": {
         "post-root-package-install": [
