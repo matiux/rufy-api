@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Rufy\RestApiBundle\RufyRestApiBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Misd\GuzzleBundle\MisdGuzzleBundle(),
             new SamJ\FractalBundle\SamJFractalBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
 

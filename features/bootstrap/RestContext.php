@@ -2,15 +2,16 @@
 
 use Behat\Behat\Tester\Exception\PendingException,
     Behat\Behat\Context\Context,
-    Behat\Behat\Context\SnippetAcceptingContext;
-
-use Behat\Gherkin\Node\PyStringNode,
+    Behat\Behat\Context\SnippetAcceptingContext,
+    Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use Rufy\RestApiBundle\Utility\String;
 
 class RestContext implements Context, SnippetAcceptingContext, RestContextInterface
 {
+    use Behat\Symfony2Extension\Context\KernelDictionary;
+
     /**
      * @var \Guzzle\Http\Client
      */
@@ -42,10 +43,14 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
      * @var array
      */
     protected $toSendData = [];
+    protected $user;
+    protected $password;
 
-    public function __construct($guzzleClient, $baseUrl)
+    protected $softDelete = true;
+
+    public function __construct(\Symfony\Bundle\FrameworkBundle\Client $testClient, $baseUrl)
     {
-        $this->client           = $guzzleClient;
+        $this->client           = $testClient;
         $this->baseApiUrl       = $baseUrl;
     }
 
@@ -54,9 +59,8 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
      */
     public function imLoggedInWithCredentials($user, $password)
     {
-        $this->client->setDefaultOption('auth', array($user, $password, 'Basic'));
-
-        //throw new PendingException();
+        $this->user         = $user;
+        $this->password     = $password;
     }
 
     /**
@@ -123,28 +127,64 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         if ('POST' == $this->requestMethod) {
 
-            $request        = $this->client->post($url, ['content-type' => 'application/json'], []);
-            $request->setBody($this->toSendData);
+            $this->client->request(
+                'POST',
+                $url,
+                array(),
+                array(),
+                array(
+                'PHP_AUTH_USER' => $this->user,
+                'PHP_AUTH_PW'   => $this->password,
+                'CONTENT_TYPE' => 'application/json'
+            ),
+                $this->toSendData);
 
         } else if ('PATCH' == $this->requestMethod) {
 
-            $request        = $this->client->patch($url, ['content-type' => 'application/json'], []);
-            $request->setBody($this->toSendData);
+            $this->client->request(
+                'PATCH',
+                $url,
+                array(),
+                array(),
+                array(
+                    'PHP_AUTH_USER' => $this->user,
+                    'PHP_AUTH_PW'   => $this->password,
+                    'CONTENT_TYPE' => 'application/json'
+                ),
+                $this->toSendData);
+
 
         } else if ('DELETE' == $this->requestMethod) {
 
-            $request        = $this->client->delete($url);
+            if ($this->softDelete) {
+
+                $this->client->request(
+                    'DELETE',
+                    $url,
+                    array(),
+                    array(),
+                    array(
+                        'PHP_AUTH_USER' => $this->user,
+                        'PHP_AUTH_PW'   => $this->password
+                    )
+                );
+            } else {
+
+            }
         }
         else {
 
-            $request            = $this->client->createRequest($this->requestMethod, $url);
+            $this->client->request('GET', $url, array(), array(), array(
+
+                'PHP_AUTH_USER' => $this->user,
+                'PHP_AUTH_PW'   => $this->password,
+            ));
         }
 
-        $this->response     = $this->client->send($request);
-        $this->body         = $this->response->json();
+        $this->body         = json_decode($this->client->getResponse()->getContent(), true);
 
-        PHPUnit_Framework_Assert::assertNotEquals(null, $this->response, "The response is null");
-        PHPUnit_Framework_Assert::assertTrue(is_a($this->response, 'Guzzle\Http\Message\Response'), 'The response is not of GuzzleHttp\Message\Response type');
+        PHPUnit_Framework_Assert::assertNotEquals(null, $this->client->getResponse(), "The response is null");
+        PHPUnit_Framework_Assert::assertTrue(is_a($this->client->getResponse(), 'Symfony\Component\HttpFoundation\Response'), 'The response is not of GuzzleHttp\Message\Response type');
 
         //throw new PendingException();
     }
@@ -155,7 +195,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     public function theResponseStatusCodeShouldBe($responseStatus)
     {
 
-        PHPUnit_Framework_Assert::assertEquals($responseStatus, $this->response->getStatusCode(), 'The response status is not equal');
+        PHPUnit_Framework_Assert::assertEquals($responseStatus, $this->client->getResponse()->getStatusCode(), 'The response status is not equal');
 
         //throw new PendingException();
     }
@@ -165,7 +205,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
      */
     public function theResponseTypeShouldBe($responseType)
     {
-        PHPUnit_Framework_Assert::assertTrue($this->response->getHeader('content-type')->hasValue($responseType), 'The response status is not '.$responseType);
+        PHPUnit_Framework_Assert::assertTrue($this->client->getResponse()->headers->contains('content-type', $responseType), 'The response status is not '.$responseType);
 
         //throw new PendingException();
     }
@@ -183,7 +223,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     /**
      * @Then :arg1 contains:
      */
-    public function contains($path, PyStringNode $strings)
+    public function containsArgs($path, PyStringNode $strings)
     {
         $strings    = $strings->getStrings();
         $path       = new String($path);
@@ -226,6 +266,16 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
                 PHPUnit_Framework_Assert::assertArrayHasKey($key, $item, "$key does not exists in $path");
             }
         }
+
+        //throw new PendingException();
+    }
+
+    /**
+     * @Given I want to permanently delete
+     */
+    public function iWantToPermanentlyDelete()
+    {
+        $this->softDelete = false;
 
         //throw new PendingException();
     }

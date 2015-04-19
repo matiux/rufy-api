@@ -184,8 +184,15 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 204
 
-  @deletereservation
+  @softdeletereservation
   Scenario: Delete a Reservation
     Given that I want delete a reservation "/v1/reservations/2":
+    When I request a resource
+    Then the response status code should be 204
+
+  @harddeletereservation
+  Scenario: Hard delete a Reservation
+    Given that I want delete a reservation "/v1/reservations/2":
+    And I want to permanently delete
     When I request a resource
     Then the response status code should be 204
