@@ -6,14 +6,16 @@ use Behat\Behat\Tester\Exception\PendingException,
     Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
+use Doctrine\ORM\EntityManager;
+
+use \Symfony\Bundle\FrameworkBundle\Client;
+
 use Rufy\RestApiBundle\Utility\String;
 
 class RestContext implements Context, SnippetAcceptingContext, RestContextInterface
 {
-    use Behat\Symfony2Extension\Context\KernelDictionary;
-
     /**
-     * @var \Guzzle\Http\Client
+     * @var Client
      */
     protected $client;
 
@@ -32,35 +34,26 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
      */
     protected $resource;
 
-    /**
-     * @var \Guzzle\Http\Message\Response
-     */
-    protected $response;
-
     protected $body;
 
     /**
      * @var array
      */
     protected $toSendData = [];
+
     protected $user;
+
     protected $password;
 
-    protected $softDelete = true;
+    /**
+     * @var EntityManager
+     */
+    protected $em;
 
-    public function __construct(\Symfony\Bundle\FrameworkBundle\Client $testClient, $baseUrl)
+    public function __construct(Client $testClient, $baseUrl)
     {
         $this->client           = $testClient;
         $this->baseApiUrl       = $baseUrl;
-    }
-
-    /**
-     * @Given im logged in with credentials :user :password
-     */
-    public function imLoggedInWithCredentials($user, $password)
-    {
-        $this->user         = $user;
-        $this->password     = $password;
     }
 
     /**
@@ -133,10 +126,10 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
                 array(),
                 array(),
                 array(
-                'PHP_AUTH_USER' => $this->user,
-                'PHP_AUTH_PW'   => $this->password,
-                'CONTENT_TYPE' => 'application/json'
-            ),
+                    'PHP_AUTH_USER'     => $this->user,
+                    'PHP_AUTH_PW'       => $this->password,
+                    'CONTENT_TYPE'      => 'application/json'
+                ),
                 $this->toSendData);
 
         } else if ('PATCH' == $this->requestMethod) {
@@ -156,21 +149,16 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         } else if ('DELETE' == $this->requestMethod) {
 
-            if ($this->softDelete) {
-
-                $this->client->request(
-                    'DELETE',
-                    $url,
-                    array(),
-                    array(),
-                    array(
-                        'PHP_AUTH_USER' => $this->user,
-                        'PHP_AUTH_PW'   => $this->password
-                    )
-                );
-            } else {
-
-            }
+            $this->client->request(
+                'DELETE',
+                $url,
+                array(),
+                array(),
+                array(
+                    'PHP_AUTH_USER' => $this->user,
+                    'PHP_AUTH_PW'   => $this->password
+                )
+            );
         }
         else {
 
@@ -266,16 +254,6 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
                 PHPUnit_Framework_Assert::assertArrayHasKey($key, $item, "$key does not exists in $path");
             }
         }
-
-        //throw new PendingException();
-    }
-
-    /**
-     * @Given I want to permanently delete
-     */
-    public function iWantToPermanentlyDelete()
-    {
-        $this->softDelete = false;
 
         //throw new PendingException();
     }

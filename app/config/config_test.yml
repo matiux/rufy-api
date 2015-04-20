@@ -24,3 +24,8 @@ doctrine:
                 driver:   pdo_sqlite
                 path:     %kernel.root_dir%/../features/data/test_fixtures.db
                 charset:  UTF8
+
+#stof_doctrine_extensions:
+#    orm:
+#        default:
+#            softdeleteable: false

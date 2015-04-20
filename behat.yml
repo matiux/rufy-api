@@ -10,6 +10,7 @@ default:
                 - FeatureReservationContext:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
+                    #entityManager: '@doctrine.orm.entity_manager'
                     baseUrl: 'http://rufysf.local/api'
 
         rufy_restapibundle.restaurant:
@@ -35,7 +36,3 @@ default:
                     baseUrl: 'http://rufysf.local/api'
     extensions:
         Behat\Symfony2Extension: ~
-        Behat\MinkExtension:
-            sessions:
-                default:
-                    symfony2: ~

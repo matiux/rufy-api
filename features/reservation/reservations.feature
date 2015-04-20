@@ -11,8 +11,9 @@ Feature: Testing Reservation API
     - List
 
   Background: Steps that run before each scenario
-    Given im logged in with credentials "matiux" "281285"
-
+    Given that I prepare database
+    And that im logged in with credentials "matiux" "281285"
+#    Given that im logged in with credentials "matiux" "281285"
 
   @createreservation
   Scenario: Creating a New Reservation
@@ -110,7 +111,7 @@ Feature: Testing Reservation API
 
   @singlereservation
   Scenario: Get a Reservation by ID
-    Given that I want to find a "/v1/reservations/1"
+    Given that I want to find a "/v1/reservations/4"
     When I request a resource
     Then the response status code should be 200
       And the response type should be "application/json"
@@ -174,7 +175,7 @@ Feature: Testing Reservation API
 
   @updatereservation
   Scenario: Update an existing Reservation
-    Given that I want update an existing "/v1/reservations/1" with values:
+    Given that I want update an existing "/v1/reservations/5" with values:
       | field             | value               |
       | people            | 5                   |
       | time              | 21:30:00            |
@@ -184,15 +185,14 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 204
 
-  @softdeletereservation
-  Scenario: Delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/2":
-    When I request a resource
-    Then the response status code should be 204
-
-  @harddeletereservation
-  Scenario: Hard delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/2":
-    And I want to permanently delete
-    When I request a resource
-    Then the response status code should be 204
+#  @softdeletereservation
+#  Scenario: Delete a Reservation
+#    Given that I want delete a reservation "/v1/reservations/4":
+#    When I request a resource
+#    Then the response status code should be 204
+#
+#  @softdeletereservation
+#  Scenario: Delete a Reservation
+#    Given that I want delete a reservation "/v1/reservations/5":
+#    When I request a resource
+#    Then the response status code should be 204
