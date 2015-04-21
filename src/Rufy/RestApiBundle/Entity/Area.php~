@@ -1,16 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\AreaInterface;
+
+use Rufy\RestApiBundle\Model\AreaInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\AreaRepository")
  * @ORM\Table(name="area", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Area implements AreaInterface
+class Area implements AreaInterface, EntityInterface
 {
     public function __construct() {
 
@@ -33,6 +36,12 @@ class Area implements AreaInterface
      * @ORM\Column(type="boolean", options={"default":0})
      */
     private $full;
+
+    /**
+     * The number of the people
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
+     */
+    private $maxPeople;
 
     /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="areas", cascade={"persist","remove"})
@@ -302,5 +311,34 @@ class Area implements AreaInterface
     public function getAreaOptions()
     {
         return $this->areaOptions;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set maxPeople
+     *
+     * @param integer $maxPeople
+     *
+     * @return Area
+     */
+    public function setMaxPeople($maxPeople)
+    {
+        $this->maxPeople = $maxPeople;
+
+        return $this;
+    }
+
+    /**
+     * Get maxPeople
+     *
+     * @return integer
+     */
+    public function getMaxPeople()
+    {
+        return $this->maxPeople;
     }
 }

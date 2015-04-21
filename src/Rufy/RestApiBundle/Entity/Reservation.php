@@ -53,6 +53,12 @@ class Reservation implements ReservationInterface, EntityInterface
     private $people;
 
     /**
+     * The number of the extra people
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned":true, "default":0})
+     */
+    private $peopleExtra;
+
+    /**
      * Time to reservation
      * @ORM\Column(type="time", nullable=true)
      */
@@ -64,15 +70,13 @@ class Reservation implements ReservationInterface, EntityInterface
     private $date;
 
     /**
-     * Is reservation confirmed
-     * @ORM\Column(type="boolean", options={"default":1}, nullable=false)
+     * The status code:
+     * 0 = Waiting list
+     * 1 = To confirm
+     * 2 = Confirmed
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $confirmed;
-
-    /**
-     * @ORM\Column(type="boolean", options={"default":0}, nullable=false)
-     */
-    private $waiting;
+    private $status;
 
     /**
      * @ORM\Column(type="text")
@@ -171,55 +175,6 @@ class Reservation implements ReservationInterface, EntityInterface
     public function getPeople()
     {
         return $this->people;
-    }
-
-
-    /**
-     * Set confirmed
-     *
-     * @param boolean $confirmed
-     *
-     * @return Reservation
-     */
-    public function setConfirmed($confirmed)
-    {
-        $this->confirmed = $confirmed;
-
-        return $this;
-    }
-
-    /**
-     * Get confirmed
-     *
-     * @return boolean
-     */
-    public function getConfirmed()
-    {
-        return $this->confirmed;
-    }
-
-    /**
-     * Set waiting
-     *
-     * @param boolean $waiting
-     *
-     * @return Reservation
-     */
-    public function setWaiting($waiting)
-    {
-        $this->waiting = $waiting;
-
-        return $this;
-    }
-
-    /**
-     * Get waiting
-     *
-     * @return boolean
-     */
-    public function getWaiting()
-    {
-        return $this->waiting;
     }
 
     /**
@@ -597,5 +552,53 @@ class Reservation implements ReservationInterface, EntityInterface
     public function getReservationOptions()
     {
         return $this->reservationOptions;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Reservation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set peopleExtra
+     *
+     * @param integer $peopleExtra
+     *
+     * @return Reservation
+     */
+    public function setPeopleExtra($peopleExtra)
+    {
+        $this->peopleExtra = $peopleExtra;
+
+        return $this;
+    }
+
+    /**
+     * Get peopleExtra
+     *
+     * @return integer
+     */
+    public function getPeopleExtra()
+    {
+        return $this->peopleExtra;
     }
 }

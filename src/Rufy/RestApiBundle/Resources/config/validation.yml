@@ -43,6 +43,10 @@ Rufy\RestApiBundle\Entity\Reservation:
       - GreaterThan:
           value: 0
           message: "Il numero persone deve essere maggiore di zero"
+    people_extra:
+      - Type:
+          type: integer
+          message: Il valore {{ value }} non è un {{ type }} valido.
 #    time:
 #      - Time:
 #          message: Il valore {{ value }} non è un {{ type }} valido.
@@ -60,17 +64,11 @@ Rufy\RestApiBundle\Entity\Reservation:
       - Type:
           type: string
           message: note deve essere passato come string
-    confirmed:
+    status:
       - NotBlank:
-          message: Confirmed deve essere fornito, 0 o 1
+          message: Status deve essere fornito
       - Type:
-          type: bool
-          message: Il valore {{ value }} non è un {{ type }} valido.
-    waiting:
-      - NotBlank:
-          message: Waiting deve essere fornito, 0 o 1
-      - Type:
-          type: bool
+          type: integer
           message: Il valore {{ value }} non è un {{ type }} valido.
     table_name:
       - NotBlank:

@@ -1,16 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Rufy\RestApiBundle\Model\OwnerInterface;
+
+use Doctrine\ORM\Mapping AS ORM,
+    Doctrine\Common\Collections\ArrayCollection;
+
+use Rufy\RestApiBundle\Model\EntityInterface,
+    Rufy\RestApiBundle\Model\OwnerInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="owner", options={"collate"="utf8_general_ci", "charset"="utf8"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Owner implements OwnerInterface
+class Owner implements OwnerInterface, EntityInterface
 {
     /**
      * @ORM\Id

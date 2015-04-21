@@ -14,6 +14,7 @@ class AreaTransformer extends Fractal\TransformerAbstract
             'restaurant_id' => $area->getRestaurant()->getId(),
             'name'          => $area->getName(),
             'full'          => $area->getFull(),
+            'max_people'    => $area->getMaxPeople(),
         ];
     }
 }

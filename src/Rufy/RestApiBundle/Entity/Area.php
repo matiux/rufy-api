@@ -38,6 +38,12 @@ class Area implements AreaInterface, EntityInterface
     private $full;
 
     /**
+     * The number of the people
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
+     */
+    private $maxPeople;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="areas", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      */
@@ -310,5 +316,29 @@ class Area implements AreaInterface, EntityInterface
     public function __toString()
     {
         return $this->id;
+    }
+
+    /**
+     * Set maxPeople
+     *
+     * @param integer $maxPeople
+     *
+     * @return Area
+     */
+    public function setMaxPeople($maxPeople)
+    {
+        $this->maxPeople = $maxPeople;
+
+        return $this;
+    }
+
+    /**
+     * Get maxPeople
+     *
+     * @return integer
+     */
+    public function getMaxPeople()
+    {
+        return $this->maxPeople;
     }
 }

@@ -12,10 +12,8 @@ interface ReservationInterface {
     public function getTime();
     public function setDate($date);
     public function getDate();
-    public function setConfirmed($confirmed);
-    public function getConfirmed();
-    public function setWaiting($waiting);
-    public function getWaiting();
+    public function setStatus($confirmed);
+    public function getStatus();
     public function setDrawingWidth($drawingWidth);
     public function getDrawingWidth();
     public function setDrawingHeight($drawingHeight);

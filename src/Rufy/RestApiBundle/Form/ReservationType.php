@@ -30,13 +30,13 @@ class ReservationType extends AbstractType
 
         $builder
             ->add('people')
+            ->add('people_extra')
             //->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
             ->add($builder->create('time', 'text')->addModelTransformer($timeTransformer))
             //->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd'])
             ->add($builder->create('date', 'text')->addModelTransformer($dateTransformer))
             ->add('note')
-            ->add('confirmed')
-            ->add('waiting')
+            ->add('status')
             ->add('table_name')
 //            ->add('drawing_width')
 //            ->add('drawing_height')

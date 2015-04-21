@@ -1,15 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity; 
 
-use Rufy\RestApiBundle\Model\ReservationOptionInterface;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+
+use Rufy\RestApiBundle\Model\ReservationOptionInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="reservation_option", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
+ * @ORM\Table(name="reservation_option", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB", "comment"="Tabella delle opzioni disponibili da applicare alle sale e di conseguenza alle prenotazioni"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class ReservationOption implements ReservationOptionInterface
+class ReservationOption implements ReservationOptionInterface, EntityInterface
 {
     /**
      * @ORM\Id

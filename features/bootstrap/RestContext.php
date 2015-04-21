@@ -42,7 +42,6 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     protected $toSendData = [];
 
     protected $user;
-
     protected $password;
 
     /**
@@ -54,6 +53,18 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     {
         $this->client           = $testClient;
         $this->baseApiUrl       = $baseUrl;
+
+        if (!file_exists('features/data/test.lock')) {
+
+            fopen('features/data/test.lock', 'w');
+
+            /**
+             * Preparo il database
+             */
+            exec('php app/console doctrine:schema:drop --force --env=test');
+            exec('php app/console doctrine:schema:update --env=test --force');
+            exec('php app/console doctrine:fixtures:load --env=test --no-interaction');
+        }
     }
 
     /**
@@ -223,6 +234,39 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
         }
 
         //throw new PendingException();
+    }
+
+    /**
+     * @Then :arg1 doesn't contains:
+     */
+    public function doesnTContains($path, PyStringNode $strings)
+    {
+        $strings    = $strings->getStrings();
+        $path       = new String($path);
+        $array      = $path->pathToArray($this->body);
+
+        foreach ($strings as $key) {
+
+            PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $array, "$key does not exists in $path");
+        }
+    }
+
+    /**
+     * @Then each :arg1 item doesn't contains:
+     */
+    public function eachItemDoesnTContains($arg1, PyStringNode $strings)
+    {
+        $path       = new String($arg1);
+        $strings    = $strings->getStrings();
+        $array      = $path->pathToArray($this->body);
+
+        foreach ($array as $item) {
+
+            foreach ($strings as $key) {
+
+                PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $item, "$key does not exists in $path");
+            }
+        }
     }
 
     /**

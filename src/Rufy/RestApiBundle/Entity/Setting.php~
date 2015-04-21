@@ -1,15 +1,19 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\SettingInterface;
+
+use Rufy\RestApiBundle\Model\SettingInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="setting", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Setting implements SettingInterface
+class Setting implements SettingInterface, EntityInterface
 {
     /**
      * @ORM\Id

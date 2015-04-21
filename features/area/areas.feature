@@ -11,7 +11,7 @@ Feature: Testing Area API
   - List
 
   Background: Steps that run before each scenario
-    Given im logged in with credentials "matiux" "281285"
+    Given that im logged in with credentials "matiux" "281285"
 
   @singlearea
   Scenario: Get an Area by ID
@@ -25,7 +25,11 @@ Feature: Testing Area API
       id
       restaurant_id
       name
+      max_people
       full
+      """
+    And "data" doesn't contains:
+      """
       """
 
   @collectionarea
@@ -37,9 +41,17 @@ Feature: Testing Area API
     And the response contains key "data"
     And "data" is a collection
     And each "data" item contains:
-        """
-        id
-        restaurant_id
-        name
-        full
-        """
+      """
+      id
+      restaurant_id
+      name
+      max_people
+      full
+      """
+    And each "data" item doesn't contains:
+      """
+      """
+
+  @endtest
+  Scenario: Terminate test
+    Given that I want complete the test

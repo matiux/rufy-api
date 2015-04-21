@@ -19,13 +19,13 @@ class LoadRestaurant extends AbstractFixture implements OrderedFixtureInterface
         $restaurant = new Restaurant();
         $restaurant->setName('Pousada');
         $restaurant->setRestDate(2);
-        $this->setReference('restaurant1', $restaurant);
+        $this->setReference('pousada', $restaurant);
 
 
         $restaurant = new Restaurant();
         $restaurant->setName('Hotelito');
         $restaurant->setRestDate(1);
-        $this->setReference('restaurant2', $restaurant);
+        $this->setReference('hotelito', $restaurant);
 
         $restaurant = new Restaurant();
         $restaurant->setName('Lo chiamavano cariola');

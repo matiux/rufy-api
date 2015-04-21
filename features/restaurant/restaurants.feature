@@ -11,7 +11,7 @@ Feature: Testing Restaurant API
   - List
 
   Background: Steps that run before each scenario
-    Given im logged in with credentials "matiux" "281285"
+    Given that im logged in with credentials "matiux" "281285"
 
   @singlerestaurant
   Scenario: Get a Restaurant by ID
@@ -41,3 +41,7 @@ Feature: Testing Restaurant API
       name
       restDate
       """
+
+  @endtest
+  Scenario: Terminate test
+    Given that I want complete the test

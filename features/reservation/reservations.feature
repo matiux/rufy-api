@@ -11,20 +11,18 @@ Feature: Testing Reservation API
     - List
 
   Background: Steps that run before each scenario
-    Given that I prepare database
-    And that im logged in with credentials "matiux" "281285"
-#    Given that im logged in with credentials "matiux" "281285"
+    Given that im logged in with credentials "matiux" "281285"
 
   @createreservation
   Scenario: Creating a New Reservation
     Given that I want to add a new "/v1/reservations" with values:
       | field              | value               |
       | people             | 4                   |
+      | people_extra       | 0                   |
       | time               | 21:15:00            |
       | date               | 2015-05-26          |
       | note               | Hanno un passeggino |
-      | confirmed          | 1                   |
-      | waiting            | 0                   |
+      | status             | 1                   |
       | table_name         | 12                  |
       | customer           | 2                   |
       | area               | 1                   |
@@ -34,44 +32,49 @@ Feature: Testing Reservation API
     And the response type should be "application/json"
     And the response contains key "data"
     And "data" contains:
-          """
-          name
-          phone
-          area
-          areaId
-          tableName
-          people
-          date
-          note
-          time
-          confirmed
-          waiting
-          drawingWidth
-          drawingHeight
-          drawingPosX
-          drawingPosY
-          reservationOptions
-          """
+      """
+      name
+      phone
+      area
+      areaId
+      tableName
+      people
+      people_extra
+      date
+      note
+      time
+      status
+      drawingWidth
+      drawingHeight
+      drawingPosX
+      drawingPosY
+      reservationOptions
+      """
+    And "data" doesn't contains:
+      """
+      confirmed
+      waiting
+      """
     And "data.reservationOptions" contains:
-          """
-          data
-          """
+      """
+      data
+      """
     And "data.reservationOptions.data.0" contains:
-          """
-          id
-          slug
-          """
+      """
+      id
+      slug
+      """
 
   @createreservation
   Scenario: Creating a New Reservation
     Given that I want to add a new "/v1/reservations" with values:
       | field             | value               |
       | people            | 6                   |
+      | people_extra      | 2                   |
       | time              | 20:30:00            |
       | date              | 2015-04-15          |
       | note              | Hanno un cane       |
-      | confirmed         | 1                   |
-      | waiting           | 0                   |
+      | status            | 2                   |
       | table_name        | 15                  |
       | customer          | 1                   |
       | area              | 2                   |
@@ -81,33 +84,36 @@ Feature: Testing Reservation API
     And the response type should be "application/json"
     And the response contains key "data"
     And "data" contains:
-          """
-          name
-          phone
-          area
-          areaId
-          tableName
-          people
-          date
-          note
-          time
-          confirmed
-          waiting
-          drawingWidth
-          drawingHeight
-          drawingPosX
-          drawingPosY
-          reservationOptions
-          """
+      """
+      name
+      phone
+      area
+      areaId
+      tableName
+      people
+      people_extra
+      date
+      note
+      time
+      status
+      drawingWidth
+      drawingHeight
+      drawingPosX
+      drawingPosY
+      reservationOptions
+      """
+    And "data" doesn't contains:
+      """
+      """
     And "data.reservationOptions" contains:
-          """
-          data
-          """
+      """
+      data
+      """
     And "data.reservationOptions.data.0" contains:
-          """
-          id
-          slug
-          """
+      """
+      id
+      slug
+      """
 
   @singlereservation
   Scenario: Get a Reservation by ID
@@ -124,11 +130,11 @@ Feature: Testing Reservation API
         areaId
         tableName
         people
+        people_extra
         date
         note
         time
-        confirmed
-        waiting
+        status
         drawingWidth
         drawingHeight
         drawingPosX
@@ -161,11 +167,11 @@ Feature: Testing Reservation API
         areaId
         tableName
         people
+        people_extra
         date
         note
         time
-        confirmed
-        waiting
+        status
         drawingWidth
         drawingHeight
         drawingPosX
@@ -185,14 +191,30 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 204
 
-#  @softdeletereservation
-#  Scenario: Delete a Reservation
-#    Given that I want delete a reservation "/v1/reservations/4":
-#    When I request a resource
-#    Then the response status code should be 204
-#
-#  @softdeletereservation
-#  Scenario: Delete a Reservation
-#    Given that I want delete a reservation "/v1/reservations/5":
-#    When I request a resource
-#    Then the response status code should be 204
+  @softdeletereservation
+  Scenario: Delete a Reservation
+    Given that I want delete a reservation "/v1/reservations/4":
+    When I request a resource
+    Then the response status code should be 204
+
+  @softdeletereservation
+  Scenario: Delete a Reservation
+    Given that I want delete a reservation "/v1/reservations/5":
+    When I request a resource
+    Then the response status code should be 204
+
+  @softdeletereservationnotexists
+  Scenario: Delete a non existent Reservation
+    Given that I want delete a reservation "/v1/reservations/50":
+    When I request a resource
+    Then the response status code should be 404
+
+  @softdeletereservationanother
+  Scenario: Delete a Reservation of another Restaurant
+    Given that I want delete a reservation "/v1/reservations/3":
+    When I request a resource
+    Then the response status code should be 403
+
+  @endtest
+  Scenario: Terminate test
+    Given that I want complete the test

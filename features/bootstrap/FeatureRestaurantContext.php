@@ -1,9 +1,6 @@
 <?php
 
-class FeatureRestaurantContext extends RestContext
+class FeatureRestaurantContext extends BasicContext
 {
-    public function __construct($testClient, $baseUrl)
-    {
-        parent::__construct($testClient, $baseUrl);
-    }
+
 }

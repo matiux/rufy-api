@@ -1,10 +1,14 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\RoleInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface as SymfonyRoleInterface;
+
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Rufy\RestApiBundle\Model\RoleInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * Rufy\RestApiBundle\Entity\Role
@@ -13,7 +17,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface as SymfonyRoleInterface;
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Role implements SymfonyRoleInterface, RoleInterface
+class Role implements SymfonyRoleInterface, RoleInterface, EntityInterface
 {
     /**
      * @ORM\Column(name="id", type="integer")

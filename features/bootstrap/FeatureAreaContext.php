@@ -1,9 +1,6 @@
 <?php 
 
-class FeatureAreaContext extends RestContext
+class FeatureAreaContext extends BasicContext
 {
-    public function __construct($testClient, $baseUrl)
-    {
-        parent::__construct($testClient, $baseUrl);
-    }
+
 }

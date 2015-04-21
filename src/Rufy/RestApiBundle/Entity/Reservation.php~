@@ -1,16 +1,43 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\Mapping AS ORM;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\ReservationInterface;
+
+use Rufy\RestApiBundle\Model\ReservationInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\ReservationRepository")
  * @ORM\Table(name="reservation", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ORM\HasLifecycleCallbacks
  */
-class Reservation implements ReservationInterface
+class Reservation implements ReservationInterface, EntityInterface
 {
+    public function __construct()
+    {
+        $this->reservationOptions   = new ArrayCollection();
+
+        $this->drawing_height       = 1;
+        $this->drawing_width        = 1;
+        $this->drawing_pos_x        = 0;
+        $this->drawing_pos_y        = 0;
+    }
+
+    //    /**
+    //     * @ORM\PrePersist
+    //     */
+    //    public function onPrePersist()
+    //    {
+    //        if (is_string($this->time))
+    //            $this->time = new \DateTime($this->time);
+    //
+    //        if (is_string($this->date))
+    //            $this->date = new \DateTime($this->date);
+    //    }
+
     /**
      * Reservation ID
      * @ORM\Id
@@ -26,6 +53,12 @@ class Reservation implements ReservationInterface
     private $people;
 
     /**
+     * The number of the extra people
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned":true, "default":0})
+     */
+    private $peopleExtra;
+
+    /**
      * Time to reservation
      * @ORM\Column(type="time", nullable=true)
      */
@@ -37,15 +70,13 @@ class Reservation implements ReservationInterface
     private $date;
 
     /**
-     * Is reservation confirmed
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":1}, nullable=false)
+     * The status code:
+     * 0 = Waiting list
+     * 1 = To confirm
+     * 2 = Confirmed
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $confirmed;
-
-    /**
-     * @ORM\Column(type="boolean", options={"unsigned":true, "default":0}, nullable=false)
-     */
-    private $waiting;
+    private $status;
 
     /**
      * @ORM\Column(type="text")
@@ -144,55 +175,6 @@ class Reservation implements ReservationInterface
     public function getPeople()
     {
         return $this->people;
-    }
-
-
-    /**
-     * Set confirmed
-     *
-     * @param boolean $confirmed
-     *
-     * @return Reservation
-     */
-    public function setConfirmed($confirmed)
-    {
-        $this->confirmed = $confirmed;
-
-        return $this;
-    }
-
-    /**
-     * Get confirmed
-     *
-     * @return boolean
-     */
-    public function getConfirmed()
-    {
-        return $this->confirmed;
-    }
-
-    /**
-     * Set waiting
-     *
-     * @param boolean $waiting
-     *
-     * @return Reservation
-     */
-    public function setWaiting($waiting)
-    {
-        $this->waiting = $waiting;
-
-        return $this;
-    }
-
-    /**
-     * Get waiting
-     *
-     * @return boolean
-     */
-    public function getWaiting()
-    {
-        return $this->waiting;
     }
 
     /**
@@ -469,7 +451,7 @@ class Reservation implements ReservationInterface
     /**
      * Set time
      *
-     * @param \DateTime $time
+     * @param $time
      * @return Reservation
      */
     public function setTime($time)
@@ -486,7 +468,9 @@ class Reservation implements ReservationInterface
      */
     public function getTime()
     {
-        return $this->time;
+        $time = $this->time;
+
+        return $time;
     }
 
     /**
@@ -509,7 +493,9 @@ class Reservation implements ReservationInterface
      */
     public function getDate()
     {
-        return $this->date;
+        $date = $this->date;
+
+        return $date;
     }
 
     /**
@@ -534,21 +520,14 @@ class Reservation implements ReservationInterface
     {
         return $this->note;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservationOptions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add reservationOptions
      *
-     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
+     * @param ReservationOption $reservationOptions
      * @return Reservation
      */
-    public function addReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
+    public function addReservationOption(ReservationOption $reservationOptions)
     {
         $this->reservationOptions[] = $reservationOptions;
 
@@ -573,5 +552,29 @@ class Reservation implements ReservationInterface
     public function getReservationOptions()
     {
         return $this->reservationOptions;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Reservation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

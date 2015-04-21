@@ -1,6 +1,5 @@
 <?php
 
-
 interface RestContextInterface {
 
     const METHOD_DELETE = 'DELETE';

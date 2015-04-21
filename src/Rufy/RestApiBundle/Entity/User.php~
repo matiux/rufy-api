@@ -1,9 +1,13 @@
 <?php namespace Rufy\RestApiBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping AS ORM,
+    Doctrine\Common\Collections\ArrayCollection;
+
 use Gedmo\Mapping\Annotation as Gedmo;
-use Rufy\RestApiBundle\Model\UserInterface;
+
+use Rufy\RestApiBundle\Model\EntityInterface,
+    Rufy\RestApiBundle\Model\UserInterface;
+
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -13,7 +17,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\UserRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class User implements AdvancedUserInterface, \Serializable, UserInterface
+class User implements AdvancedUserInterface, \Serializable, UserInterface, EntityInterface
 {
     /**
      * @ORM\Id
@@ -445,6 +449,11 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function isPasswordLegal()
+    {
+        return $this->username != $this->password && $this->email != $this->password;
     }
 
     /**
