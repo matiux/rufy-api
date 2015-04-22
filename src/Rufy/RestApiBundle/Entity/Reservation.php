@@ -54,9 +54,9 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * The number of the extra people
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned":true, "default":0})
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":0})
      */
-    private $peopleExtra;
+    private $people_extra = 0;
 
     /**
      * Time to reservation
@@ -579,7 +579,7 @@ class Reservation implements ReservationInterface, EntityInterface
     }
 
     /**
-     * Set peopleExtra
+     * Set people_extra
      *
      * @param integer $peopleExtra
      *
@@ -587,18 +587,18 @@ class Reservation implements ReservationInterface, EntityInterface
      */
     public function setPeopleExtra($peopleExtra)
     {
-        $this->peopleExtra = $peopleExtra;
+        $this->people_extra = $peopleExtra;
 
         return $this;
     }
 
     /**
-     * Get peopleExtra
+     * Get people_extra
      *
      * @return integer
      */
     public function getPeopleExtra()
     {
-        return $this->peopleExtra;
+        return $this->people_extra;
     }
 }

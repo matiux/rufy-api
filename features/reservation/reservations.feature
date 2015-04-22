@@ -39,7 +39,7 @@ Feature: Testing Reservation API
       areaId
       tableName
       people
-      people_extra
+      peopleExtra
       date
       note
       time
@@ -91,7 +91,7 @@ Feature: Testing Reservation API
       areaId
       tableName
       people
-      people_extra
+      peopleExtra
       date
       note
       time
@@ -130,7 +130,7 @@ Feature: Testing Reservation API
         areaId
         tableName
         people
-        people_extra
+        peopleExtra
         date
         note
         time
@@ -167,7 +167,7 @@ Feature: Testing Reservation API
         areaId
         tableName
         people
-        people_extra
+        peopleExtra
         date
         note
         time
