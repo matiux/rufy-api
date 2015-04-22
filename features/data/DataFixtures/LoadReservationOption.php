@@ -1,10 +1,9 @@
-<?php namespace Rufy\RestApiBundle\DataFixtures\ORM;
+<?php
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\Doctrine;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Rufy\RestApiBundle\Entity\ReservationOption;
 
 class LoadReservationOption extends AbstractFixture implements OrderedFixtureInterface
@@ -18,18 +17,19 @@ class LoadReservationOption extends AbstractFixture implements OrderedFixtureInt
     {
         $options = [
 
-            'Fumatori'  => 'smokers',
-            //'Invalidi'  => 'invalids',
-            'Animali'   => 'animals',
+            'smokers',
+            'outside',
+            'full',
+            'invalids',
+            'animals'
         ];
 
-        foreach ($options as $name => $slug) {
+        foreach ($options as $option) {
 
             $restaurantOption = new ReservationOption();
-            $restaurantOption->setSlug($slug);
-            $restaurantOption->setName($name);
+            $restaurantOption->setSlug($option);
 
-            $this->setReference('reservationOption_'.$slug, $restaurantOption);
+            $this->setReference('reservationOption_'.$option, $restaurantOption);
         }
 
     }

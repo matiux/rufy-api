@@ -18,38 +18,45 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $pousada        = $this->getReference('pousada');
         $hotelito       = $this->getReference('hotelito');
 
-        $area = new Area();
-        $area->setName('2° Piano  - Terrazzo');
-        $area->setRestaurant($this->getReference('pousada'));
-        $area->setFull(0);
-        $area->setMaxPeople(22);
-        $area->addAreaOption($this->getReference('reservationOption_outside'));
-        $area->addAreaOption($this->getReference('reservationOption_invalids'));
-        $area->addAreaOption($this->getReference('reservationOption_animals'));
-        $this->setReference('area_1', $area);
-        $pousada->addArea($area);
+        $ristoranti     = [
 
-        $area = new Area();
-        $area->setName('1° Piano  - Sala Grande');
-        $area->setFull(0);
-        $area->setMaxPeople(15);
-        $area->setRestaurant($this->getReference('pousada'));
-        $area->addAreaOption($this->getReference('reservationOption_outside'));
-        //$area->addAreaOption($this->getReference('reservationOption_invalids'));
-        $area->addAreaOption($this->getReference('reservationOption_smokers'));
-        $area->addAreaOption($this->getReference('reservationOption_animals'));
-        $this->setReference('area_2', $area);
-        $pousada->addArea($area);
+            'pousada'   => [
 
-        $area = new Area();
-        $area->setName('Corridoio Esterno');
-        $area->setFull(0);
-        $area->setMaxPeople(46);
-        $area->setRestaurant($this->getReference('hotelito'));
-        $area->addAreaOption($this->getReference('reservationOption_invalids'));
-        $area->addAreaOption($this->getReference('reservationOption_animals'));
-        $this->setReference('area_3', $area);
-        $hotelito->addArea($area);
+                'Corridoio'     => ['maxPeople' => 10, 'options' => ['animals']],
+                'Sala'          => ['maxPeople' => 14, 'options' => ['animals']],
+                'Atras'         => ['maxPeople' => 6, 'options' => ['animals']],
+                'Tondo'         => ['maxPeople' => 5, 'options' => ['animals']],
+                'Frida'         => ['maxPeople' => 22, 'options' => ['animals']],
+                'Camarote'      => ['maxPeople' => 20, 'options' => ['animals']],
+                'Fuori'         => ['maxPeople' => 25, 'options' => ['animals', 'smokers']],
+
+            ],
+            'hotelito'  => [
+
+                'Tavoli da 2'   => ['maxPeople' => 8, 'options' => ['animals']],
+                'Fronte'        => ['maxPeople' => 30, 'options' => ['animals']],
+                'Lato'          => ['maxPeople' => 22, 'options' => ['animals']],
+                'Tenda'         => ['maxPeople' => 18, 'options' => ['animals', 'smokers']],
+                'Fuori'         => ['maxPeople' => 44, 'options' => ['animals', 'smokers']],
+            ],
+        ];
+
+        foreach ($ristoranti as $ristoName => $aree) {
+
+            foreach ($aree as $areaName => $areaData) {
+
+                $areaObj    = new Area();
+                $areaObj->setName($areaName);
+                $areaObj->setRestaurant($this->getReference($ristoName));
+                $areaObj->setFull(0);
+                $areaObj->setMaxPeople($areaData['maxPeople']);
+
+                foreach($areaData['options'] as $opt)
+                    $areaObj->addAreaOption($this->getReference("reservationOption_$opt"));
+
+                $this->setReference($areaName, $areaObj);
+            }
+        }
     }
 
     /**

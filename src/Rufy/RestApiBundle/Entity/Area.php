@@ -35,13 +35,13 @@ class Area implements AreaInterface, EntityInterface
     /**
      * @ORM\Column(type="boolean", options={"default":0})
      */
-    private $full;
+    private $full = 0;
 
     /**
      * The number of the people
      * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
      */
-    private $maxPeople;
+    private $maxPeople = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="areas", cascade={"persist","remove"})

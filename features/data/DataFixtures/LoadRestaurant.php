@@ -1,4 +1,4 @@
-<?php namespace Rufy\RestApiBundle\DataFixtures\ORM;
+<?php
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\Doctrine;
@@ -15,10 +15,12 @@ class LoadRestaurant extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
+
         $restaurant = new Restaurant();
         $restaurant->setName('Pousada');
         $restaurant->setRestDate(2);
         $this->setReference('pousada', $restaurant);
+
 
         $restaurant = new Restaurant();
         $restaurant->setName('Hotelito');
@@ -28,7 +30,7 @@ class LoadRestaurant extends AbstractFixture implements OrderedFixtureInterface
         $restaurant = new Restaurant();
         $restaurant->setName('Lo chiamavano cariola');
         $restaurant->setRestDate(5);
-        $this->setReference('lochiamavanocariola', $restaurant);
+        $this->setReference('restaurant3', $restaurant);
     }
 
     /**

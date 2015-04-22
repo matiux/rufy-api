@@ -1,10 +1,11 @@
-<?php namespace Rufy\RestApiBundle\DataFixtures\ORM;
+<?php
 
 use Doctrine\Common\DataFixtures\AbstractFixture,
     Doctrine\Common\DataFixtures\Doctrine,
     Doctrine\Common\DataFixtures\FixtureInterface,
-    Doctrine\Common\DataFixtures\OrderedFixtureInterface,
-    Doctrine\Common\Persistence\ObjectManager;
+    Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+
+use Doctrine\Common\Persistence\ObjectManager;
 
 use Rufy\RestApiBundle\Entity\User;
 
@@ -35,7 +36,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setName('Matteo');
         $user->setEmail('m.galacci@gmail.com');
         $user->addRestaurant($this->getReference('pousada'));
-        $user->addRestaurant($this->getReference('hotelito'));
+        $user->addRestaurant($this->getReference('restaurant3'));
         $this->addReference('user_matteo', $user);
 
         $user       = new User();
@@ -45,7 +46,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->addRole($this->getReference('role_admin'));
         $user->setName('Emanuele');
         $user->setEmail('ingro85@gmail.com ');
-        $user->addRestaurant($this->getReference('lochiamavanocariola'));
+        $user->addRestaurant($this->getReference('pousada'));
 
         $this->addReference('user_emanuele', $user);
 
@@ -56,7 +57,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->addRole($this->getReference('role_user'));
         $user->setName('Pinco');
         $user->setEmail('pinco@pallo.com ');
-        $user->addRestaurant($this->getReference('lochiamavanocariola'));
+        $user->addRestaurant($this->getReference('hotelito'));
 
         $this->addReference('user_pincopallo', $user);
     }

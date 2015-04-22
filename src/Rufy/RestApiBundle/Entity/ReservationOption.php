@@ -28,6 +28,11 @@ class ReservationOption implements ReservationOptionInterface, EntityInterface
     private $slug;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $name;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Area", mappedBy="areaOptions")
      */
     private $areas;
@@ -90,6 +95,29 @@ class ReservationOption implements ReservationOptionInterface, EntityInterface
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set option name
+     *
+     * @param string $name
+     * @return ReservationOption
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get options name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

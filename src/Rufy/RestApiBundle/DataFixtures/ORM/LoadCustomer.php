@@ -1,13 +1,23 @@
 <?php namespace Rufy\RestApiBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\Doctrine;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\AbstractFixture,
+    Doctrine\Common\DataFixtures\Doctrine,
+    Doctrine\Common\DataFixtures\FixtureInterface,
+    Doctrine\Common\DataFixtures\OrderedFixtureInterface,
+    Doctrine\Common\Persistence\ObjectManager;
+
 use Rufy\RestApiBundle\Entity\Customer;
 
-class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface
+use Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    Symfony\Component\DependencyInjection\ContainerInterface;
+
+class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -15,38 +25,29 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
-        $customer = new Customer();
-        $customer->setName('Ciccio');
-        $customer->setSurname('Panza');
-        $customer->setPhone('3397476790');
-        $customer->setEmail('ciccio@paanza.it');
-        $customer->setPrivacy(true);
-        $customer->setNewsletter(true);
-        $customer->setRestaurant($this->getReference('pousada'));
+        $populator      = $this->container->get('faker.generator');
+        $faker          = $populator->create();
 
-        $this->setReference('customer_1', $customer);
+        $ristoranti     = [
 
-        $customer = new Customer();
-        $customer->setName('Pancia');
-        $customer->setSurname('Sfonda');
-        $customer->setPhone('369852147');
-        $customer->setEmail('pancia@sfonda.com');
-        $customer->setPrivacy(false);
-        $customer->setNewsletter(false);
-        $customer->setRestaurant($this->getReference('pousada'));
+            $this->getReference('pousada'),
+            $this->getReference('hotelito'),
+            $this->getReference('lochiamavanocariola'),
+        ];
 
-        $this->setReference('customer_2', $customer);
+        for ($i = 1; $i <= 20; $i++) {
 
-        $customer = new Customer();
-        $customer->setName('Pinco');
-        $customer->setSurname('Pallo');
-        $customer->setPhone('369852147');
-        $customer->setEmail('pinco@pallo.com');
-        $customer->setPrivacy(false);
-        $customer->setNewsletter(false);
-        $customer->setRestaurant($this->getReference('hotelito'));
+            $customer = new Customer();
+            $customer->setName($faker->name);
+            $customer->setSurname($faker->lastName);
+            $customer->setPhone($faker->phoneNumber);
+            $customer->setEmail($faker->email);
+            $customer->setPrivacy(true);
+            $customer->setNewsletter(true);
+            $customer->setRestaurant($ristoranti[rand(0, 2)]);
 
-        $this->setReference('customer_3', $customer);
+            $this->setReference('customer_1', $customer);
+        }
     }
 
     /**
@@ -57,5 +58,17 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface
     function getOrder()
     {
         return 60;
+    }
+
+    /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

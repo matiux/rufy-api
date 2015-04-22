@@ -63,7 +63,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
              */
             exec('php app/console doctrine:schema:drop --force --env=test');
             exec('php app/console doctrine:schema:update --env=test --force');
-            exec('php app/console doctrine:fixtures:load --env=test --no-interaction');
+            exec('php app/console doctrine:fixtures:load --env=test --no-interaction --fixtures=features/data/DataFixtures');
         }
     }
 
