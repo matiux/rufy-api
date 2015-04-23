@@ -313,10 +313,10 @@ class Area implements AreaInterface, EntityInterface
         return $this->areaOptions;
     }
 
-    public function __toString()
-    {
-        return $this->id;
-    }
+//    public function __toString()
+//    {
+//        return $this->id;
+//    }
 
     /**
      * Set maxPeople

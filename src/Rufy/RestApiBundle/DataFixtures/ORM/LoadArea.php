@@ -15,9 +15,6 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
-        $pousada        = $this->getReference('pousada');
-        $hotelito       = $this->getReference('hotelito');
-
         $ristoranti     = [
 
             'pousada'   => [
@@ -39,6 +36,12 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
                 'Tenda'         => ['maxPeople' => 18, 'options' => ['animals', 'smokers']],
                 'Fuori'         => ['maxPeople' => 44, 'options' => ['animals', 'smokers']],
             ],
+            'lochiamavanocariola'   => [
+
+                'Sopra'         => ['maxPeople' => 58, 'options' => ['animals']],
+                'Sotto'         => ['maxPeople' => 65, 'options' => ['animals']],
+                'Fuori'         => ['maxPeople' => 28, 'options' => ['animals', 'smokers']],
+            ],
         ];
 
         foreach ($ristoranti as $ristoName => $aree) {
@@ -55,8 +58,12 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
                     $areaObj->addAreaOption($this->getReference("reservationOption_$opt"));
 
                 $this->setReference($areaName, $areaObj);
+
+                $manager->persist($areaObj);
             }
         }
+
+        $manager->flush();
     }
 
     /**

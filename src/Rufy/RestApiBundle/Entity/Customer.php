@@ -33,11 +33,6 @@ class Customer implements CustomerInterface, EntityInterface
     private $name;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $surname;
-
-    /**
      * @ORM\Column(type="string", nullable=false)
      */
     private $phone;
@@ -111,30 +106,6 @@ class Customer implements CustomerInterface, EntityInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return Customer
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string
-     */
-    public function getSurname()
-    {
-        return $this->surname;
     }
 
     /**

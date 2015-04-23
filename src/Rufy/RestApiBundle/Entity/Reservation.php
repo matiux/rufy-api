@@ -456,6 +456,8 @@ class Reservation implements ReservationInterface, EntityInterface
      */
     public function setTime($time)
     {
+        $time = is_string($time) ? new \DateTime($time) : $time;
+
         $this->time = $time;
 
         return $this;
@@ -481,6 +483,8 @@ class Reservation implements ReservationInterface, EntityInterface
      */
     public function setDate($date)
     {
+        $date = is_string($date) ? new \DateTime($date) : $date;
+
         $this->date = $date;
 
         return $this;

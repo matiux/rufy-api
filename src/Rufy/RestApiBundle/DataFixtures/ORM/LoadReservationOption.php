@@ -30,8 +30,11 @@ class LoadReservationOption extends AbstractFixture implements OrderedFixtureInt
             $restaurantOption->setName($name);
 
             $this->setReference('reservationOption_'.$slug, $restaurantOption);
+
+            $manager->persist($restaurantOption);
         }
 
+        $manager->flush();
     }
 
     /**

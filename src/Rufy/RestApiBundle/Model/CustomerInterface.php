@@ -23,22 +23,6 @@ interface CustomerInterface
     public function getName();
 
     /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return Customer
-     */
-    public function setSurname($surname);
-
-    /**
-     * Get surname
-     *
-     * @return string
-     */
-    public function getSurname();
-
-    /**
      * Set phone
      *
      * @param string $phone

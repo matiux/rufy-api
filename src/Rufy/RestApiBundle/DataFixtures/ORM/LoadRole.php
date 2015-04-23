@@ -29,6 +29,9 @@ class LoadRole extends AbstractFixture implements OrderedFixtureInterface
             $role->setRole('ROLE_'.strtoupper($roleName));
 
             $this->setReference('role_'.$roleName, $role);
+
+            $manager->persist($role);
+            $manager->flush();
         }
     }
 
