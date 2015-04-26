@@ -78,7 +78,7 @@ class RestaurantController extends BaseController
      * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return per page.")
      * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
      *
      * @param int $restaurantId Restaurant id
@@ -131,7 +131,7 @@ class RestaurantController extends BaseController
      * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many areas to return per page.")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -176,7 +176,7 @@ class RestaurantController extends BaseController
      * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return per page.")
      *
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *

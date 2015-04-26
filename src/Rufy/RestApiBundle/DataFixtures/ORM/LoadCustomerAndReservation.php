@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface,
 
 use Faker\Factory;
 
-class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
+class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -45,7 +45,7 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, F
         $cc->h = [];
         $cc->l = [];
 
-        for ($x = 1; $x <= 20; $x++) {
+        for ($x = 1; $x <= 100; $x++) {
 
             $i = rand(0, 2);
 
@@ -104,7 +104,7 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, F
             'user_emanuele',
         ];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 150; $i++) {
 
             $x              = rand(0,14);
 

@@ -2,7 +2,8 @@
 
 use League\Fractal\Manager,
     League\Fractal\Resource\Item,
-    League\Fractal\Resource\Collection;
+    League\Fractal\Resource\Collection,
+    League\Fractal\Serializer\DataArraySerializer;
 
 use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer,
     Rufy\RestApiBundle\Exception\InvalidFormException;
@@ -89,6 +90,8 @@ class RufySerializerHandler
         }
 
         $this->fractalManager->setSerializer($this->customFractalSerializer);
+        //$this->fractalManager->setSerializer(new DataArraySerializer());
+
 
         $this->transformer = $this->getTransformer();
     }

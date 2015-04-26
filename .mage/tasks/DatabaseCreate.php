@@ -26,7 +26,7 @@ class DatabaseCreate extends AbstractTask
      */
     public function run()
     {
-        $command    = 'php app/console doctrine:schema:update --force';
+        $command    = 'php app/console doctrine:schema:update --force --env=dev';
         $result     = $this->runCommandRemote($command);
 
         return $result;
