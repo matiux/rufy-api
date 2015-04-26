@@ -17,19 +17,20 @@ class LoadReservationOption extends AbstractFixture implements OrderedFixtureInt
     {
         $options = [
 
-            'smokers',
-            'outside',
-            'full',
-            'invalids',
-            'animals'
+            'Fumatori'  => 'smokers',
+            'Fuori'     => 'outside',
+            'Pieno'     => 'full',
+            'Invalidi'  => 'invalids',
+            'Animali'   => 'animals'
         ];
 
-        foreach ($options as $option) {
+        foreach ($options as $option => $slug) {
 
             $restaurantOption = new ReservationOption();
-            $restaurantOption->setSlug($option);
+            $restaurantOption->setSlug($slug);
+            $restaurantOption->setName($option);
 
-            $this->setReference('reservationOption_'.$option, $restaurantOption);
+            $this->setReference('reservationOption_'.$slug, $restaurantOption);
         }
 
     }

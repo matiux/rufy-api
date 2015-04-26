@@ -113,6 +113,7 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, F
             /**
              * TODO
              * impostare data minima da oggi
+             * migliorare orari
              */
 
             $reservation->setArea($this->getReference($aree[$x]['a']));
@@ -120,7 +121,7 @@ class LoadCustomer extends AbstractFixture implements OrderedFixtureInterface, F
             $reservation->setPeople(rand(2, 12));
             $reservation->setPeopleExtra(rand(1, 4));
             $reservation->setDate($faker->date('Y-m-d'));
-            $reservation->setTime($faker->time('H:i:s'));
+            $reservation->setTime($faker->time('H:i'));
             $reservation->setNote($faker->text(rand(50, 200)));
             $reservation->setStatus(rand(0, 2));
             $reservation->addReservationOption($this->getReference('reservationOption_'.$options[rand(0, 1)]));
