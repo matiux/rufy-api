@@ -75,7 +75,9 @@ class ReservationController extends BaseController
 
         try {
 
-            $reservation = $this->get('rufy_api.reservation.handler')->post($this->container->get('request')->request->all());
+            $params         = $this->container->get('request')->request->all();
+
+            $reservation    = $this->saveWithCustomerCheck($params);
 
             return $this->view($reservation, 201);
 
@@ -85,6 +87,16 @@ class ReservationController extends BaseController
 
             return $exception->getForm();
         }
+    }
+
+    private function saveWithCustomerCheck(array $params)
+    {
+        if (0 == $params['customer'])
+            echo 'a';
+
+        $reservation    = $this->get('rufy_api.reservation.handler')->post($params);
+
+        return $reservation;
     }
 
     /**

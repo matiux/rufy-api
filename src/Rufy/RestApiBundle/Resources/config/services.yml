@@ -2,10 +2,12 @@ parameters:
     rufy_api.reservation.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\ReservationHandler
     rufy_api.restaurant.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\RestaurantHandler
     rufy_api.area.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\AreaHandler
+    rufy_api.customer.handler.class: Rufy\RestApiBundle\Handler\Db\Doctrine\CustomerHandler
 
     rufy_api.reservation.class: Rufy\RestApiBundle\Entity\Reservation
     rufy_api.restaurant.class: Rufy\RestApiBundle\Entity\Restaurant
     rufy_api.area.class: Rufy\RestApiBundle\Entity\Area
+    rufy_api.customer.class: Rufy\RestApiBundle\Entity\Customer
 
 services:
 
@@ -22,6 +24,9 @@ services:
 
     rufy_api.area.class:
         class: %rufy_api.area.class%
+
+    rufy_api.customer.class:
+        class: %rufy_api.customer.class%
 
     ## Fine Modelli
     #############################################
@@ -53,6 +58,12 @@ services:
         parent: rufy_api.entity_handler
         calls:
             - [setEntityClass, [@rufy_api.area.class]]
+
+    rufy_api.customer.handler:
+        class: %rufy_api.customer.handler.class%
+        parent: rufy_api.entity_handler
+        calls:
+            - [setEntityClass, [@rufy_api.customer.class]]
 
     ## Fine Handler dei modelli
     #############################################

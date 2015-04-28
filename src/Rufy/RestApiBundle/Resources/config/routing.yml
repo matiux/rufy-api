@@ -19,3 +19,9 @@ areas:
     prefix: v1
     resource: Rufy\RestApiBundle\Controller\AreaController
     name_prefix:  api_v1_
+
+customer:
+    type: rest
+    prefix: v1
+    resource: Rufy\RestApiBundle\Controller\CustomerController
+    name_prefix:  api_v1_

@@ -1,9 +1,28 @@
+Rufy\RestApiBundle\Entity\Customer:
+  properties:
+    name:
+      - Type:
+          type: string
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    phone:
+      - Type:
+          type: string
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    phone:
+      - Email:
+          message: The email "{{ value }}" is not a valid email.
+          checkMX: true
+    privacy:
+      - Type:
+          type: bool
+          message: Il valore {{ value }} non è un {{ type }} valido.
+    newsletter:
+      - Type:
+          type: bool
+          message: Il valore {{ value }} non è un {{ type }} valido.
+
 Rufy\RestApiBundle\Entity\Area:
   properties:
-    id:
-      - Type:
-          type: integer
-          message: Il valore {{ value }} non è un {{ type }} valido.
     name:
       - Type:
           type: string
@@ -19,10 +38,6 @@ Rufy\RestApiBundle\Entity\Area:
 
 Rufy\RestApiBundle\Entity\Restaurant:
   properties:
-    id:
-      - Type:
-          type: integer
-          message: Il valore {{ value }} non è un {{ type }} valido.
     name:
       - Type:
           type: string
@@ -42,24 +57,11 @@ Rufy\RestApiBundle\Entity\Reservation:
           message: Il valore {{ value }} non è un {{ type }} valido.
       - GreaterThan:
           value: 0
-          message: "Il numero persone deve essere maggiore di zero"
+          message: Il numero persone deve essere maggiore di zero
     people_extra:
       - Type:
           type: integer
           message: Il valore {{ value }} non è un {{ type }} valido.
-#    time:
-#      - Time:
-#          message: Il valore {{ value }} non è un {{ type }} valido.
-#      - NotBlank:
-#          message: E' necessario impostare l'orario della prenotazione nel formato HH:MM:SS"
-#    date:
-#      - Type:
-#          type: \DateTime
-#          message: Il valore {{ value }} non è un {{ type }} valido.
-#      - NotBlank:
-#          message: Impostare la data
-#      - Date:
-#          message: "Formato data non valido. Usare YYYY-MM-DD"
     note:
       - Type:
           type: string
@@ -79,21 +81,9 @@ Rufy\RestApiBundle\Entity\Reservation:
     customer:
       - NotBlank:
           message: Seleziona un cliente
-#      - Type:
-#          type: integer
-#          message: Il valore {{ value }} non è un {{ type }} valido.
-#      - GreaterThan:
-#          value: 0
-#          message: Customer id non valido
     area:
       - NotBlank:
           message: Indicare l'area della prenotazione
-#      - Type:
-#          type: integer
-#          message: Il valore {{ value }} non è un {{ type }} valido.
-#      - GreaterThan:
-#          value: 0
-#          message: "Area id non valido"
 #    reservationOptions:
 #      - Collection:
 #          fields:
@@ -102,24 +92,3 @@ Rufy\RestApiBundle\Entity\Reservation:
 #                      type: string
 #                      message: note deve essere passato come string
 #          allowMissingFields: true
-
-#    user:
-#      - NotBlank:
-#          message: E' necessario indicare un utente
-#      - Type:
-#          type: integer
-#          message: Il valore {{ value }} non è un {{ type }} valido.
-#      - GreaterThan:
-#          value: 0
-#          message: "User id non valido"
-
-#Rufy\RestApiBundle\Entity\Reservation:
-#  getters:
-#    passwordLegal:
-#      - "True": { message: "La password non può essere uguale allo username o alla email" }
-#  properties:
-#    username:
-#      - NotBlank: ~
-#      - NotNull: ~
-#      - Length:
-#          min: 3
