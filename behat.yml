@@ -34,5 +34,16 @@ default:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
                     baseUrl: 'http://rufysf.local/api'
+
+        rufy_restapibundle.customer:
+            type: symfony_bundle
+            bundle: RufyRestApiBundle
+            paths:
+                - %paths.base%/features/customer
+            contexts:
+                - FeatureReservationContext:
+                    #guzzleClient: '@guzzle.client'
+                    testClient: '@test.client'
+                    baseUrl: 'http://rufysf.local/api'
     extensions:
         Behat\Symfony2Extension: ~

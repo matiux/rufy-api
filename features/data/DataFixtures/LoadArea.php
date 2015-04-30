@@ -20,7 +20,7 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
 
         $area = new Area();
         $area->setName('2° Piano  - Terrazzo');
-        $area->setRestaurant($this->getReference('pousada'));
+        $area->setRestaurant($pousada);
         $area->setFull(0);
         $area->setMaxPeople(22);
         $area->addAreaOption($this->getReference('reservationOption_outside'));
@@ -33,22 +33,11 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area->setName('1° Piano  - Sala Grande');
         $area->setFull(0);
         $area->setMaxPeople(15);
-        $area->setRestaurant($this->getReference('pousada'));
+        $area->setRestaurant($hotelito);
         $area->addAreaOption($this->getReference('reservationOption_outside'));
-        //$area->addAreaOption($this->getReference('reservationOption_invalids'));
         $area->addAreaOption($this->getReference('reservationOption_smokers'));
         $area->addAreaOption($this->getReference('reservationOption_animals'));
         $this->setReference('area_2', $area);
-        $pousada->addArea($area);
-
-        $area = new Area();
-        $area->setName('Corridoio Esterno');
-        $area->setFull(0);
-        $area->setMaxPeople(46);
-        $area->setRestaurant($this->getReference('hotelito'));
-        $area->addAreaOption($this->getReference('reservationOption_invalids'));
-        $area->addAreaOption($this->getReference('reservationOption_animals'));
-        $this->setReference('area_3', $area);
         $hotelito->addArea($area);
     }
 

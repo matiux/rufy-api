@@ -8,7 +8,7 @@ Rufy\RestApiBundle\Entity\Customer:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
-    phone:
+    email:
       - Email:
           message: The email "{{ value }}" is not a valid email.
           checkMX: true
@@ -20,6 +20,9 @@ Rufy\RestApiBundle\Entity\Customer:
       - Type:
           type: bool
           message: Il valore {{ value }} non è un {{ type }} valido.
+    restaurant:
+      - NotNull:
+          message: Indicare il ristorante del Customer.
 
 Rufy\RestApiBundle\Entity\Area:
   properties:

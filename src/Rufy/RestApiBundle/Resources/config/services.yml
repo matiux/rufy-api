@@ -75,6 +75,12 @@ services:
         arguments: [@security.token_storage]
         tags:
             - {name: form.type, alias: reservation_type }
+
+    rufy_api.form.type.customer:
+        class: Rufy\RestApiBundle\Form\CustomerType
+        arguments: [@security.token_storage]
+        tags:
+            - {name: form.type, alias: customer_type }
     ## Fine Form
     #############################################
 
@@ -96,23 +102,31 @@ services:
 
     ###########################################
     ##  Voter
-    security.access.reservation.voter:
-        class:      Rufy\RestApiBundle\Security\Authorization\Voter\ReservationVoter
-        arguments:  [@doctrine.orm.entity_manager]
-        public:     false
+    security.access.voter:
+        abstract: true
+        calls:
+            - [setObjectManager, [@doctrine.orm.entity_manager]]
+
+    security.access.area.voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\AreaVoter
+        parent:     security.access.voter
+        tags:
+            - { name: security.voter }
+
+    security.access.customer.voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\CustomerVoter
+        parent:     security.access.voter
         tags:
             - { name: security.voter }
 
     security.access.restaurant.voter:
         class:      Rufy\RestApiBundle\Security\Authorization\Voter\RestaurantVoter
-        arguments:  [@doctrine.orm.entity_manager]
-        public:     false
+        parent:     security.access.voter
         tags:
             - { name: security.voter }
 
-    security.access.area.voter:
-        class:      Rufy\RestApiBundle\Security\Authorization\Voter\AreaVoter
-        arguments:  [@doctrine.orm.entity_manager]
-        public:     false
+    security.access.reservation.voter:
+        class:      Rufy\RestApiBundle\Security\Authorization\Voter\ReservationVoter
+        parent:     security.access.voter
         tags:
             - { name: security.voter }

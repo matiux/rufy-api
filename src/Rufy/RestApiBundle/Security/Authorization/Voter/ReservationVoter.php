@@ -1,35 +1,12 @@
-<?php namespace Rufy\RestApiBundle\Security\Authorization\Voter; 
+<?php namespace Rufy\RestApiBundle\Security\Authorization\Voter;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface,
+    Symfony\Component\Security\Core\User\UserInterface;
 
-use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-
-/**
- * See http://symfony.com/blog/new-in-symfony-2-6-simpler-security-voters
- *
- * Class ReservationVoter
- * @package Rufy\RestApiBundle\Security\Authorization\Voter
- */
-class ReservationVoter extends AbstractVoter implements RufyVoterInterface
+class ReservationVoter extends BaseVoter
 {
-    use RufyVoterTrait;
-
     /**
-     * @var ObjectManager
-     */
-    private $om;
-
-    public function __construct(ObjectManager $om)
-    {
-        $this->om                      = $om;
-    }
-
-    /**
-     * Return an array of supported classes. This will be called by supportsClass
-     *
-     * @return array an array of supported classes, i.e. array('Acme\DemoBundle\Model\Product')
+     * {@inheritdoc}
      */
     protected function getSupportedClasses()
     {
@@ -37,17 +14,7 @@ class ReservationVoter extends AbstractVoter implements RufyVoterInterface
     }
 
     /**
-     * Perform a single access check operation on a given attribute, object and (optionally) user
-     * It is safe to assume that $attribute and $object's class pass supportsAttribute/supportsClass
-     * $user can be one of the following:
-     *   a UserInterface object (fully authenticated user)
-     *   a string               (anonymously authenticated user)
-     *
-     * @param string $attribute
-     * @param Reservation $resource
-     * @param UserInterface|string $user
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     protected function isGranted($attribute, $resource, $user = null)
     {

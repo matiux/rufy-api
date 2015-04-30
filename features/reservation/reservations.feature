@@ -24,7 +24,7 @@ Feature: Testing Reservation API
       | note               | Hanno un passeggino |
       | status             | 1                   |
       | table_name         | 12                  |
-      | customer           | 2                   |
+      | customer           | 1                   |
       | area               | 1                   |
       | reservationOptions | 3,2                 |
     When I request a resource
@@ -52,8 +52,6 @@ Feature: Testing Reservation API
       """
     And "data" doesn't contains:
       """
-      confirmed
-      waiting
       """
     And "data.reservationOptions" contains:
       """
@@ -77,7 +75,7 @@ Feature: Testing Reservation API
       | status            | 2                   |
       | table_name        | 15                  |
       | customer          | 1                   |
-      | area              | 2                   |
+      | area              | 1                   |
       |reservationOptions | 4,2                 |
     When I request a resource
     Then the response status code should be 201
@@ -181,25 +179,17 @@ Feature: Testing Reservation API
 
   @updatereservation
   Scenario: Update an existing Reservation
-    Given that I want update an existing "/v1/reservations/5" with values:
+    Given that I want update an existing "/v1/reservations/1" with values:
       | field             | value               |
       | people            | 5                   |
       | time              | 21:30:00            |
       | table_name        | 15                  |
-      | area              | 2                   |
-      |reservationOptions | 1,2                 |
     When I request a resource
     Then the response status code should be 204
 
   @softdeletereservation
   Scenario: Delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/4":
-    When I request a resource
-    Then the response status code should be 204
-
-  @softdeletereservation
-  Scenario: Delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/5":
+    Given that I want delete a reservation "/v1/reservations/3":
     When I request a resource
     Then the response status code should be 204
 
@@ -211,7 +201,7 @@ Feature: Testing Reservation API
 
   @softdeletereservationanother
   Scenario: Delete a Reservation of another Restaurant
-    Given that I want delete a reservation "/v1/reservations/3":
+    Given that I want delete a reservation "/v1/reservations/2":
     When I request a resource
     Then the response status code should be 403
 

@@ -14,7 +14,7 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('restaurant', 'entity', ['class' => 'Rufy\RestApiBundle\Entity\Restaurant', 'property' => 'id'])
+            ->add('restaurant', 'entity', ['class' => 'RufyRestApiBundle:Restaurant', 'property' => 'id'])
             ->add('name')
             ->add('phone')
             ->add('email')

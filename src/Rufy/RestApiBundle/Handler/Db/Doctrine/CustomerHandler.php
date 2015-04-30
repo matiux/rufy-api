@@ -29,7 +29,45 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
     {
         $customer = $this->createResource();
 
-        return $this->processForm($reservation, $parameters, 'POST');
+        return $this->processForm($customer, $parameters, 'POST');
+    }
+
+    /**
+     * Processes the form.
+     *
+     * @param $resource
+     * @param array $parameters
+     * @param string $method
+     * @return mixed
+     * @throws InvalidFormException
+     */
+    private function processForm($resource, array $parameters, $method = 'POST')
+    {
+        /**
+         * Invece di new ReservationType() passo 'customer_type' dato che CustomerType
+         * è registrato come servizio
+         */
+        $form = $this->formFactory->create('customer_type', $resource, array('method' => $method));
+
+        $form->submit($parameters, 'PATCH' !== $method);
+
+        if ($form->isValid()) {
+
+            /**
+             * @var $resource Reservation
+             */
+            $resource = $form->getData();
+
+            if (false === $this->authChecker->isGranted('CREATE', $resource))
+                throw new AccessDeniedException('Accesso non autorizzato!');
+
+            $this->om->persist($resource);
+            $this->om->flush();
+
+            return $resource;
+        }
+
+        throw new InvalidFormException('Invalid submitted data', $form);
     }
 
     /**

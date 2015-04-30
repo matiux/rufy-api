@@ -36,7 +36,6 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setName('Matteo');
         $user->setEmail('m.galacci@gmail.com');
         $user->addRestaurant($this->getReference('pousada'));
-        $user->addRestaurant($this->getReference('restaurant3'));
         $this->addReference('user_matteo', $user);
 
         $user       = new User();
@@ -46,20 +45,8 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->addRole($this->getReference('role_admin'));
         $user->setName('Emanuele');
         $user->setEmail('ingro85@gmail.com ');
-        $user->addRestaurant($this->getReference('pousada'));
-
-        $this->addReference('user_emanuele', $user);
-
-        $user       = new User();
-        $user->setUsername('pinco');
-        $user->setPassword($encoder->encodePassword($user, 'pallo'));
-        $user->setIsActive(true);
-        $user->addRole($this->getReference('role_user'));
-        $user->setName('Pinco');
-        $user->setEmail('pinco@pallo.com ');
         $user->addRestaurant($this->getReference('hotelito'));
-
-        $this->addReference('user_pincopallo', $user);
+        $this->addReference('user_emanuele', $user);
     }
 
     /**

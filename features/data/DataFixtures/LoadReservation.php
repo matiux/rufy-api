@@ -37,7 +37,7 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
 
         $reservation    = new Reservation();
         $reservation->setCustomer($this->getReference('customer_2'));
-        $reservation->setArea($this->getReference('area_1'));
+        $reservation->setArea($this->getReference('area_2'));
         $reservation->setUser($this->getReference('user_emanuele'));
         $reservation->setPeople(12);
         $reservation->setTime(new \DateTime('21:30'));
@@ -54,23 +54,23 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
 
         $this->getReference('user_emanuele')->addReservation($reservation);
 
-        $reservation    = new Reservation();
-        $reservation->setCustomer($this->getReference('customer_3'));
-        $reservation->setArea($this->getReference('area_3'));
-        $reservation->setUser($this->getReference('user_pincopallo'));
-        $reservation->setPeople(3);
-        $reservation->setTime(new \DateTime('21:30'));
-        $reservation->setDate(new \DateTime('31-12-2014'));
-        $reservation->setStatus(0);
-        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
-        $reservation->setNote('Qualche nota circa la prenotazione');
-        $reservation->setTableName('12');
-        $reservation->setDrawingWidth(50);
-        $reservation->setDrawingHeight(10);
-        $reservation->setDrawingPosX(125);
-        $reservation->setDrawingPosY(90);
-
-        $this->getReference('user_pincopallo')->addReservation($reservation);
+//        $reservation    = new Reservation();
+//        $reservation->setCustomer($this->getReference('customer_3'));
+//        $reservation->setArea($this->getReference('area_2'));
+//        $reservation->setUser($this->getReference('user_pincopallo'));
+//        $reservation->setPeople(3);
+//        $reservation->setTime(new \DateTime('21:30'));
+//        $reservation->setDate(new \DateTime('31-12-2014'));
+//        $reservation->setStatus(0);
+//        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
+//        $reservation->setNote('Qualche nota circa la prenotazione');
+//        $reservation->setTableName('12');
+//        $reservation->setDrawingWidth(50);
+//        $reservation->setDrawingHeight(10);
+//        $reservation->setDrawingPosX(125);
+//        $reservation->setDrawingPosY(90);
+//
+//        $this->getReference('user_pincopallo')->addReservation($reservation);
     }
 
     /**
