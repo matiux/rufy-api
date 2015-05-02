@@ -27,6 +27,13 @@ Feature: Testing Restaurant API
       restDate
       """
 
+  @notpermittedsinglerestaurant
+  Scenario: Get a Restaurant by ID
+    Given that I want to find a "/v1/restaurants/2"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
+
   @collectionrestaurant
   Scenario: Get all user's restaurants
     Given that I want to find a "/v1/restaurants"

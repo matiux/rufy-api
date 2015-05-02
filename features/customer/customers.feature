@@ -40,3 +40,40 @@ Feature: Testing Customer API
     And "data" doesn't contains:
       """
       """
+
+  @updatereservation
+  Scenario: Update an existing Customer
+    Given that I want update an existing "/v1/customer/1" with values:
+      | field      | value      |
+      | phone      | 3664589968 |
+      | newsletter | 1          |
+    When I request a resource
+    Then the response status code should be 204
+
+  @singlecustomer
+  Scenario: Get a Customer by ID
+    Given that I want to find a "/v1/customers/1"
+    When I request a resource
+    Then the response status code should be 200
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" contains:
+      """
+      id
+      name
+      phone
+      email
+      privacy
+      newsletter
+      restaurant
+      """
+    And "data" doesn't contains:
+      """
+      """
+
+  @singlenotpermittedcustomer
+  Scenario: Get an Area of another restaurant by ID
+    Given that I want to find a "/v1/customers/2"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"

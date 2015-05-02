@@ -7,8 +7,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\Config\Definition\Exception\Exception,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationController extends BaseController
@@ -30,6 +30,7 @@ class ReservationController extends BaseController
      *
      *   statusCodes = {
      *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get a reservation of another restaurant",
      *     404 = "Returned when the reservation is not found"
      *   }
      * )

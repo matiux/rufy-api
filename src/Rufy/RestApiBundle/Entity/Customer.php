@@ -9,7 +9,7 @@ use Rufy\RestApiBundle\Model\CustomerInterface,
     Rufy\RestApiBundle\Model\EntityInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Rufy\RestApiBundle\Repository\CustomerRepository")
  * @ORM\Table(name="customer", options={"collate"="utf8_general_ci", "charset"="utf8", "engine"="InnoDB"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */

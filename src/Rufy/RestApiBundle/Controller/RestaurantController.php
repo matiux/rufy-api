@@ -8,7 +8,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\Config\Definition\Exception\Exception,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RestaurantController extends BaseController
@@ -30,6 +31,7 @@ class RestaurantController extends BaseController
      *  },
      *   statusCodes = {
      *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get a restaurant of another user",
      *     404 = "Returned when the restaurant is not found"
      *   }
      * )

@@ -32,6 +32,13 @@ Feature: Testing Area API
       """
       """
 
+  @singlenotpermittedarea
+  Scenario: Get an Area of another restaurant by ID
+    Given that I want to find a "/v1/areas/2"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
+
   @collectionarea
   Scenario: Get a collection of Area by restaurant ID
     Given that I want to find a "/v1/restaurants/1/areas"

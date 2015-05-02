@@ -1,11 +1,8 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Rufy\RestApiBundle\Entity\Reservation;
-use Rufy\RestApiBundle\Exception\InvalidFormException,
-    Rufy\RestApiBundle\Form\ReservationType,
-    Rufy\RestApiBundle\Model\ReservationInterface;
+use Rufy\RestApiBundle\Entity\Reservation,
+    Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Rufy\RestApiBundle\Model\EntityInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReservationHandler extends AbstractEntityHandler implements EntityHandlerInterface

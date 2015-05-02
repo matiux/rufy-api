@@ -5,7 +5,10 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Rufy\RestApiBundle\Exception\InvalidFormException;
+
+use Symfony\Component\Config\Definition\Exception\Exception,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AreaController extends BaseController
@@ -26,6 +29,7 @@ class AreaController extends BaseController
      *  },
      *   statusCodes = {
      *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get an area of another restaurant",
      *     404 = "Returned when the area is not found"
      *   }
      * )

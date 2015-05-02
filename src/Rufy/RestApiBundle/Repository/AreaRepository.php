@@ -37,18 +37,6 @@ class AreaRepository extends EntityRepository implements EntityRepositoryInterfa
         return true;
     }
 
-    public function hasUser(Area $area, User $user)
-    {
-        $restaurantUsers    = $area->getRestaurant()->getUsers();
-
-        if ($restaurantUsers)
-            foreach ($restaurantUsers as $restaurantUser)
-                if ($restaurantUser->getId() == $user->getId())
-                    return true;
-
-        return false;
-    }
-
     /**
      * {@inheritdoc }
      */

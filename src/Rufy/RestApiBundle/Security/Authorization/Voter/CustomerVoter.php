@@ -1,5 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Security\Authorization\Voter;
 
+use Rufy\RestApiBundle\Entity\Customer;
+
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface,
     Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,6 +20,10 @@ class CustomerVoter extends BaseVoter
      */
     protected function isGranted($attribute, $resource, $user = null)
     {
+        /**
+         * @var $resource Customer
+         */
+
         // si assicura che ci sia un utente (che abbia fatto login)
         if (!$user instanceof UserInterface)
             return VoterInterface::ACCESS_DENIED;
@@ -25,9 +31,8 @@ class CustomerVoter extends BaseVoter
         switch($attribute) {
             case self::CREATE:
                 if (
-                    // Controllo che il ristorante appartenga all'utente che salva il Customer
-                    //$this->om->getRepository('RufyRestApiBundle:User')->hasArea($resource, $user)
-                    true
+                    // Controllo che l'utente che salva il customer, lavori nel ristorante che vuole associare al customer
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource->getRestaurant(), $user)
                 )
                     return VoterInterface::ACCESS_GRANTED;
                 break;

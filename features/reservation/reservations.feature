@@ -149,6 +149,13 @@ Feature: Testing Reservation API
         slug
         """
 
+  @notpermittedsinglereservation
+  Scenario: Get a Reservation of another restaurant by ID
+    Given that I want to find a "/v1/reservations/2"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
+
   @collectionreservation
   Scenario: Get a collection of Reservation by restaurant ID
     Given that I want to find a "/v1/restaurants/1/reservations"

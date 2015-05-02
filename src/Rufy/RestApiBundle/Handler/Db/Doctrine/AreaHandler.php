@@ -1,5 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 class AreaHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
     /**

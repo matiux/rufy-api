@@ -28,7 +28,9 @@ class RestaurantVoter extends BaseVoter
         switch($attribute) {
             case self::VIEW:
             case self::LISTING:
-                if ($this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUSer($resource, $user))
+                if (
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource, $user)
+                )
                     return VoterInterface::ACCESS_GRANTED;
                 break;
         }
