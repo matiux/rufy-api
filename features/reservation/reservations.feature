@@ -149,6 +149,13 @@ Feature: Testing Reservation API
         slug
         """
 
+  @notexistssinglereservation
+  Scenario: Get a Reservation by ID
+    Given that I want to find a "/v1/reservations/1050"
+    When I request a resource
+    Then the response status code should be 404
+    And the response type should be "application/json"
+
   @notpermittedsinglereservation
   Scenario: Get a Reservation of another restaurant by ID
     Given that I want to find a "/v1/reservations/2"
@@ -184,6 +191,13 @@ Feature: Testing Reservation API
         reservationOptions
         """
 
+  @collectionnotpermittedreservation
+  Scenario: Get a collection of Reservation by not permitted restaurant ID
+    Given that I want to find a "/v1/restaurants/2/reservations"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
+
   @updatereservation
   Scenario: Update an existing Reservation
     Given that I want update an existing "/v1/reservations/1" with values:
@@ -209,6 +223,14 @@ Feature: Testing Reservation API
   @softdeletereservationanother
   Scenario: Delete a Reservation of another Restaurant
     Given that I want delete a reservation "/v1/reservations/2":
+    When I request a resource
+    Then the response status code should be 403
+
+  @updatenotpermittedreservation
+  Scenario: Update an existing Reservation of another restaurant
+    Given that I want update an existing "/v1/reservations/2" with values:
+      | field  | value |
+      | people | 5     |
     When I request a resource
     Then the response status code should be 403
 

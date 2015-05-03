@@ -39,6 +39,13 @@ Feature: Testing Area API
     Then the response status code should be 403
     And the response type should be "application/json"
 
+  @singlenotexistsarea
+  Scenario: Get an Area of another restaurant by ID
+    Given that I want to find a "/v1/areas/1050"
+    When I request a resource
+    Then the response status code should be 404
+    And the response type should be "application/json"
+
   @collectionarea
   Scenario: Get a collection of Area by restaurant ID
     Given that I want to find a "/v1/restaurants/1/areas"
@@ -58,6 +65,13 @@ Feature: Testing Area API
     And each "data" item doesn't contains:
       """
       """
+
+  @collectionnotpermittedarea
+  Scenario: Get a collection of Area by not permitted restaurant ID
+    Given that I want to find a "/v1/restaurants/2/areas"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
 
   @endtest
   Scenario: Terminate test

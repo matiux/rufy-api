@@ -19,7 +19,13 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
      */
     public function get($id)
     {
+        $customer = $this->repository->findCustom($id);
 
+        if ($customer && false === $this->authChecker->isGranted('VIEW', $customer)) {
+            throw new AccessDeniedException('Accesso non autorizzato!');
+        }
+
+        return $customer;
     }
 
     /**
@@ -84,16 +90,14 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
     }
 
     /**
-     * Partially update a Entity.
-     *
-     * @param $entity
-     * @param array $parameters
-     *
-     * @return Entity
+     * {@inheritdoc }
      */
-    public function patch($entity, array $parameters)
+    public function patch($customer, array $parameters)
     {
+        $this->om->persist($customer);
+        $this->om->flush();
 
+        return $this->processForm($customer, $parameters, 'PATCH');
     }
 
     /**

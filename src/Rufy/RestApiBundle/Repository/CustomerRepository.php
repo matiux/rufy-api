@@ -21,4 +21,19 @@ class CustomerRepository extends EntityRepository implements EntityRepositoryInt
     {
 
     }
+
+    /**
+     * Find a customer by id
+     *
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findCustom($id)
+    {
+        $customer = $this->findOneById($id);
+
+        return $customer;
+    }
 }

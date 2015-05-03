@@ -41,15 +41,6 @@ Feature: Testing Customer API
       """
       """
 
-  @updatereservation
-  Scenario: Update an existing Customer
-    Given that I want update an existing "/v1/customer/1" with values:
-      | field      | value      |
-      | phone      | 3664589968 |
-      | newsletter | 1          |
-    When I request a resource
-    Then the response status code should be 204
-
   @singlecustomer
   Scenario: Get a Customer by ID
     Given that I want to find a "/v1/customers/1"
@@ -72,8 +63,48 @@ Feature: Testing Customer API
       """
 
   @singlenotpermittedcustomer
-  Scenario: Get an Area of another restaurant by ID
+  Scenario: Get a Customer of another restaurant by ID
     Given that I want to find a "/v1/customers/2"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
+
+  @singlenotexistscustomer
+  Scenario: Get a Customer of another restaurant by ID
+    Given that I want to find a "/v1/customers/1050"
+    When I request a resource
+    Then the response status code should be 404
+    And the response type should be "application/json"
+
+  @updatereservation
+  Scenario: Update an existing Customer
+    Given that I want update an existing "/v1/customers/1" with values:
+      | field      | value      |
+      | phone      | 3664589968 |
+      | newsletter | 1          |
+    When I request a resource
+    Then the response status code should be 204
+
+  @updatereservation
+  Scenario: Update an existing Customer of another restaurant
+    Given that I want update an existing "/v1/customers/2" with values:
+      | field      | value      |
+      | phone      | 3664589968 |
+    When I request a resource
+    Then the response status code should be 403
+
+  @updatereservation
+  Scenario: Update a non existing Customer
+    Given that I want update an existing "/v1/customers/1050" with values:
+      | field      | value      |
+      | phone      | 3664589968 |
+    When I request a resource
+    Then the response status code should be 404
+
+  @collectioncustomer
+
+  @collectionnotpermittedcustomer
+
+  @endtest
+  Scenario: Terminate test
+    Given that I want complete the test

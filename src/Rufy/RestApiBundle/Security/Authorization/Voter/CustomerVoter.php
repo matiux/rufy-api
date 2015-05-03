@@ -29,6 +29,15 @@ class CustomerVoter extends BaseVoter
             return VoterInterface::ACCESS_DENIED;
 
         switch($attribute) {
+            case self::VIEW:
+            case self::LISTING:
+            case self::DELETE:
+                if (
+                    // Controllo che il clienter che si vuole visualizzare appartenga al ristorante dello user che lo richiede
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource->getRestaurant(), $resource, $user)
+                )
+                    return VoterInterface::ACCESS_GRANTED;
+                break;
             case self::CREATE:
                 if (
                     // Controllo che l'utente che salva il customer, lavori nel ristorante che vuole associare al customer

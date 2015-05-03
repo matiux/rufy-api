@@ -34,6 +34,13 @@ Feature: Testing Restaurant API
     Then the response status code should be 403
     And the response type should be "application/json"
 
+  @nonexistssinglerestaurant
+  Scenario: Get a Restaurant by ID
+    Given that I want to find a "/v1/restaurants/150"
+    When I request a resource
+    Then the response status code should be 404
+    And the response type should be "application/json"
+
   @collectionrestaurant
   Scenario: Get all user's restaurants
     Given that I want to find a "/v1/restaurants"
