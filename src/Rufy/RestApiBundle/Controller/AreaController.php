@@ -30,7 +30,7 @@ class AreaController extends BaseController
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     403 = "Returned when you try to get an area of another restaurant",
-     *     404 = "Returned when the area is not found"
+     *     404 = "Returned when the area has not been found"
      *   }
      * )
      *
@@ -38,7 +38,7 @@ class AreaController extends BaseController
      *
      * @return json
      *
-     * @throws NotFoundHttpException when area not exist
+     * @throws NotFoundHttpException when area doesn't exist
      * @throws AccessDeniedException when role is not allowed
      */
     public function getAreaAction($id)

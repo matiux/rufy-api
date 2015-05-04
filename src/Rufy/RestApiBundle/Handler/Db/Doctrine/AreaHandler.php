@@ -41,12 +41,4 @@ class AreaHandler extends AbstractEntityHandler implements EntityHandlerInterfac
     {
 
     }
-
-    /**
-     * {@inheritdoc }
-     */
-    public function delete($entity)
-    {
-
-    }
 }

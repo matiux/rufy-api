@@ -32,7 +32,7 @@ class RestaurantController extends BaseController
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     403 = "Returned when you try to get a restaurant of another user",
-     *     404 = "Returned when the restaurant is not found"
+     *     404 = "Returned when the restaurant has not been found"
      *   }
      * )
      *
@@ -40,7 +40,7 @@ class RestaurantController extends BaseController
      *
      * @return json
      *
-     * @throws NotFoundHttpException when restaurant not exist
+     * @throws NotFoundHttpException when restaurant doesn't exist
      * @throws AccessDeniedException when role is not allowed
      */
     public function getRestaurantAction($id)

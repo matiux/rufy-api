@@ -100,14 +100,4 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
         return $this->processForm($customer, $parameters, 'PATCH');
     }
 
-    /**
-     * Delete an entity
-     *
-     * @param $entity
-     * @return mixed
-     */
-    public function delete($entity)
-    {
-
-    }
 }

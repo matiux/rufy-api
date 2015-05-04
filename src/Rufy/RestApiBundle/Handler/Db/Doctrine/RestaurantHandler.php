@@ -71,17 +71,4 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     {
 
     }
-
-    /**
-     * Delete an entity
-     *
-     * @api
-     *
-     * @param $entity
-     * @return mixed
-     */
-    public function delete($entity)
-    {
-
-    }
 }

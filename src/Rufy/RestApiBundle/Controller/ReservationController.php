@@ -31,7 +31,7 @@ class ReservationController extends BaseController
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     403 = "Returned when you try to get a reservation of another restaurant",
-     *     404 = "Returned when the reservation is not found"
+     *     404 = "Returned when the reservation has not been found"
      *   }
      * )
      *
@@ -39,7 +39,7 @@ class ReservationController extends BaseController
      *
      * @return json
      *
-     * @throws NotFoundHttpException when reservation not exist
+     * @throws NotFoundHttpException when reservation doesn't exist
      * @throws AccessDeniedException when role is not allowed
      */
     public function getReservationAction($id)
@@ -115,7 +115,7 @@ class ReservationController extends BaseController
      *
      * @return FormTypeInterface
      *
-     * @throws NotFoundHttpException when Reservation not exist
+     * @throws NotFoundHttpException when Reservation doesn't exist
      */
     public function patchReservationAction($id)
     {
@@ -151,7 +151,7 @@ class ReservationController extends BaseController
      *  },
      *   statusCodes = {
      *     204 = "Returned when successful",
-     *     404 = "Returned when the reservation is not found",
+     *     404 = "Returned when the reservation has not been found",
      *     403 = "Returned when you try to delete a reservation of another restaurant"
      *   }
      * )
@@ -159,7 +159,7 @@ class ReservationController extends BaseController
      * @param int $id Reservation id
      *
      *
-     * @throws NotFoundHttpException when reservation not exist
+     * @throws NotFoundHttpException when reservation doesn't exist
      * @throws AccessDeniedException when role is not allowed
      */
     public function deleteReservationAction($id)

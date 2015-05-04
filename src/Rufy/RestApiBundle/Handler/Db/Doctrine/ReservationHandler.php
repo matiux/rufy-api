@@ -89,18 +89,4 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
 
         return $this->processForm($reservation, $parameters, 'PATCH');
     }
-
-    /**
-     * {@inheritdoc }
-     */
-    public function delete($resource)
-    {
-
-        if (false === $this->authChecker->isGranted('DELETE', $resource))
-            throw new AccessDeniedException('Accesso non autorizzato!');
-
-        //$status = $this->om->remove($this->om->getReference('RufyRestApiBundle:Reservation', $reservationId));
-        $status = $this->om->remove($resource);
-        $this->om->flush();
-    }
 }

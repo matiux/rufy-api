@@ -210,19 +210,19 @@ Feature: Testing Reservation API
 
   @softdeletereservation
   Scenario: Delete a Reservation
-    Given that I want delete a reservation "/v1/reservations/3":
+    Given that I want to delete "/v1/reservations/3":
     When I request a resource
     Then the response status code should be 204
 
   @softdeletereservationnotexists
   Scenario: Delete a non existent Reservation
-    Given that I want delete a reservation "/v1/reservations/50":
+    Given that I want to delete "/v1/reservations/50":
     When I request a resource
     Then the response status code should be 404
 
   @softdeletereservationanother
   Scenario: Delete a Reservation of another Restaurant
-    Given that I want delete a reservation "/v1/reservations/2":
+    Given that I want to delete "/v1/reservations/2":
     When I request a resource
     Then the response status code should be 403
 

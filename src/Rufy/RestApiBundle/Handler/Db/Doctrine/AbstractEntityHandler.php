@@ -91,4 +91,18 @@ abstract class AbstractEntityHandler
 
         return $entities;
     }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function delete($resource)
+    {
+
+        if (false === $this->authChecker->isGranted('DELETE', $resource))
+            throw new AccessDeniedException('Accesso non autorizzato!');
+
+        //$status = $this->om->remove($this->om->getReference('RufyRestApiBundle:Reservation', $reservationId));
+        $status = $this->om->remove($resource);
+        $this->om->flush();
+    }
 }

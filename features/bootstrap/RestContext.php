@@ -89,9 +89,9 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     }
 
     /**
-     * @Given that I want delete a reservation :arg1:
+     * @Given that I want to delete :arg1:
      */
-    public function thatIWantDeleteAReservation($resource)
+    public function thatIWantToDelete($resource)
     {
         $this->requestMethod    = self::METHOD_DELETE;
         $this->resource         = $resource;
@@ -230,7 +230,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         foreach ($strings as $key) {
 
-            PHPUnit_Framework_Assert::assertArrayHasKey($key, $array, "$key does not exists in $path");
+            PHPUnit_Framework_Assert::assertArrayHasKey($key, $array, "$key doesn't exist in $path");
         }
 
         //throw new PendingException();
@@ -247,7 +247,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         foreach ($strings as $key) {
 
-            PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $array, "$key does not exists in $path");
+            PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $array, "$key doesn't exist in $path");
         }
     }
 
@@ -264,7 +264,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
             foreach ($strings as $key) {
 
-                PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $item, "$key does not exists in $path");
+                PHPUnit_Framework_Assert::assertArrayNotHasKey($key, $item, "$key doesn't exist in $path");
             }
         }
     }
@@ -295,7 +295,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
             foreach ($strings as $key) {
 
-                PHPUnit_Framework_Assert::assertArrayHasKey($key, $item, "$key does not exists in $path");
+                PHPUnit_Framework_Assert::assertArrayHasKey($key, $item, "$key doesn't exist in $path");
             }
         }
 

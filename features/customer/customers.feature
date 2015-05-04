@@ -85,7 +85,7 @@ Feature: Testing Customer API
     When I request a resource
     Then the response status code should be 204
 
-  @updatereservation
+  @updatenotpermittedreservation
   Scenario: Update an existing Customer of another restaurant
     Given that I want update an existing "/v1/customers/2" with values:
       | field      | value      |
@@ -100,6 +100,25 @@ Feature: Testing Customer API
       | phone      | 3664589968 |
     When I request a resource
     Then the response status code should be 404
+
+  @softdeletecustomer
+  Scenario: Delete a Customer
+    Given that I want to delete "/v1/customers/1":
+    When I request a resource
+    Then the response status code should be 204
+
+  @softdeletecustomernotexists
+  Scenario: Delete a non existent Customer
+    Given that I want to delete "/v1/customers/1050":
+    When I request a resource
+    Then the response status code should be 404
+
+  @softdeletecustomeranother
+  Scenario: Delete a Customer of another Restaurant
+    Given that I want to delete "/v1/customers/2":
+    When I request a resource
+    Then the response status code should be 403
+
 
   @collectioncustomer
 

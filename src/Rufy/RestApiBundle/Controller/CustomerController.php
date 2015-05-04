@@ -65,7 +65,7 @@ class CustomerController extends BaseController
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     403 = "Returned when you try to get a customer of another restaurant",
-     *     404 = "Returned when the customer is not found"
+     *     404 = "Returned when the customer has not been found"
      *   }
      * )
      *
@@ -73,7 +73,7 @@ class CustomerController extends BaseController
      *
      * @return json
      *
-     * @throws NotFoundHttpException when customer not exist
+     * @throws NotFoundHttpException when customer doesn't exist
      * @throws AccessDeniedException when role is not allowed
      */
     public function getCustomerAction($id)
@@ -98,11 +98,11 @@ class CustomerController extends BaseController
      *   }
      * )
      *
-     * @param int $id the reservation id
+     * @param int $id the customer id
      *
      * @return FormTypeInterface
      *
-     * @throws NotFoundHttpException when Reservation not exist
+     * @throws NotFoundHttpException when Customer doesn't exist
      */
     public function patchCustomerAction($id)
     {
@@ -122,5 +122,40 @@ class CustomerController extends BaseController
 
             return $exception->getForm();
         }
+    }
+
+    /**
+     * Delete existing customer
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Customer ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "Returned when the customer has not been found",
+     *     403 = "Returned when you try to delete a customer of another restaurant"
+     *   }
+     * )
+     *
+     * @param int $id Customer id
+     *
+     *
+     * @throws NotFoundHttpException when customer doesn't exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function deleteCustomerAction($id)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $customer = $this->getOr404($id, 'customer');
+
+        $this->container->get('rufy_api.customer.handler')->delete($customer);
     }
 }

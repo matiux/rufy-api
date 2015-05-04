@@ -32,7 +32,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
      *
      * @see UsernameNotFoundException
      *
-     * @throws UsernameNotFoundException if the user is not found
+     * @throws UsernameNotFoundException if the user has not been found
      */
     public function loadUserByUsername($username)
     {
