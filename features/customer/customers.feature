@@ -121,8 +121,30 @@ Feature: Testing Customer API
 
 
   @collectioncustomer
+  Scenario: Get a collection of Customer by restaurant ID
+    Given that I want to find a "/v1/restaurants/1/customers"
+    When I request a resource
+    Then the response status code should be 200
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" is a collection
+    And each "data" item contains:
+      """
+      id
+      name
+      phone
+      email
+      privacy
+      newsletter
+      restaurant
+      """
 
   @collectionnotpermittedcustomer
+  Scenario: Get a collection of Customer by not permitted restaurant ID
+    Given that I want to find a "/v1/restaurants/2/customers"
+    When I request a resource
+    Then the response status code should be 403
+    And the response type should be "application/json"
 
   @endtest
   Scenario: Terminate test
