@@ -5,6 +5,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Rufy\RestApiBundle\Entity\Customer;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
 use Symfony\Component\Config\Definition\Exception\Exception,
@@ -92,8 +93,14 @@ class ReservationController extends BaseController
 
     private function saveWithCustomerCheck(array $params)
     {
-        if (0 == $params['customer'])
-            echo 'a';
+        if (is_array($params['customer'])) {
+
+            /**
+             * @var $customer Customer
+             */
+            $customer               = $this->get('rufy_api.customer.handler')->post($params['customer']);
+            $params['customer']     = $customer->getId();
+        }
 
         $reservation    = $this->get('rufy_api.reservation.handler')->post($params);
 

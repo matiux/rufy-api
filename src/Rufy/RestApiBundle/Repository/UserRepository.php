@@ -170,8 +170,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             /**
              * @var $restaurant Restaurant
              */
-            if ($this->getEntityManager()->getRepository('RufyRestApiBundle:Restaurant')->hasArea($restaurant, $reservationArea))
+            if ($this->getEntityManager()->getRepository('RufyRestApiBundle:Restaurant')->hasArea($restaurant, $reservationArea)) {
                 return true;
+            }
+
         }
 
         return false;

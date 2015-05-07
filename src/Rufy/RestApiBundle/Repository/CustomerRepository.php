@@ -8,18 +8,26 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CustomerRepository extends EntityRepository implements EntityRepositoryInterface
 {
     /**
-     * Find an entity
-     *
-     * @param $limit
-     * @param $offset
-     * @param $params
-     * @param array $filters
-     *
-     * @return mixed
+     * {@inheritdoc }
      */
     public function findMore($limit, $offset, $params, $filters = array())
     {
+        $restaurantId = $params['restaurantId'];
 
+        $q = $this->createQueryBuilder('c')
+            ->where('c.restaurant = :restaurantid')
+            ->setParameter('restaurantid', $restaurantId);
+
+        foreach ($filters as $filter => $value)
+            $q = $q->andWhere("c.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+
+        $q = $q->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery();
+
+        $customers = $q->getResult();
+
+        return $customers ? $customers : false;
     }
 
     /**

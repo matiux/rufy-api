@@ -108,6 +108,59 @@ class RestaurantController extends BaseController
     }
 
     /**
+     * List all customers by a given id restaurant
+     *
+     * @ApiDoc(
+     *  resource = false,
+     *  description = "Returns a collection of Customer",
+     *  output="Rufy\RestApiBundle\Entity\Customer",
+     *  requirements={
+     *      {
+     *          "name"="restaurantId",
+     *          "requirement"="\d+",
+     *          "dataType"="integer",
+     *          "description"="Restaurant ID"
+     *      }
+     *  },
+     *  filters={
+     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing customers."},
+     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many customers to return."},
+     *  },
+     *  statusCodes = {
+     *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get the customers of another restaurants",
+     *     404 = "Returned when no restaurant has been found"
+     *  }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many customers to return per page.")
+     *
+     * @param int $restaurantId Restaurant id
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return json
+     *
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function getRestaurantCustomersAction($restaurantId, ParamFetcherInterface $paramFetcher)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+            throw new AccessDeniedException();
+
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+
+        $params         = [
+
+            'restaurantId' => $restaurantId
+        ];
+
+        $restaurantCustomers   = $this->getAllOr404($limit, $offset, $filters, $params, 'customer');
+
+        return $restaurantCustomers;
+    }
+
+    /**
      * List all areas by a given id restaurant
      *
      * @ApiDoc(

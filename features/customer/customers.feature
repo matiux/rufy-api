@@ -69,8 +69,8 @@ Feature: Testing Customer API
     Then the response status code should be 403
     And the response type should be "application/json"
 
-  @singlenotexistscustomer
-  Scenario: Get a Customer of another restaurant by ID
+  @singlenotexistingscustomer
+  Scenario: Get a Customer from not existing restaurant
     Given that I want to find a "/v1/customers/1050"
     When I request a resource
     Then the response status code should be 404
@@ -144,6 +144,13 @@ Feature: Testing Customer API
     Given that I want to find a "/v1/restaurants/2/customers"
     When I request a resource
     Then the response status code should be 403
+    And the response type should be "application/json"
+
+  @collectionfromnotexistingrestaurant
+  Scenario: Get a collection of Customer from not existing restaurant
+    Given that I want to find a "/v1/restaurants/281285/customers"
+    When I request a resource
+    Then the response status code should be 404
     And the response type should be "application/json"
 
   @endtest

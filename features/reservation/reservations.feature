@@ -150,7 +150,7 @@ Feature: Testing Reservation API
         """
 
   @notexistssinglereservation
-  Scenario: Get a Reservation by ID
+  Scenario: Get a not existing Reservation by ID
     Given that I want to find a "/v1/reservations/1050"
     When I request a resource
     Then the response status code should be 404
@@ -214,8 +214,8 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 204
 
-  @softdeletereservationnotexists
-  Scenario: Delete a non existent Reservation
+  @softdeletereservationnotexisting
+  Scenario: Delete a not existing Reservation
     Given that I want to delete "/v1/reservations/50":
     When I request a resource
     Then the response status code should be 404

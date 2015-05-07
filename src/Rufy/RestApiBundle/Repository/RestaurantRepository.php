@@ -1,6 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Repository; 
 
-use Doctrine\ORM\EntityRepository,
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ORM\EntityRepository,
     Doctrine\ORM\NoResultException;
 
 use Rufy\RestApiBundle\Entity\Restaurant,
@@ -102,9 +103,16 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
         $customers = $user->getRestaurants()->map(function($r) use ($customer) {
 
             /**
-             * @var $r Restaurant
+             * Passando per il repository Customer piuttosto che ricavare i customers da $r->getCustomers(); mi da modo di avere
+             * la lista dei Customers aggiornata. Questo è necessario nel caso in cui si salvi una prenotazione con un nuovo Customer
+             * dato che dopo il salvataggio del Customer, la collection in $r->getCustomers(); non è aggiornata
+             *
+             * @var $customersUpdated ArrayCollection
              */
-            return $r->getCustomers()->contains($customer);
+
+            $customersUpdated = new ArrayCollection($this->_em->getRepository('RufyRestApiBundle:Customer')->findBy(['restaurant' => $r->getId()]));
+
+            return $customersUpdated->contains($customer);
 
         })->exists(function($key, $value) {
 
