@@ -26,7 +26,7 @@ Feature: Testing Reservation API
       | table_name         | 12                  |
       | customer           | 1                   |
       | area               | 1                   |
-      | reservationOptions | 3,2                 |
+      | reservationOptions | array,3,2           |
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
@@ -76,7 +76,57 @@ Feature: Testing Reservation API
       | table_name        | 15                  |
       | customer          | 1                   |
       | area              | 1                   |
-      |reservationOptions | 4,2                 |
+      |reservationOptions | array,4,2           |
+    When I request a resource
+    Then the response status code should be 201
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" contains:
+      """
+      name
+      phone
+      area
+      areaId
+      tableName
+      people
+      peopleExtra
+      date
+      note
+      time
+      status
+      drawingWidth
+      drawingHeight
+      drawingPosX
+      drawingPosY
+      reservationOptions
+      """
+    And "data" doesn't contains:
+      """
+      """
+    And "data.reservationOptions" contains:
+      """
+      data
+      """
+    And "data.reservationOptions.data.0" contains:
+      """
+      id
+      slug
+      """
+
+  @createreservationwithnewcustomer
+  Scenario: Creating a New Reservation with a new Customer
+    Given that I want to add a new "/v1/reservations" with values:
+      | field              | value         |
+      | people             | 6             |
+      | people_extra       | 2             |
+      | time               | 20:30:00      |
+      | date               | 2015-04-15    |
+      | note               | Hanno un cane |
+      | status             | 2             |
+      | table_name         | 15            |
+      | customer           | array,name=Pinco Pallo,phone=456987,email=info@pallo.it,privacy=1,newsletter=0,restaurant=1 |
+      | area               | 1             |
+      | reservationOptions | array,4,2     |
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"

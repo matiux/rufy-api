@@ -113,14 +113,40 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         foreach ($toSendData as $index => $data) {
 
-            if ('reservationOptions' == $data['field'])
-                $data['value'] = explode(',', $data['value']);
+//            if ('reservationOptions' == $data['field'])
+//                $data['value'] = explode(',', $data['value']);
+
+            $value = new String($data['value']);
+
+            if ($value->contains('array,'))
+                $data['value'] = $this->handleArrayValue($data['value']);
 
             $postArray[$data['field']] = $data['value'];
         }
 
         return json_encode($postArray);
     }
+
+    private function handleArrayValue($value)
+    {
+        $values = explode(',', $value);
+        array_shift($values);
+
+        foreach ($values as $i => $value) {
+
+            unset($values[$i]);
+
+            $value              = explode('=', $value);
+
+            if (1 == count($value))
+                array_push($values, is_numeric(current($value)) ? (int) current($value) : current($value));
+            else
+                $values[$value[0]]  = is_numeric($value[1]) ? (int) $value[1] : $value[1];
+        }
+
+        return $values;
+    }
+
 
     /**
      * @When I request a resource
