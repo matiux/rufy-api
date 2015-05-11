@@ -12,7 +12,8 @@ security:
     #Gli utenti con il ruolo ROLE_ADMIN avranno anche il ruolo ROLE_USER e ROLE_READER.
     role_hierarchy:
         ROLE_USER:          ROLE_READER
-        ROLE_ADMIN:         [ROLE_USER, ROLE_READER]
+        ROLE_OWNER:         [ROLE_USER]
+        ROLE_ADMIN:         [ROLE_OWNER]
 
     #http://symfony.com/it/doc/current/cookbook/security/entity_provider.html
     providers:
@@ -45,4 +46,4 @@ security:
             stateless: true
 
     access_control:
-        - { path: ^/api\/(.)*, roles: ROLE_USER  }
+        - { path: ^/api\/(.)*, roles: ROLE_READER  }

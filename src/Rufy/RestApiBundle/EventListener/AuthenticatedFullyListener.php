@@ -32,7 +32,8 @@ class AuthenticatedFullyListener
 
         if($controller[0] instanceof AuthenticatedFullyController) {
             if (!$this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-                throw new AccessDeniedException();
+                //throw new AccessDeniedException();
+                throw new AccessDeniedHttpException();
         }
     }
 }
