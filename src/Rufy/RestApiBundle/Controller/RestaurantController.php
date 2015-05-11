@@ -71,10 +71,12 @@ class RestaurantController extends BaseController
      *  filters={
      *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
      *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="5", "description"="How many reservations to return."},
-     *      {"name"="date", "dataType"="date", "requirements"="\d{4}-\d{2}-\d{2}","nullable"="false", "description"="Reservation date"}
+     *      {"name"="date", "dataType"="date", "requirements"="\d{4}-\d{2}-\d{2}","nullable"="false", "description"="Reservation date"},
+     *      {"name"="status", "dataType"="integer", "requirements"="[012]","nullable"="false", "description"="Reservation status"}
      *  },
      *  statusCodes = {
      *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get the reservations of another restaurant",
      *     404 = "Returned when no reservation has been found"
      *  }
      * )
@@ -82,6 +84,7 @@ class RestaurantController extends BaseController
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many reservations to return per page.")
      * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
+     * @Annotations\QueryParam(name="status", requirements="[012]", description="Reservation status")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
