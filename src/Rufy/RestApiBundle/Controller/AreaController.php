@@ -43,9 +43,6 @@ class AreaController extends BaseController
      */
     public function getAreaAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $area = $this->getOr404($id, 'area');
 
         return $area;

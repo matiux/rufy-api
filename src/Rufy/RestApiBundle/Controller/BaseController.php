@@ -8,7 +8,7 @@ use Rufy\RestApiBundle\Model\AreaInterface,
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class BaseController extends FOSRestController
+class BaseController extends FOSRestController implements AuthenticatedFullyController
 {
     protected function prepareFilters(&$limit, &$offset, &$params, array $source) {
 

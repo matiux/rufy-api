@@ -45,9 +45,6 @@ class ReservationController extends BaseController
      */
     public function getReservationAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $reservation = $this->getOr404($id, 'reservation');
 
         return $reservation;
@@ -72,9 +69,6 @@ class ReservationController extends BaseController
      */
     public function postReservationAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         try {
 
             $params         = $this->container->get('request')->request->all();
@@ -126,9 +120,6 @@ class ReservationController extends BaseController
      */
     public function patchReservationAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         try {
 
             $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
@@ -171,9 +162,6 @@ class ReservationController extends BaseController
      */
     public function deleteReservationAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $reservation = $this->getOr404($id, 'reservation');
 
         $this->container->get('rufy_api.reservation.handler')->delete($reservation);

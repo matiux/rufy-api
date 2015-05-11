@@ -45,9 +45,6 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $restaurant = $this->getOr404($id, 'restaurant');
 
         return $restaurant;
@@ -95,9 +92,6 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -148,9 +142,6 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantCustomersAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -200,9 +191,6 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantAreasAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -244,9 +232,6 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantsAction(ParamFetcherInterface $paramFetcher)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);

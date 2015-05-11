@@ -32,9 +32,6 @@ class CustomerController extends BaseController
      */
     public function postCustomerAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         try {
 
             $customer    = $this->get('rufy_api.customer.handler')->post($this->container->get('request')->request->all());
@@ -78,9 +75,6 @@ class CustomerController extends BaseController
      */
     public function getCustomerAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $customer = $this->getOr404($id, 'customer');
 
         return $customer;
@@ -106,9 +100,6 @@ class CustomerController extends BaseController
      */
     public function patchCustomerAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         try {
 
             $customer = $this->container->get('rufy_api.customer.handler')->patch(
@@ -151,9 +142,6 @@ class CustomerController extends BaseController
      */
     public function deleteCustomerAction($id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-            throw new AccessDeniedException();
-
         $customer = $this->getOr404($id, 'customer');
 
         $this->container->get('rufy_api.customer.handler')->delete($customer);
