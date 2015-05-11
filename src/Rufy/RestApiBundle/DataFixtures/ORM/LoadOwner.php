@@ -19,6 +19,8 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
         $owner->setEmail('m.galacci@gmail.com');
         $owner->setPhone('3397476790');
         $owner->addUser($this->getReference('user_matteo'));
+        $owner->addUser($this->getReference('user_pinco'));
+        $owner->addUser($this->getReference('user_mat'));
         $this->addReference('owner1', $owner);
         $manager->persist($owner);
 

@@ -18,8 +18,9 @@ class LoadRole extends AbstractFixture implements OrderedFixtureInterface
         $roles = [
 
             'admin',
+            'owner',
             'user',
-            'visitor',
+            'reader',
         ];
 
         foreach ($roles as $roleName) {

@@ -38,6 +38,30 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->addRestaurant($this->getReference('pousada'));
         $this->addReference('user_matteo', $user);
 
+        $user = new User();
+        $user->setUsername('pinco');
+        $user->setPassword($encoder->encodePassword($user, 'pallo'));
+        $user->setIsActive(true);
+        $user->addRole($this->getReference('role_user'));
+        $user->setName('Pinco');
+        $user->setEmail('pinco@pallo.it');
+        $user->addRestaurant($this->getReference('pousada'));
+        $user->addRestaurant($this->getReference('hotelito'));
+        $this->addReference('user_pinco', $user);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('mat');
+        $user->setPassword($encoder->encodePassword($user, 'mat'));
+        $user->setIsActive(true);
+        $user->addRole($this->getReference('role_reader'));
+        $user->setName('Mat');
+        $user->setEmail('mat@mat.it');
+        $user->addRestaurant($this->getReference('pousada'));
+        $user->addRestaurant($this->getReference('hotelito'));
+        $this->addReference('user_mat', $user);
+        $manager->persist($user);
+
         $user       = new User();
         $user->setUsername('ingro');
         $user->setPassword($encoder->encodePassword($user, 'eleuname'));

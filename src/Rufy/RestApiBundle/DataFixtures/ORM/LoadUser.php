@@ -31,12 +31,36 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setUsername('matiux');
         $user->setPassword($encoder->encodePassword($user, '281285'));
         $user->setIsActive(true);
-        $user->addRole($this->getReference('role_admin'));
+        $user->addRole($this->getReference('role_owner'));
         $user->setName('Matteo');
         $user->setEmail('m.galacci@gmail.com');
         $user->addRestaurant($this->getReference('pousada'));
         $user->addRestaurant($this->getReference('hotelito'));
         $this->addReference('user_matteo', $user);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('pinco');
+        $user->setPassword($encoder->encodePassword($user, 'pallo'));
+        $user->setIsActive(true);
+        $user->addRole($this->getReference('role_user'));
+        $user->setName('Pinco');
+        $user->setEmail('pinco@pallo.it');
+        $user->addRestaurant($this->getReference('pousada'));
+        $user->addRestaurant($this->getReference('hotelito'));
+        $this->addReference('user_pinco', $user);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('mat');
+        $user->setPassword($encoder->encodePassword($user, 'mat'));
+        $user->setIsActive(true);
+        $user->addRole($this->getReference('role_reader'));
+        $user->setName('Mat');
+        $user->setEmail('mat@mat.it');
+        $user->addRestaurant($this->getReference('pousada'));
+        $user->addRestaurant($this->getReference('hotelito'));
+        $this->addReference('user_mat', $user);
         $manager->persist($user);
 
         $user       = new User();
