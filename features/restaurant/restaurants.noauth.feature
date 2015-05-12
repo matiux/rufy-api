@@ -23,6 +23,15 @@ Feature: Testing Restaurant API - No Auth
     Then the response status code should be 403
     And the response type should be "application/json"
 
+  @updaterestaurant
+  Scenario: Update an existing Reservation
+    Given that I want update an existing "/v1/restaurants/3" with values:
+      | field     | value           |
+      | name      | La nuova stalla |
+      | rest_date | 3               |
+    When I request a resource
+    Then the response status code should be 403
+
   @endtest
   Scenario: Terminate test
     Given that I want complete the test

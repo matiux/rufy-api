@@ -287,7 +287,41 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * Fetch a entioties or throw an 404 Exception.
+     * Update existing restaurant
+     *
+     * @ApiDoc(
+     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     400 = "Returned when the form has errors"
+     *     403 = "Returned when the user haven't the right access"
+     *   }
+     * )
+     *
+     * @param int $id the restaurant id
+     *
+     * @return FormTypeInterface
+     *
+     * @throws NotFoundHttpException when Restaurant doesn't exist
+     */
+    public function patchRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $restaurant = $this->patchAction('restaurant', $this->getOr404($id, 'restaurant'));
+
+            return $this->view($restaurant, 204);
+
+        } catch(InvalidFormException $exception) {
+
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * Fetch the entities or throw an 404 Exception.
      *
      * @param int $limit
      * @param int $offset

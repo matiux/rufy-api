@@ -3,7 +3,6 @@
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer,
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class RestaurantType extends AbstractType

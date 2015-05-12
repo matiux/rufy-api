@@ -112,6 +112,7 @@ class ReservationController extends BaseController
      *   statusCodes = {
      *     204 = "Returned when successful",
      *     400 = "Returned when the form has errors"
+     *     403 = "Returned when the user haven't the right access"
      *   }
      * )
      *
@@ -127,10 +128,7 @@ class ReservationController extends BaseController
 
         try {
 
-            $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
-                $this->getOr404($id, 'reservation'),
-                $this->container->get('request')->request->all()
-            );
+            $reservation = $this->patchAction('reservation', $this->getOr404($id, 'reservation'));
 
             return $this->view($reservation, 204);
 

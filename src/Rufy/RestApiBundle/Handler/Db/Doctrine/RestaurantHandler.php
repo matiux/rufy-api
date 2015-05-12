@@ -50,18 +50,11 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     }
 
     /**
-     * Partially update a Entity.
-     *
-     * @api
-     *
-     * @param $entity
-     * @param array           $parameters
-     *
-     * @return Entity
+     * {@inheritdoc }
      */
-    public function patch($entity, array $parameters)
+    public function patch($restaurant, array $parameters)
     {
-
+        return $this->processForm($restaurant, $parameters, 'PATCH');
     }
 
     /**

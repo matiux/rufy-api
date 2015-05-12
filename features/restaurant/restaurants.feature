@@ -33,6 +33,24 @@ Feature: Testing Restaurant API
       """
       """
 
+  @updaterestaurant
+  Scenario: Update an existing Reservation
+    Given that I want update an existing "/v1/restaurants/1" with values:
+      | field     | value           |
+      | name      | La nuova stalla |
+      | rest_date | 3               |
+    When I request a resource
+    Then the response status code should be 204
+
+  @updatenotpermittedrestaurant
+  Scenario: Update an existing Reservation of another restaurant
+    Given that I want update an existing "/v1/restaurants/2" with values:
+      | field     | value           |
+      | name      | La nuova stalla |
+      | rest_date | 3               |
+    When I request a resource
+    Then the response status code should be 403
+
   @singlerestaurant
   Scenario: Get a Restaurant by ID
     Given that I want to find a "/v1/restaurants/1"

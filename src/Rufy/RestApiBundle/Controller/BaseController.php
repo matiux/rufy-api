@@ -4,7 +4,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 
 use Rufy\RestApiBundle\Model\AreaInterface,
     Rufy\RestApiBundle\Model\ReservationInterface,
-    Rufy\RestApiBundle\Model\RestaurantInterface;
+    Rufy\RestApiBundle\Model\RestaurantInterface,
+    Rufy\RestApiBundle\Model\EntityInterface;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -41,5 +42,20 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
         }
 
         return $entity;
+    }
+
+    /**
+     * @param $model
+     * @param EntityInterface $resource
+     * @return mixed
+     */
+    protected function patchAction($model, EntityInterface $resource) {
+
+        $updatedResource = $this->container->get("rufy_api.$model.handler")->patch(
+            $resource,
+            $this->container->get('request')->request->all()
+        );
+
+        return $updatedResource;
     }
 }
