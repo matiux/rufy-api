@@ -43,6 +43,8 @@ class AreaController extends BaseController
      */
     public function getAreaAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $area = $this->getOr404($id, 'area');
 
         return $area;

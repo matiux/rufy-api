@@ -32,6 +32,8 @@ class CustomerController extends BaseController
      */
     public function postCustomerAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
         try {
 
             $customer    = $this->get('rufy_api.customer.handler')->post($this->container->get('request')->request->all());
@@ -75,6 +77,8 @@ class CustomerController extends BaseController
      */
     public function getCustomerAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $customer = $this->getOr404($id, 'customer');
 
         return $customer;
@@ -100,6 +104,8 @@ class CustomerController extends BaseController
      */
     public function patchCustomerAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
         try {
 
             $customer = $this->container->get('rufy_api.customer.handler')->patch(
@@ -142,6 +148,8 @@ class CustomerController extends BaseController
      */
     public function deleteCustomerAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OWNER', null, 'Non si può accedere a questa risorsa!');
+
         $customer = $this->getOr404($id, 'customer');
 
         $this->container->get('rufy_api.customer.handler')->delete($customer);

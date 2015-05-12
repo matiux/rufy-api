@@ -37,7 +37,7 @@ class Role implements SymfonyRoleInterface, RoleInterface, EntityInterface
     private $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role")
      */
     private $users;
 

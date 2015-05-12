@@ -16,11 +16,11 @@ services:
 
     ###########################################
     ## Listeners
-    rufy_api.authenticated.fully.listener:
-        class: Rufy\RestApiBundle\EventListener\AuthenticatedFullyListener
-        arguments: [@service_container]
-        tags:
-            - {name: kernel.event_listener, event: kernel.controller, method: onKernelController}
+#    rufy_api.authenticated.fully.listener:
+#        class: Rufy\RestApiBundle\EventListener\AuthenticatedFullyListener
+#        arguments: [@service_container]
+#        tags:
+#            - {name: kernel.event_listener, event: kernel.controller, method: onKernelController}
     ## Fine Listeners
     #############################################
 

@@ -39,7 +39,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         /**
          * u = user
-         * ro = role
          * re = restaurant
          * a = area
          * ao = area options
@@ -47,8 +46,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
          */
         $q = $this
             ->createQueryBuilder('u')
-            ->addSelect('u, ro, re, a, ao, c')
-            ->leftJoin('u.roles', 'ro')
+            ->addSelect('u, re, a, ao, c')
             ->leftJoin('u.restaurants', 're')
             ->leftJoin('re.areas', 'a')
             ->leftJoin('a.areaOptions', 'ao')

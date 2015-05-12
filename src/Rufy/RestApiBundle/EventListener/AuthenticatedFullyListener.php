@@ -6,6 +6,15 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException,
     Symfony\Component\HttpKernel\Event\FilterControllerEvent,
     Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class AuthenticatedFullyListener
+ * @package Rufy\RestApiBundle\EventListener
+ *
+ * TODO
+ * Questo listener si occupa di verificare prima di ogni chiamata ai controller, che l'utente sia loggato
+ * Si base è disabilitato in quanto il controllo sulla sicurezza è gestito dal file security.yml
+ * Per abilitarlo, decommentare il codice nel file services.yml
+ */
 class AuthenticatedFullyListener
 {
     /**

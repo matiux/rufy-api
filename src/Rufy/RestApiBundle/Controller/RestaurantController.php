@@ -45,6 +45,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $restaurant = $this->getOr404($id, 'restaurant');
 
         return $restaurant;
@@ -92,6 +94,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -142,6 +146,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantCustomersAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -191,6 +197,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantAreasAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -232,6 +240,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantsAction(ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
