@@ -5,7 +5,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Rufy\RestApiBundle\Model\RestaurantInterface,
+use Rufy\RestApiBundle\Exception\InvalidFormException,
+    Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
 
 use Symfony\Component\Config\Definition\Exception\Exception,
@@ -215,7 +216,7 @@ class RestaurantController extends BaseController
      * List all the logged user's restaurants
      *
      * @ApiDoc(
-     *  resource = true,
+     *  resource = false,
      *  description = "List all the logged user's restaurants",
      *  output="Rufy\RestApiBundle\Entity\Restaurant",
      *  requirements={
@@ -247,6 +248,42 @@ class RestaurantController extends BaseController
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
 
         return $restaurants;
+    }
+
+    /**
+     * Create a Restaurant
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new Restaurant.",
+     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
+     *   output = "Rufy\RestApiBundle\Entity\Restaurant",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the data is invalid or non-existent",
+     *     403 = "Returned when relationships are not allowed"
+     *   }
+     * )
+     *
+     * @throws AccessDeniedException if user is not logged in
+     */
+    public function postRestaurantAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $params         = $this->container->get('request')->request->all();
+            $restaurant     = $this->get('rufy_api.restaurant.handler')->post($params);
+
+            return $this->view($restaurant, 201);
+
+            //return $this->handleView($view);
+
+        } catch (InvalidFormException $exception) {
+
+            return $exception->getForm();
+        }
     }
 
     /**

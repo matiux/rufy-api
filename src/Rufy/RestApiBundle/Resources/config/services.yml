@@ -91,6 +91,12 @@ services:
         arguments: [@security.token_storage]
         tags:
             - {name: form.type, alias: customer_type }
+
+    rufy_api.form.type.restaurant:
+        class: Rufy\RestApiBundle\Form\RestaurantType
+        arguments: [@security.token_storage]
+        tags:
+            - {name: form.type, alias: restaurant_type }
     ## Fine Form
     #############################################
 

@@ -29,16 +29,6 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
     }
 
     /**
-     * {@inheritdoc }
-     */
-    public function post(array $parameters)
-    {
-        $customer = $this->createResource();
-
-        return $this->processForm($customer, $parameters, 'POST');
-    }
-
-    /**
      * Processes the form.
      *
      * @param $resource
@@ -47,7 +37,7 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
      * @return mixed
      * @throws InvalidFormException
      */
-    private function processForm($resource, array $parameters, $method = 'POST')
+    protected function processForm($resource, array $parameters, $method = 'POST')
     {
         /**
          * Invece di new ReservationType() passo 'customer_type' dato che CustomerType

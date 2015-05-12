@@ -22,16 +22,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     }
 
     /**
-     * {@inheritdoc }
-     */
-    public function post(array $parameters)
-    {
-        $reservation = $this->createResource();
-
-        return $this->processForm($reservation, $parameters, 'POST');
-    }
-
-    /**
      * Processes the form.
      *
      * @param $resource
@@ -40,7 +30,7 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      * @return mixed
      * @throws InvalidFormException
      */
-    private function processForm($resource, array $parameters, $method = 'POST')
+    protected function processForm($resource, array $parameters, $method = 'POST')
     {
         /**
          * Invece di new ReservationType() passo 'reservation_type' dato che ReservationType

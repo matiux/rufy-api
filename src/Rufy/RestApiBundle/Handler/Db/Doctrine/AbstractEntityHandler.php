@@ -105,4 +105,14 @@ abstract class AbstractEntityHandler
         $status = $this->om->remove($resource);
         $this->om->flush();
     }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function post(array $parameters)
+    {
+        $resource = $this->createResource();
+
+        return $this->processForm($resource, $parameters, 'POST');
+    }
 }

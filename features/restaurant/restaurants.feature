@@ -13,6 +13,26 @@ Feature: Testing Restaurant API
   Background: Steps that run before each scenario
     Given that im logged in with credentials "matiux" "281285"
 
+  @createrestaurant
+  Scenario: Creating a New Restaurant
+    Given that I want to add a new "/v1/restaurants" with values:
+      | field     | value     |
+      | name      | La stalla |
+      | rest_date | 1         |
+    When I request a resource
+    Then the response status code should be 201
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" contains:
+      """
+      id
+      name
+      restDate
+      """
+    And "data" doesn't contains:
+      """
+      """
+
   @singlerestaurant
   Scenario: Get a Restaurant by ID
     Given that I want to find a "/v1/restaurants/1"
