@@ -2,12 +2,19 @@
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Rufy\RestApiBundle\Entity\Reservation,
+use Rufy\RestApiBundle\Entity\Area,
+    Rufy\RestApiBundle\Entity\Customer,
+    Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Entity\Restaurant,
+
+    Rufy\RestApiBundle\Repository\AreaRepository,
+    Rufy\RestApiBundle\Repository\CustomerRepository,
     Rufy\RestApiBundle\Repository\ReservationRepository,
     Rufy\RestApiBundle\Repository\RestaurantRepository,
     Rufy\RestApiBundle\Repository\UserRepository,
-    Rufy\RestApiBundle\Model\EntityInterface;
+
+    Rufy\RestApiBundle\Model\EntityInterface,
+    Rufy\RestApiBundle\Exception\InvalidFormException;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface,
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface,
@@ -18,12 +25,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 abstract class AbstractEntityHandler
 {
     /**
-     * @var Reservation|Restaurant
+     * @var Reservation|Restaurant|Area|Customer
      */
     protected $entityClass;
 
     /**
-     * @var ReservationRepository|RestaurantRepository
+     * @var ReservationRepository|RestaurantRepository|AreaRepository|CustomerRepository
      */
     protected $repository;
 
@@ -114,5 +121,48 @@ abstract class AbstractEntityHandler
         $resource = $this->createResource();
 
         return $this->processForm($resource, $parameters, 'POST');
+    }
+
+    /**
+     * Processes the form.
+     *
+     * @param $resource
+     * @param array $parameters
+     * @param string $method
+     * @return mixed
+     * @throws InvalidFormException
+     */
+    protected function processForm($resource, array $parameters, $method = 'POST')
+    {
+        /**
+         * Ottengo qualcosa come reservation_type
+         */
+        $type = explode('\\', strtolower(str_replace('Handler', '_type', get_called_class())))[5];
+
+        /**
+         * Invece di new ReservationType() passo 'customer_type' dato che CustomerType
+         * è registrato come servizio
+         */
+        $form = $this->formFactory->create($type, $resource, array('method' => $method));
+
+        $form->submit($parameters, 'PATCH' !== $method);
+
+        if ($form->isValid()) {
+
+            /**
+             * @var $resource Reservation
+             */
+            $resource = $form->getData();
+
+            if (false === $this->authChecker->isGranted('CREATE', $resource))
+                throw new AccessDeniedException('Accesso non autorizzato!');
+
+            $this->om->persist($resource);
+            $this->om->flush();
+
+            return $resource;
+        }
+
+        throw new InvalidFormException('Invalid submitted data', $form);
     }
 }

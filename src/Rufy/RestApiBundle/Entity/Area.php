@@ -33,11 +33,6 @@ class Area implements AreaInterface, EntityInterface
     private $name;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":0})
-     */
-    private $full = 0;
-
-    /**
      * The number of the people
      * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
      */
@@ -103,30 +98,6 @@ class Area implements AreaInterface, EntityInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set full
-     *
-     * @param boolean $full
-     *
-     * @return Area
-     */
-    public function setFull($full)
-    {
-        $this->full = $full;
-
-        return $this;
-    }
-
-    /**
-     * Get full
-     *
-     * @return boolean
-     */
-    public function getFull()
-    {
-        return $this->full;
     }
 
     /**

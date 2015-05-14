@@ -21,7 +21,6 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area = new Area();
         $area->setName('2° Piano  - Terrazzo');
         $area->setRestaurant($pousada);
-        $area->setFull(0);
         $area->setMaxPeople(22);
         $area->addAreaOption($this->getReference('reservationOption_outside'));
         $area->addAreaOption($this->getReference('reservationOption_invalids'));
@@ -31,7 +30,6 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
 
         $area = new Area();
         $area->setName('1° Piano  - Sala Grande');
-        $area->setFull(0);
         $area->setMaxPeople(15);
         $area->setRestaurant($hotelito);
         $area->addAreaOption($this->getReference('reservationOption_outside'));

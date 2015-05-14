@@ -14,6 +14,42 @@ use Symfony\Component\Config\Definition\Exception\Exception,
 class AreaController extends BaseController
 {
     /**
+     * Create an Area
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new Area.",
+     *   input = "Rufy\RestApiBundle\Form\AreaType",
+     *   output = "Rufy\RestApiBundle\Entity\Area",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the data is invalid or non-existent",
+     *     403 = "Returned when relationships are not allowed"
+     *   }
+     * )
+     *
+     * @throws AccessDeniedException if user is not logged in
+     */
+    public function postAreaAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_OWNER', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $params         = $this->container->get('request')->request->all();
+            $area           = $this->get('rufy_api.area.handler')->post($params);
+
+            return $this->view($area, 201);
+
+            //return $this->handleView($view);
+
+        } catch (InvalidFormException $exception) {
+
+            return $exception->getForm();
+        }
+    }
+
+    /**
      * Get single Area.
      *
      * @ApiDoc(

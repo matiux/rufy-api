@@ -16,44 +16,6 @@ use Symfony\Component\Config\Definition\Exception\Exception,
 class RestaurantController extends BaseController
 {
     /**
-     * Get single Restaurant.
-     *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "Gets a Restaurant for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Restaurant",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The restaurant ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get a restaurant of another user",
-     *     404 = "Returned when the restaurant has not been found"
-     *   }
-     * )
-     *
-     * @param int $id - Restaurant id
-     *
-     * @return json
-     *
-     * @throws NotFoundHttpException when restaurant doesn't exist
-     * @throws AccessDeniedException when role is not allowed
-     */
-    public function getRestaurantAction($id)
-    {
-        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
-
-        $restaurant = $this->getOr404($id, 'restaurant');
-
-        return $restaurant;
-    }
-
-    /**
      * List all reservations by a given id restaurant
      *
      * @ApiDoc(
@@ -293,7 +255,7 @@ class RestaurantController extends BaseController
      *   input = "Rufy\RestApiBundle\Form\RestaurantType",
      *   statusCodes = {
      *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
+     *     400 = "Returned when the form has errors",
      *     403 = "Returned when the user haven't the right access"
      *   }
      * )
@@ -318,6 +280,78 @@ class RestaurantController extends BaseController
 
             return $exception->getForm();
         }
+    }
+
+    /**
+     * Delete existing restaurant
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Restaurant ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "Returned when the restaurant has not been found",
+     *     403 = "Returned when you try to delete a restaurant of another restaurant"
+     *   }
+     * )
+     *
+     * @param int $id Restaurant id
+     *
+     *
+     * @throws NotFoundHttpException when restaurant doesn't exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function deleteRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        $restaurant = $this->getOr404($id, 'restaurant');
+
+        $this->container->get('rufy_api.restaurant.handler')->delete($restaurant);
+    }
+
+    /**
+     * Get single Restaurant.
+     *
+     * @ApiDoc(
+     *  resource = false,
+     *  description = "Gets a Restaurant for a given id",
+     *  output = "Rufy\RestApiBundle\Entity\Restaurant",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The restaurant ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get a restaurant of another user",
+     *     404 = "Returned when the restaurant has not been found"
+     *   }
+     * )
+     *
+     * @param int $id - Restaurant id
+     *
+     * @return json
+     *
+     * @throws NotFoundHttpException when restaurant doesn't exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function getRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
+        $restaurant = $this->getOr404($id, 'restaurant');
+
+        return $restaurant;
     }
 
     /**

@@ -94,6 +94,18 @@ Feature: Testing Restaurant API
       restDate
       """
 
+  @softdeleterestaurant
+  Scenario: Delete a Restaurant
+    Given that I want to delete "/v1/restaurants/1":
+    When I request a resource
+    Then the response status code should be 204
+
+  @softdeleterestaurantnotexisting
+  Scenario: Delete a not existing Restaurant
+    Given that I want to delete "/v1/restaurants/1050":
+    When I request a resource
+    Then the response status code should be 404
+
   @endtest
   Scenario: Terminate test
     Given that I want complete the test

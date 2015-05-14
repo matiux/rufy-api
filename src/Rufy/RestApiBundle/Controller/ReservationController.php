@@ -111,7 +111,7 @@ class ReservationController extends BaseController
      *   input = "Rufy\RestApiBundle\Form\ReservationType",
      *   statusCodes = {
      *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
+     *     400 = "Returned when the form has errors",
      *     403 = "Returned when the user haven't the right access"
      *   }
      * )

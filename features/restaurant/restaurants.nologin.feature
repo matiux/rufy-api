@@ -34,6 +34,12 @@ Feature: Testing Restaurant API - No login
     Then the response status code should be 401
     And the response type should be "application/json"
 
+  @softdeleterestaurant
+  Scenario: Delete a Restaurant
+    Given that I want to delete "/v1/restaurants/2":
+    When I request a resource
+    Then the response status code should be 401
+
   @endtest
   Scenario: Terminate test
     Given that I want complete the test

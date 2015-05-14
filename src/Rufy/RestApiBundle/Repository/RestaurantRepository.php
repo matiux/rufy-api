@@ -63,20 +63,20 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
      * Controlla se un ristorante possiede una determinata area
      *
      * @param Restaurant $restaurant
-     * @param Area $reservationArea
+     * @param Area $area
      *
      * @return bool
      */
-    public function hasArea(Restaurant $restaurant, Area $reservationArea)
+    public function hasArea(Restaurant $restaurant, Area $area)
     {
         $restaurantAreas = $restaurant->getAreas();
 
-        foreach ($restaurantAreas as $area) {
+        foreach ($restaurantAreas as $rArea) {
 
             /**
              * @var $area Area
              */
-            if ($area->getId() == $reservationArea->getId())
+            if ($rArea->getId() == $area->getId())
                 return true;
         }
 

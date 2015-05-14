@@ -32,6 +32,13 @@ Feature: Testing Restaurant API - No Auth
     When I request a resource
     Then the response status code should be 403
 
+
+  @softdeleterestaurant
+  Scenario: Delete a Restaurant
+    Given that I want to delete "/v1/restaurants/2":
+    When I request a resource
+    Then the response status code should be 403
+
   @endtest
   Scenario: Terminate test
     Given that I want complete the test

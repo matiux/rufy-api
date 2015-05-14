@@ -51,7 +51,6 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
                 $areaObj    = new Area();
                 $areaObj->setName($areaName);
                 $areaObj->setRestaurant($this->getReference($ristoName));
-                $areaObj->setFull(0);
                 $areaObj->setMaxPeople($areaData['maxPeople']);
 
                 foreach($areaData['options'] as $opt)

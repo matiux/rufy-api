@@ -5,7 +5,7 @@ use Symfony\Component\Form\AbstractType,
     Symfony\Component\OptionsResolver\OptionsResolverInterface,
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
-class RestaurantType extends AbstractType
+class AreaType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -13,8 +13,9 @@ class RestaurantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('restaurant', 'entity', ['class' => 'RufyRestApiBundle:Restaurant', 'property' => 'id'])
             ->add('name')
-            ->add('rest_date')
+            ->add('maxPeople')
         ;
     }
 
@@ -25,7 +26,7 @@ class RestaurantType extends AbstractType
     {
         $resolver->setDefaults(array(
 
-            'data_class'        => 'Rufy\RestApiBundle\Entity\Restaurant',
+            'data_class'        => 'Rufy\RestApiBundle\Entity\Area',
             'csrf_protection'   => false,
 
         ));
@@ -38,6 +39,6 @@ class RestaurantType extends AbstractType
      */
     public function getName()
     {
-        return 'restaurant_type';
+        return 'area_type';
     }
 }
