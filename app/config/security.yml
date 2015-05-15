@@ -46,4 +46,4 @@ security:
             stateless: true
 
     access_control:
-        - { path: ^/api\/(.)*, roles: ROLE_READER  }
+        - { path: ^/api\/(.)*, roles: ROLE_ADMIN  }
