@@ -39,7 +39,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         /**
          * u = user
-         * ro = role
          * re = restaurant
          * a = area
          * ao = area options
@@ -47,8 +46,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
          */
         $q = $this
             ->createQueryBuilder('u')
-            ->addSelect('u, ro, re, a, ao, c')
-            ->leftJoin('u.roles', 'ro')
+            ->addSelect('u, re, a, ao, c')
             ->leftJoin('u.restaurants', 're')
             ->leftJoin('re.areas', 'a')
             ->leftJoin('a.areaOptions', 'ao')
@@ -155,14 +153,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * Controlla se un utente ha determinate aree
      *
-     * @param Reservation $reservation
+     * @param Area $area
      * @param User $user
      *
      * @return bool
      */
-    public function hasArea($reservation, $user)
+    public function hasArea($area, $user)
     {
-        $reservationArea    = $reservation->getArea();
         $userRestaurants    = $user->getRestaurants();
 
         foreach ($userRestaurants as $restaurant) {
@@ -170,7 +167,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             /**
              * @var $restaurant Restaurant
              */
-            if ($this->getEntityManager()->getRepository('RufyRestApiBundle:Restaurant')->hasArea($restaurant, $reservationArea)) {
+            if ($this->getEntityManager()->getRepository('RufyRestApiBundle:Restaurant')->hasArea($restaurant, $area)) {
                 return true;
             }
 

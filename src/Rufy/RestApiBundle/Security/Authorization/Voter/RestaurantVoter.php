@@ -23,15 +23,20 @@ class RestaurantVoter extends BaseVoter
             return VoterInterface::ACCESS_DENIED;
         }
 
-        $a= 1;
-
         switch($attribute) {
+            case self::DELETE:
+                // Qui non ho bisogno di controlli particolari dato che  nel Controller controllo già che l'utente che cancella sia un ADMIN
+                return VoterInterface::ACCESS_GRANTED;
             case self::VIEW:
             case self::LISTING:
                 if (
                     $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource, $user)
                 )
                     return VoterInterface::ACCESS_GRANTED;
+                break;
+            case self::CREATE:
+                // Qui non ho bisogno di controlli particolari dato che  nel Controller controllo già che l'utente che crea sia un ADMIN
+                return VoterInterface::ACCESS_GRANTED;
                 break;
         }
     }

@@ -64,10 +64,10 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface, Entit
     private $restaurants;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinTable(name="users_roles")
-     */
-    private $roles;
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     **/
+    private $role;
 
     /**
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="user", cascade={"persist"})
@@ -101,7 +101,6 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface, Entit
 
         $this->restaurants              = new ArrayCollection();
         $this->reservations             = new ArrayCollection();
-        $this->roles                    = new ArrayCollection();
 
         $this->salt                     = md5(uniqid(null, true));
     }
@@ -395,7 +394,8 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface, Entit
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        //return $this->roles->toArray();
+        return array($this->role);
     }
 
     /**
@@ -547,7 +547,9 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface, Entit
      */
     public function addRole(\Rufy\RestApiBundle\Entity\Role $roles)
     {
-        $this->roles[] = $roles;
+        //$this->roles[] = $roles;
+
+        $this->role = $roles;
 
         return $this;
     }
@@ -559,6 +561,10 @@ class User implements AdvancedUserInterface, \Serializable, UserInterface, Entit
      */
     public function removeRole(\Rufy\RestApiBundle\Entity\Role $roles)
     {
-        $this->roles->removeElement($roles);
+        //$this->roles->removeElement($roles);
+
+        /**
+         * TODO
+         */
     }
 }

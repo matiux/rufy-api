@@ -30,14 +30,13 @@ Rufy\RestApiBundle\Entity\Area:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
-    restaurant:
+    maxPeople:
       - Type:
           type: integer
           message: Il valore {{ value }} non è un {{ type }} valido.
-    full:
-      - Type:
-          type: bool
-          message: Il valore {{ value }} non è un {{ type }} valido.
+    restaurant:
+      - NotNull:
+          message: Indicare il ristorante del Customer.
 
 Rufy\RestApiBundle\Entity\Restaurant:
   properties:

@@ -45,6 +45,8 @@ class ReservationController extends BaseController
      */
     public function getReservationAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $reservation = $this->getOr404($id, 'reservation');
 
         return $reservation;
@@ -69,10 +71,11 @@ class ReservationController extends BaseController
      */
     public function postReservationAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
         try {
 
             $params         = $this->container->get('request')->request->all();
-
             $reservation    = $this->saveWithCustomerCheck($params);
 
             return $this->view($reservation, 201);
@@ -96,7 +99,7 @@ class ReservationController extends BaseController
             $params['customer']     = $customer->getId();
         }
 
-        $reservation    = $this->get('rufy_api.reservation.handler')->post($params);
+        $reservation                = $this->get('rufy_api.reservation.handler')->post($params);
 
         return $reservation;
     }
@@ -108,7 +111,8 @@ class ReservationController extends BaseController
      *   input = "Rufy\RestApiBundle\Form\ReservationType",
      *   statusCodes = {
      *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
+     *     400 = "Returned when the form has errors",
+     *     403 = "Returned when the user haven't the right access"
      *   }
      * )
      *
@@ -120,12 +124,11 @@ class ReservationController extends BaseController
      */
     public function patchReservationAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
         try {
 
-            $reservation = $this->container->get('rufy_api.reservation.handler')->patch(
-                $this->getOr404($id, 'reservation'),
-                $this->container->get('request')->request->all()
-            );
+            $reservation = $this->patchAction('reservation', $this->getOr404($id, 'reservation'));
 
             return $this->view($reservation, 204);
 
@@ -162,6 +165,8 @@ class ReservationController extends BaseController
      */
     public function deleteReservationAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
         $reservation = $this->getOr404($id, 'reservation');
 
         $this->container->get('rufy_api.reservation.handler')->delete($reservation);

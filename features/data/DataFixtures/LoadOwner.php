@@ -40,7 +40,8 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($this->getReference('role_admin'));
         $manager->persist($this->getReference('role_user'));
-        $manager->persist($this->getReference('role_visitor'));
+        $manager->persist($this->getReference('role_owner'));
+        $manager->persist($this->getReference('role_reader'));
 
         $options = [
 

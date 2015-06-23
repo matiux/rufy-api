@@ -21,14 +21,6 @@ class AreaHandler extends AbstractEntityHandler implements EntityHandlerInterfac
     /**
      * {@inheritdoc }
      */
-    public function post(array $parameters)
-    {
-
-    }
-
-    /**
-     * {@inheritdoc }
-     */
     public function put($entity, array $parameters)
     {
 

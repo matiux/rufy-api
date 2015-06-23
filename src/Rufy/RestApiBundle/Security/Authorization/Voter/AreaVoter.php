@@ -32,8 +32,9 @@ class AreaVoter extends BaseVoter
         switch($attribute) {
             case self::VIEW:
             case self::LISTING:
+            case self::CREATE:
                 if (
-                    // Controllo che l'utente che vuole visualuzzare un'area o la lista delle aree, lavori per
+                    // Controllo che l'utente che vuole visualizzare l'area o la lista delle aree, lavori per il ristorante
                     $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource->getRestaurant(), $user)
                 )
                     return VoterInterface::ACCESS_GRANTED;

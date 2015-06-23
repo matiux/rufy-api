@@ -5,7 +5,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Rufy\RestApiBundle\Model\RestaurantInterface,
+use Rufy\RestApiBundle\Exception\InvalidFormException,
+    Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
 
 use Symfony\Component\Config\Definition\Exception\Exception,
@@ -14,42 +15,6 @@ use Symfony\Component\Config\Definition\Exception\Exception,
 
 class RestaurantController extends BaseController
 {
-    /**
-     * Get single Restaurant.
-     *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "Gets a Restaurant for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Restaurant",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The restaurant ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get a restaurant of another user",
-     *     404 = "Returned when the restaurant has not been found"
-     *   }
-     * )
-     *
-     * @param int $id - Restaurant id
-     *
-     * @return json
-     *
-     * @throws NotFoundHttpException when restaurant doesn't exist
-     * @throws AccessDeniedException when role is not allowed
-     */
-    public function getRestaurantAction($id)
-    {
-        $restaurant = $this->getOr404($id, 'restaurant');
-
-        return $restaurant;
-    }
-
     /**
      * List all reservations by a given id restaurant
      *
@@ -92,6 +57,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -142,6 +109,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantCustomersAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -191,6 +160,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantAreasAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $params         = [
@@ -207,7 +178,7 @@ class RestaurantController extends BaseController
      * List all the logged user's restaurants
      *
      * @ApiDoc(
-     *  resource = true,
+     *  resource = false,
      *  description = "List all the logged user's restaurants",
      *  output="Rufy\RestApiBundle\Entity\Restaurant",
      *  requirements={
@@ -232,6 +203,8 @@ class RestaurantController extends BaseController
      */
     public function getRestaurantsAction(ParamFetcherInterface $paramFetcher)
     {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
         $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
@@ -240,7 +213,149 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * Fetch a entioties or throw an 404 Exception.
+     * Create a Restaurant
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new Restaurant.",
+     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
+     *   output = "Rufy\RestApiBundle\Entity\Restaurant",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the data is invalid or non-existent",
+     *     403 = "Returned when relationships are not allowed"
+     *   }
+     * )
+     *
+     * @throws AccessDeniedException if user is not logged in
+     */
+    public function postRestaurantAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $params         = $this->container->get('request')->request->all();
+            $restaurant     = $this->get('rufy_api.restaurant.handler')->post($params);
+
+            return $this->view($restaurant, 201);
+
+            //return $this->handleView($view);
+
+        } catch (InvalidFormException $exception) {
+
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * Update existing restaurant
+     *
+     * @ApiDoc(
+     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     400 = "Returned when the form has errors",
+     *     403 = "Returned when the user haven't the right access"
+     *   }
+     * )
+     *
+     * @param int $id the restaurant id
+     *
+     * @return FormTypeInterface
+     *
+     * @throws NotFoundHttpException when Restaurant doesn't exist
+     */
+    public function patchRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $restaurant = $this->patchAction('restaurant', $this->getOr404($id, 'restaurant'));
+
+            return $this->view($restaurant, 204);
+
+        } catch(InvalidFormException $exception) {
+
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * Delete existing restaurant
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Restaurant ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "Returned when the restaurant has not been found",
+     *     403 = "Returned when you try to delete a restaurant of another restaurant"
+     *   }
+     * )
+     *
+     * @param int $id Restaurant id
+     *
+     *
+     * @throws NotFoundHttpException when restaurant doesn't exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function deleteRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
+
+        $restaurant = $this->getOr404($id, 'restaurant');
+
+        $this->container->get('rufy_api.restaurant.handler')->delete($restaurant);
+    }
+
+    /**
+     * Get single Restaurant.
+     *
+     * @ApiDoc(
+     *  resource = false,
+     *  description = "Gets a Restaurant for a given id",
+     *  output = "Rufy\RestApiBundle\Entity\Restaurant",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The restaurant ID"
+     *      }
+     *  },
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     403 = "Returned when you try to get a restaurant of another user",
+     *     404 = "Returned when the restaurant has not been found"
+     *   }
+     * )
+     *
+     * @param int $id - Restaurant id
+     *
+     * @return json
+     *
+     * @throws NotFoundHttpException when restaurant doesn't exist
+     * @throws AccessDeniedException when role is not allowed
+     */
+    public function getRestaurantAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
+
+        $restaurant = $this->getOr404($id, 'restaurant');
+
+        return $restaurant;
+    }
+
+    /**
+     * Fetch the entities or throw an 404 Exception.
      *
      * @param int $limit
      * @param int $offset

@@ -29,20 +29,6 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     }
 
     /**
-     * Post Entity, creates a new Entity.
-     *
-     * @api
-     *
-     * @param array $parameters
-     *
-     * @return Entity
-     */
-    public function post(array $parameters)
-    {
-
-    }
-
-    /**
      * Edit a Entity.
      *
      * @api
@@ -58,17 +44,10 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
     }
 
     /**
-     * Partially update a Entity.
-     *
-     * @api
-     *
-     * @param $entity
-     * @param array           $parameters
-     *
-     * @return Entity
+     * {@inheritdoc }
      */
-    public function patch($entity, array $parameters)
+    public function patch($restaurant, array $parameters)
     {
-
+        return $this->processForm($restaurant, $parameters, 'PATCH');
     }
 }

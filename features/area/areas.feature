@@ -13,6 +13,28 @@ Feature: Testing Area API
   Background: Steps that run before each scenario
     Given that im logged in with credentials "matiux" "281285"
 
+  @createarea
+  Scenario: Creating a New Area
+    Given that I want to add a new "/v1/areas" with values:
+      | field      | value       |
+      | name       | Sala grande |
+      | restaurant | 1           |
+      | maxPeople  | 55          |
+    When I request a resource
+    Then the response status code should be 201
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" contains:
+      """
+      id
+      restaurant_id
+      name
+      max_people
+      """
+    And "data" doesn't contains:
+      """
+      """
+
   @singlearea
   Scenario: Get an Area by ID
     Given that I want to find a "/v1/areas/1"
@@ -26,7 +48,6 @@ Feature: Testing Area API
       restaurant_id
       name
       max_people
-      full
       """
     And "data" doesn't contains:
       """
@@ -60,7 +81,6 @@ Feature: Testing Area API
       restaurant_id
       name
       max_people
-      full
       """
     And each "data" item doesn't contains:
       """
