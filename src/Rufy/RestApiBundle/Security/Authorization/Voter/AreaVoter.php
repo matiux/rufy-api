@@ -35,7 +35,7 @@ class AreaVoter extends BaseVoter
             case self::CREATE:
                 if (
                     // Controllo che l'utente che vuole visualizzare l'area o la lista delle aree, lavori per il ristorante
-                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource->getRestaurant(), $user)
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasUser($resource->getRestaurant(), $user) || 'ROLE_ADMIN' == $user->getRoles()[0]->getRole()
                 )
                     return VoterInterface::ACCESS_GRANTED;
                 break;
