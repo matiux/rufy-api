@@ -55,14 +55,17 @@ class AreaRepository extends EntityRepository implements EntityRepositoryInterfa
             ->where('area.restaurant = :restaurantid')
             ->setParameter('restaurantid', $restaurantId);
 
-        foreach ($filters as $filter => $value)
+        foreach ($filters as $filter => $value) {
+
             $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+        }
 
-        $q = $q->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery();
+        if (0 != $limit) {
+            $q = $q->setMaxResults($limit)->setFirstResult($offset);
+        }
 
-        $areas = $q->getResult();
+        $q      = $q->getQuery();
+        $areas  = $q->getResult();
 
         return $areas ? $areas : false;
     }

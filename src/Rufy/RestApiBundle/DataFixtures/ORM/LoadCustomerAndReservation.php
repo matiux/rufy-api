@@ -104,7 +104,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             'user_emanuele',
         ];
 
-        for ($i = 1; $i <= 150; $i++) {
+        for ($i = 1; $i <= 600; $i++) {
 
             $x              = rand(0,14);
 
@@ -120,7 +120,8 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             $reservation->setUser($this->getReference($aree[$x]['u']));
             $reservation->setPeople(rand(2, 12));
             $reservation->setPeopleExtra(rand(1, 4));
-            $reservation->setDate($faker->date('Y-m-d'));
+            //$reservation->setDate($faker->date('Y-m-d'));
+            $reservation->setDate($this->buildDate());
             $reservation->setTime($faker->time('H:i'));
             $reservation->setNote($faker->text(rand(50, 200)));
             $reservation->setStatus(rand(0, 2));
@@ -167,5 +168,12 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+    }
+
+    private function buildDate()
+    {
+        $int = mt_rand(time(), strtotime('+1 month', time()));
+
+        return date('Y-m-d', $int);
     }
 }

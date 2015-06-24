@@ -37,6 +37,7 @@ Feature: Testing Reservation API
       phone
       area
       areaId
+      restaurantId
       tableName
       people
       peopleExtra
@@ -87,6 +88,7 @@ Feature: Testing Reservation API
       phone
       area
       areaId
+      restaurantId
       tableName
       people
       peopleExtra
@@ -137,6 +139,7 @@ Feature: Testing Reservation API
       phone
       area
       areaId
+      restaurantId
       tableName
       people
       peopleExtra
@@ -176,6 +179,7 @@ Feature: Testing Reservation API
         phone
         area
         areaId
+        restaurantId
         tableName
         people
         peopleExtra
@@ -227,6 +231,7 @@ Feature: Testing Reservation API
         phone
         area
         areaId
+        restaurantId
         tableName
         people
         peopleExtra

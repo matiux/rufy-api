@@ -21,11 +21,12 @@ class CustomerRepository extends EntityRepository implements EntityRepositoryInt
         foreach ($filters as $filter => $value)
             $q = $q->andWhere("c.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
 
-        $q = $q->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery();
+        if (0 != $limit) {
+            $q = $q->setMaxResults($limit)->setFirstResult($offset);
+        }
 
-        $customers = $q->getResult();
+        $q          = $q->getQuery();
+        $customers  = $q->getResult();
 
         return $customers ? $customers : false;
     }

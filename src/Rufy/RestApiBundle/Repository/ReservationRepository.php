@@ -92,11 +92,12 @@ class ReservationRepository extends EntityRepository implements EntityRepository
         foreach ($filters as $filter => $value)
             $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
 
-        $q = $q->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery();
+        if (0 != $limit) {
+            $q = $q->setMaxResults($limit)->setFirstResult($offset);
+        }
 
-        $reservations = $q->getResult();
+        $q              = $q->getQuery();
+        $reservations   = $q->getResult();
 
         return $reservations ? $reservations : false;
     }

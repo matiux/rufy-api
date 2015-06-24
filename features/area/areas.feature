@@ -27,7 +27,7 @@ Feature: Testing Area API
     And "data" contains:
       """
       id
-      restaurant_id
+      restaurantId
       name
       max_people
       """
@@ -45,7 +45,7 @@ Feature: Testing Area API
     And "data" contains:
       """
       id
-      restaurant_id
+      restaurantId
       name
       max_people
       """
@@ -78,7 +78,7 @@ Feature: Testing Area API
     And each "data" item contains:
       """
       id
-      restaurant_id
+      restaurantId
       name
       max_people
       """

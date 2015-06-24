@@ -12,7 +12,7 @@ class AreaTransformer extends TransformerAbstract
         return [
 
             'id'            => $area->getId(),
-            'restaurant_id' => $area->getRestaurant()->getId(),
+            'restaurantId'  => $area->getRestaurant()->getId(),
             'name'          => $area->getName(),
             'max_people'    => $area->getMaxPeople(),
         ];

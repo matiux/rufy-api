@@ -36,12 +36,14 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
         $q = $this->createQueryBuilder('r')
             ->join('r.users', 'u')
             ->where('u.id = :userid')
-            ->setParameter('userid', $userId)
-            ->getQuery()
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
+            ->setParameter('userid', $userId);
 
-        $restaurants = $q->getResult();
+        if (0 != $limit) {
+            $q = $q->setMaxResults($limit)->setFirstResult($offset);
+        }
+
+        $q              = $q->getQuery();
+        $restaurants    = $q->getResult();
 
         return $restaurants;
     }
