@@ -371,7 +371,8 @@ class RestaurantController extends BaseController
     {
         if (!($entities = $this->container->get("rufy_api.$type.handler")->all($limit, $offset, $filters, $params))) {
 
-            throw new NotFoundHttpException(sprintf("The {$type}s was not found for restaurant  '%s'", $params['restaurantId']));
+            //throw new NotFoundHttpException(sprintf("The {$type}s was not found for restaurant  '%s'", $params['restaurantId']));
+            return [];
         }
 
         return $entities;

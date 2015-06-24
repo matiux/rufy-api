@@ -309,6 +309,17 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     }
 
     /**
+     * @Then :arg1 is void
+     */
+    public function isVoid($arg1)
+    {
+        $path       = new String($arg1);
+        $array      = $path->pathToArray($this->body);
+
+        PHPUnit_Framework_Assert::assertTrue(empty($array));
+    }
+
+    /**
      * @Then each :arg1 item contains:
      */
     public function eachItemContains($arg1, PyStringNode $strings)

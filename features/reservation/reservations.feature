@@ -241,6 +241,16 @@ Feature: Testing Reservation API
         reservationOptions
         """
 
+  @voidcollectionreservation
+  Scenario: Get a voiud collection of Reservation by restaurant ID
+    Given that I want to find a "/v1/restaurants/1/reservations?date=2015-06-24"
+    When I request a resource
+    Then the response status code should be 200
+    And the response type should be "application/json"
+    And the response contains key "data"
+    And "data" is a collection
+    And "data" is void
+
   @collectionnotpermittedreservation
   Scenario: Get a collection of Reservation by not permitted restaurant ID
     Given that I want to find a "/v1/restaurants/2/reservations"
