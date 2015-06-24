@@ -104,7 +104,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             'user_emanuele',
         ];
 
-        for ($i = 1; $i <= 600; $i++) {
+        for ($i = 1; $i <= 1200; $i++) {
 
             $x              = rand(0,14);
 

@@ -3,6 +3,10 @@ rufy_rest_api:
     prefix: /api
     resource: "@RufyRestApiBundle/Resources/config/routing.yml"
 
+rufy_command:
+    prefix: /command
+    resource: "@RufyRestApiBundle/Resources/config/routing_command.yml"
+
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc

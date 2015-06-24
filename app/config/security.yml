@@ -6,8 +6,9 @@ security:
     # Se invece si usa il fornitore "in memoria", esso restituirà un oggetto Symfony\Component\Security\Core\User\User.
     encoders:
         Rufy\RestApiBundle\Entity\User:
-        #Symfony\Component\Security\Core\User\User:
             algorithm: sha512
+
+        Symfony\Component\Security\Core\User\User: plaintext
 
     #Gli utenti con il ruolo ROLE_ADMIN avranno anche il ruolo ROLE_OWNER, ROLE_USER e ROLE_READER.
     role_hierarchy:
@@ -19,17 +20,12 @@ security:
     providers:
         users:
             entity: { class: RufyRestApiBundle:User }
-
-#        in_memory:
-#            memory:
-#                users:
-#                    mat:
-#                        password: $2a$12$HSBmWvUZDiZM/IQFtP12L.drU7vKWz9PCNrNxH3BQodbVEHmbnxbO
-#                        roles: 'ROLE_READER'
-#                        #010487
-#                    matiux:
-#                        password: $2a$12$FrQbVGNmmmB.Db2VjdVcqO6SxVbzTb6F1l0lvrCHW3nv4RSj5qRTa
-#                        roles: 'ROLE_USER'
+        in_memory:
+            memory:
+                users:
+                    matiux:
+                        password: 281285 #$2a$12$FrQbVGNmmmB.Db2VjdVcqO6SxVbzTb6F1l0lvrCHW3nv4RSj5qRTa
+                        roles: 'ROLE_USER'
 
     firewalls:
         dev:
@@ -40,6 +36,11 @@ security:
             pattern: ^\/api(\/)?$
             anonymous: ~
             security: false
+
+        command:
+            pattern: ^\/command(\/)?
+            http_basic: ~
+            provider: in_memory
 
         default:
             http_basic: ~

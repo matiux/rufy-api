@@ -1,0 +1,3 @@
+command_dbseed:
+  path:         /dbseed
+  defaults:     { _controller: RufyRestApiBundle:Command:dbSeed}
