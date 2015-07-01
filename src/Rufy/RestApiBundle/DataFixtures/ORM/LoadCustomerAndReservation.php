@@ -104,7 +104,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             'user_emanuele',
         ];
 
-        for ($i = 1; $i <= 1200; $i++) {
+        for ($i = 1; $i <= 2400; $i++) {
 
             $x              = rand(0,14);
 
@@ -172,7 +172,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
 
     private function buildDate()
     {
-        $int = mt_rand(time(), strtotime('+1 month', time()));
+        $int = mt_rand(time(), strtotime('+2 weeks', time()));
 
         return date('Y-m-d', $int);
     }
