@@ -58,7 +58,7 @@ class ReservationRepository extends EntityRepository implements EntityRepository
             ->select('rese, a, c, opt')
             ->join('rese.area', 'a')
             ->join('rese.customer', 'c')
-            ->join('rese.reservationOptions', 'opt')
+            ->leftJoin('rese.reservationOptions', 'opt')
             ->where('rese.id = :reservationid')
             ->setParameter('reservationid', $id)
             ->getQuery();

@@ -23,23 +23,26 @@ class FormErrorTransformer extends Fractal\TransformerAbstract
                  */
                 $childErrors    = $child->getErrors(true, true)->getChildren();
 
-                /**
-                 * Proprietà per creare il messaggio completo di errore
-                 */
-                $cause          = $childErrors->getCause()->getCause();
-                if ($cause)
-                    $cause      = $cause->getMEssage();
-                $wrongValue     = $childErrors->getCause()->getInvalidValue();
-                $msg            = $childErrors->getMessage();
-                $name           = $child->getName();
+                if ($childErrors) {
 
-                $errors['form_errors'][] = [
+                    /**
+                     * Proprietà per creare il messaggio completo di errore
+                     */
+                    $cause          = $childErrors->getCause()->getCause();
+                    if ($cause)
+                        $cause      = $cause->getMEssage();
+                    $wrongValue     = $childErrors->getCause()->getInvalidValue();
+                    $msg            = $childErrors->getMessage();
+                    $name           = $child->getName();
 
-                    'name'          => $name,
-                    'generic'       => $msg,
-                    'wrong_value'   => $wrongValue,
-                    'cause'         => $cause
-                ];
+                    $errors['form_errors'][] = [
+
+                        'name'          => $name,
+                        'generic'       => $msg,
+                        'wrong_value'   => $wrongValue,
+                        'cause'         => $cause
+                    ];
+                }
             }
         }
 

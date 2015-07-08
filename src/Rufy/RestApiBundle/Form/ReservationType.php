@@ -25,7 +25,7 @@ class ReservationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $timeTransformer = new DateTimeToStringTransformer('Europe/Rome', 'Europe/Rome', 'H:i:s');
+        $timeTransformer = new DateTimeToStringTransformer('Europe/Rome', 'Europe/Rome', 'H:i');
         $dateTransformer = new DateTimeToStringTransformer('Europe/Rome', 'Europe/Rome', 'Y-m-d');
 
         $builder
