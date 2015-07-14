@@ -11,13 +11,13 @@ class CustomerTransformer extends TransformerAbstract
     {
         return [
 
-            'id'            => $customer->getId(),
             'name'          => $customer->getName(),
-            'restaurant'    => $customer->getRestaurant()->getName(),
             'phone'         => $customer->getPhone(),
             'email'         => $customer->getEmail(),
             'privacy'       => $customer->getPrivacy() ? 1 : 0,
             'newsletter'    => $customer->getNewsletter() ? 1 : 0,
+            'restaurant'    => $customer->getRestaurant()->getName(),
+            'id'            => $customer->getId(),
         ];
     }
 }

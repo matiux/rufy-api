@@ -76,7 +76,9 @@ class ReservationController extends BaseController
         try {
 
             $params         = $this->container->get('request')->request->all();
-            $reservation    = $this->saveWithCustomerCheck($params);
+            $this->saveWithcustomerCheck($params);
+
+            $reservation                = $this->get('rufy_api.reservation.handler')->post($params);
 
             return $this->view($reservation, 201);
 
@@ -88,7 +90,7 @@ class ReservationController extends BaseController
         }
     }
 
-    private function saveWithCustomerCheck(array $params)
+    private function saveWithcustomerCheck(array &$params)
     {
         if (is_array($params['customer'])) {
 
@@ -98,10 +100,20 @@ class ReservationController extends BaseController
             $customer               = $this->get('rufy_api.customer.handler')->post($params['customer']);
             $params['customer']     = $customer->getId();
         }
+    }
 
-        $reservation                = $this->get('rufy_api.reservation.handler')->post($params);
+    private function updateWithcustomerCheck(array &$params)
+    {
+        if (is_array($params['customer'])) {
 
-        return $reservation;
+            $data           = $params['customer'];
+            $cusromerId     = $data['id'];
+
+            unset($params['customer']);
+            unset($data['id']);
+
+            $this->container->get('rufy_api.customer.handler')->patch($this->getOr404($cusromerId, 'customer'), $data);
+        }
     }
 
     /**
@@ -128,7 +140,10 @@ class ReservationController extends BaseController
 
         try {
 
-            $reservation = $this->patchAction('reservation', $this->getOr404($id, 'reservation'));
+            $params         = $this->container->get('request')->request->all();
+            $this->updateWithcustomerCheck($params);
+
+            $reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
 
             return $this->view($reservation, 204);
 

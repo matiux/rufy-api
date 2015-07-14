@@ -7,30 +7,35 @@ use Rufy\RestApiBundle\Entity\Reservation;
 class ReservationTransformer extends Fractal\TransformerAbstract
 {
     protected $defaultIncludes = [
-        'reservationOptions'
+
+        'reservationOptions',
+        'customer',
     ];
 
     public function transform(Reservation $reservation)
     {
         return [
+            'people'                    => $reservation->getPeople(),
+            'time'                      => $reservation->getTime()->format('H:i'),
+            'date'                      => $reservation->getDate()->format('Y-m-d'),
+            'note'                      => $reservation->getNote(),
+            'people_extra'              => $reservation->getPeopleExtra(),
+            'status'                    => $reservation->getStatus(),
+            'table_name'                => $reservation->getTableName(),
+            'customer'                  => $reservation->getCustomer(),
+            'area'                      => $reservation->getArea()->getId(),
+            //'reservationOptions'        => $reservation->getReservationOptions(),
 
-            'id'            => $reservation->getId(),
-            'name'          => $reservation->getCustomer()->getName(),
-            'phone'         => $reservation->getCustomer()->getPhone(),
-            'area_name'     => $reservation->getArea()->getName(),
-            'area'          => $reservation->getArea()->getId(),
-            'restaurantId'  => $reservation->getArea()->getRestaurant()->getId(),
-            'table_name'    => $reservation->getTableName(),
-            'people'        => $reservation->getPeople(),
-            'people_extra'  => $reservation->getPeopleExtra(),
-            'date'          => $reservation->getDate()->format('Y-m-d'),
-            'time'          => $reservation->getTime()->format('H:i'),
-            'note'          => $reservation->getNote(),
-            'status'        => $reservation->getStatus(),
-            'drawingWidth'  => $reservation->getDrawingWidth(),
-            'drawingHeight' => $reservation->getDrawingHeight(),
-            'drawingPosX'   => $reservation->getDrawingPosX(),
-            'drawingPosY'   => $reservation->getDrawingPosY(),
+
+//            'id'            => $reservation->getId(),
+//            'name'          => $reservation->getCustomer()->getName(),
+//            'phone'         => $reservation->getCustomer()->getPhone(),
+//            'area_name'     => $reservation->getArea()->getName(),
+//            'restaurantId'  => $reservation->getArea()->getRestaurant()->getId(),
+//            'drawingWidth'  => $reservation->getDrawingWidth(),
+//            'drawingHeight' => $reservation->getDrawingHeight(),
+//            'drawingPosX'   => $reservation->getDrawingPosX(),
+//            'drawingPosY'   => $reservation->getDrawingPosY(),
         ];
     }
 
@@ -39,5 +44,12 @@ class ReservationTransformer extends Fractal\TransformerAbstract
         $opts = $reservation->getReservationOptions();
 
         return $this->collection($opts, new ReservationOptionTransformer);
+    }
+
+    public function includeCustomer(Reservation $reservation)
+    {
+        $customer = $reservation->getCustomer();
+
+        return $this->item($customer, new CustomerTransformer());
     }
 }
