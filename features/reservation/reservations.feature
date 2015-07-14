@@ -13,7 +13,7 @@ Feature: Testing Reservation API
   Background: Steps that run before each scenario
     Given that im logged in with credentials "matiux" "281285"
 
-  @createreservation
+  @create
   Scenario: Creating a New Reservation
     Given that I want to add a new "/v1/reservations" with values:
       | field              | value               |
@@ -30,41 +30,33 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
+      """
+      people
+      time
+      date
+      note
+      people_extra
+      status
+      table_name
+      customer
+      area
+      reservationOptions
+      """
+    And "reservationOptions" is a collection
+    And "customer" is a collection
+    And "customer" contains:
       """
       name
       phone
-      area
-      area_name
-      restaurantId
-      table_name
-      people
-      people_extra
-      date
-      note
-      time
-      status
-      drawingWidth
-      drawingHeight
-      drawingPosX
-      drawingPosY
-      reservationOptions
-      """
-    And "data" doesn't contains:
-      """
-      """
-    And "data.reservationOptions" contains:
-      """
-      data
-      """
-    And "data.reservationOptions.data.0" contains:
-      """
+      email
+      privacy
+      newsletter
+      restaurant
       id
-      slug
       """
 
-  @createreservation
+  @create
   Scenario: Creating a New Reservation
     Given that I want to add a new "/v1/reservations" with values:
       | field              | value         |
@@ -81,41 +73,33 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
+      """
+      people
+      time
+      date
+      note
+      people_extra
+      status
+      table_name
+      customer
+      area
+      reservationOptions
+      """
+    And "reservationOptions" is a collection
+    And "customer" is a collection
+    And "customer" contains:
       """
       name
       phone
-      area
-      area_name
-      restaurantId
-      table_name
-      people
-      people_extra
-      date
-      note
-      time
-      status
-      drawingWidth
-      drawingHeight
-      drawingPosX
-      drawingPosY
-      reservationOptions
-      """
-    And "data" doesn't contains:
-      """
-      """
-    And "data.reservationOptions" contains:
-      """
-      data
-      """
-    And "data.reservationOptions.data.0" contains:
-      """
+      email
+      privacy
+      newsletter
+      restaurant
       id
-      slug
       """
 
-  @createreservationwithnewcustomer
+  @createwithnewcustomer
   Scenario: Creating a New Reservation with a new Customer
     Given that I want to add a new "/v1/reservations" with values:
       | field              | value                                                                                       |
@@ -132,148 +116,137 @@ Feature: Testing Reservation API
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
+      """
+      people
+      time
+      date
+      note
+      people_extra
+      status
+      table_name
+      customer
+      area
+      reservationOptions
+      """
+    And "reservationOptions" is a collection
+    And "customer" is a collection
+    And "customer" contains:
       """
       name
       phone
-      area
-      area_name
-      restaurantId
-      table_name
-      people
-      people_extra
-      date
-      note
-      time
-      status
-      drawingWidth
-      drawingHeight
-      drawingPosX
-      drawingPosY
-      reservationOptions
-      """
-    And "data" doesn't contains:
-      """
-      """
-    And "data.reservationOptions" contains:
-      """
-      data
-      """
-    And "data.reservationOptions.data.0" contains:
-      """
+      email
+      privacy
+      newsletter
+      restaurant
       id
-      slug
       """
 
-  @singlereservation
+  @single
   Scenario: Get a Reservation by ID
     Given that I want to find a "/v1/reservations/4"
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
-        """
-        name
-        phone
-        area
-        area_name
-        restaurantId
-        table_name
-        people
-        people_extra
-        date
-        note
-        time
-        status
-        drawingWidth
-        drawingHeight
-        drawingPosX
-        drawingPosY
-        reservationOptions
-        """
-    And "data.reservationOptions" contains:
-        """
-        data
-        """
-    And "data.reservationOptions.data.0" contains:
-        """
-        id
-        slug
-        """
+    And the response contains:
+      """
+      people
+      time
+      date
+      note
+      people_extra
+      status
+      table_name
+      customer
+      area
+      reservationOptions
+      """
+    And "reservationOptions" is a collection
+    And "customer" is a collection
+    And "customer" contains:
+      """
+      name
+      phone
+      email
+      privacy
+      newsletter
+      restaurant
+      id
+      """
 
-  @notexistssinglereservation
+  @notexistssingle
   Scenario: Get a not existing Reservation by ID
     Given that I want to find a "/v1/reservations/1050"
     When I request a resource
     Then the response status code should be 404
     And the response type should be "application/json"
 
-  @notpermittedsinglereservation
+  @notpermittedsingle
   Scenario: Get a Reservation of another restaurant by ID
     Given that I want to find a "/v1/reservations/2"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
 
-  @collectionreservation
+  @collection
   Scenario: Get a collection of Reservation by restaurant ID
     Given that I want to find a "/v1/restaurants/1/reservations"
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" is a collection
-    And each "data" item contains:
-        """
-        name
-        phone
-        area
-        area_name
-        restaurantId
-        table_name
-        people
-        people_extra
-        date
-        note
-        time
-        status
-        drawingWidth
-        drawingHeight
-        drawingPosX
-        drawingPosY
-        reservationOptions
-        """
+    And the response is a collection
+    And each "response" item contains:
+      """
+      people
+      time
+      date
+      note
+      people_extra
+      status
+      table_name
+      customer
+      area
+      reservationOptions
+      """
 
-  @voidcollectionreservation
+  @voidcollection
   Scenario: Get a voiud collection of Reservation by restaurant ID
     Given that I want to find a "/v1/restaurants/1/reservations?date=2015-06-24"
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" is a collection
-    And "data" is void
+    And the response is a collection
+    And "response" is void
 
-  @collectionnotpermittedreservation
+  @collectionnotpermitted
   Scenario: Get a collection of Reservation by not permitted restaurant ID
     Given that I want to find a "/v1/restaurants/2/reservations"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
 
-  @updatereservation
+  @update
   Scenario: Update an existing Reservation
     Given that I want update an existing "/v1/reservations/1" with values:
-      | field      | value |
-      | people     | 5     |
-      | time       | 21:30 |
-      | table_name | 15    |
+      | field      | value  |
+      | people     | 5      |
+      | time       | 21:30  |
+      | table_name | Angolo |
     When I request a resource
     Then the response status code should be 204
 
-  @softdeletereservation
+  @updatewithcustomer
+  Scenario: Update an existing Reservation
+    Given that I want update an existing "/v1/reservations/1" with values:
+      | field      | value                |
+      | people     | 5                    |
+      | time       | 21:30                |
+      | table_name | Angolo               |
+      | customer   | array,id=1,name=Gigi |
+    When I request a resource
+    Then the response status code should be 204
+
+  @softdelete
   Scenario: Delete a Reservation
     Given that I want to delete "/v1/reservations/3":
     When I request a resource

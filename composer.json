@@ -22,7 +22,8 @@
         "nelmio/api-doc-bundle": "@dev",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "samj/fractal-bundle": "dev-master",
-        "nelmio/cors-bundle": "~1.4"
+        "nelmio/cors-bundle": "~1.4",
+        "matiux/types": "0.*"
     },
     "require-dev": {
         

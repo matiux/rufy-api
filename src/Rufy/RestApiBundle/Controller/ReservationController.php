@@ -104,7 +104,7 @@ class ReservationController extends BaseController
 
     private function updateWithcustomerCheck(array &$params)
     {
-        if (is_array($params['customer'])) {
+        if (isset($params['customer']) && is_array($params['customer'])) {
 
             $data           = $params['customer'];
             $cusromerId     = $data['id'];

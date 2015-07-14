@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 
 use \Symfony\Bundle\FrameworkBundle\Client;
 
-use Rufy\RestApiBundle\Utility\String;
+use Matiux\Types\String;
 
 class RestContext implements Context, SnippetAcceptingContext, RestContextInterface
 {
@@ -236,6 +236,22 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     }
 
     /**
+     * Verifica che il responso contenga determinate chiavi
+     * And the response contains:
+     *
+     * @Then the response contains:
+     */
+    public function theResponseContains(PyStringNode $strings)
+    {
+        $strings    = $strings->getStrings();
+
+        foreach ($strings as $key) {
+
+            PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->body, "$key doesn't exist");
+        }
+    }
+
+    /**
      * @Then the response contains key :arg1
      */
     public function theResponseContainsKey($key)
@@ -309,12 +325,27 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
     }
 
     /**
+     * @Then the response is a collection
+     */
+    public function theResponseIsACollection()
+    {
+        PHPUnit_Framework_Assert::assertTrue(is_Array($this->body));
+    }
+
+    /**
      * @Then :arg1 is void
      */
     public function isVoid($arg1)
     {
-        $path       = new String($arg1);
-        $array      = $path->pathToArray($this->body);
+        if ('response' == $arg1) {
+
+            $array = $this->body;
+
+        } else {
+
+            $path       = new String($arg1);
+            $array      = $path->pathToArray($this->body);
+        }
 
         PHPUnit_Framework_Assert::assertTrue(empty($array));
     }
@@ -324,9 +355,16 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
      */
     public function eachItemContains($arg1, PyStringNode $strings)
     {
-        $path       = new String($arg1);
-        $strings    = $strings->getStrings();
-        $array      = $path->pathToArray($this->body);
+        if ('response' == $arg1) {
+
+            $array = $this->body;
+
+        } else {
+
+            $path       = new String($arg1);
+            $strings    = $strings->getStrings();
+            $array      = $path->pathToArray($this->body);
+        }
 
         foreach ($array as $item) {
 
