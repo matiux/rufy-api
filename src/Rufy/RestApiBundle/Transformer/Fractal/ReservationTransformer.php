@@ -15,6 +15,7 @@ class ReservationTransformer extends Fractal\TransformerAbstract
     public function transform(Reservation $reservation)
     {
         return [
+            'id'                        => $reservation->getId(),
             'people'                    => $reservation->getPeople(),
             'time'                      => $reservation->getTime()->format('H:i'),
             'date'                      => $reservation->getDate()->format('Y-m-d'),
@@ -24,7 +25,8 @@ class ReservationTransformer extends Fractal\TransformerAbstract
             'table_name'                => $reservation->getTableName(),
             'customer'                  => $reservation->getCustomer(),
             'area'                      => $reservation->getArea()->getId(),
-            //'reservationOptions'        => $reservation->getReservationOptions(),
+
+
 
 
 //            'id'            => $reservation->getId(),

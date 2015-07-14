@@ -16,7 +16,7 @@ class CustomerTransformer extends TransformerAbstract
             'email'         => $customer->getEmail(),
             'privacy'       => $customer->getPrivacy() ? 1 : 0,
             'newsletter'    => $customer->getNewsletter() ? 1 : 0,
-            'restaurant'    => $customer->getRestaurant()->getName(),
+            'restaurant'    => $customer->getRestaurant()->getId(),
             'id'            => $customer->getId(),
         ];
     }
