@@ -28,3 +28,5 @@ tasks:
         - composer-optimize
         - symfony2/cache-clear: {env: prod}
         - symfony2/cache-warmup: {env: prod}
+        - symfony2/cache-clear: {env: dev}
+        - symfony2/cache-warmup: {env: dev}

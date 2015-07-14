@@ -75,7 +75,7 @@ class ReservationController extends BaseController
 
         try {
 
-            $params         = $this->container->get('request')->request->all();
+            $params         = $this->prepareParams($this->container->get('request')->request->all());
             $this->saveWithcustomerCheck($params);
 
             $reservation                = $this->get('rufy_api.reservation.handler')->post($params);
@@ -140,7 +140,7 @@ class ReservationController extends BaseController
 
         try {
 
-            $params         = $this->container->get('request')->request->all();
+            $params         = $this->prepareParams($this->container->get('request')->request->all());
             $this->updateWithcustomerCheck($params);
 
             $reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
@@ -190,5 +190,15 @@ class ReservationController extends BaseController
         $reservation = $this->getOr404($id, 'reservation');
 
         $this->container->get('rufy_api.reservation.handler')->delete($reservation);
+    }
+
+    private function prepareParams($params)
+    {
+        if (isset($params['id'])) {
+
+            unset($params['id']);
+        }
+
+        return $params;
     }
 }
