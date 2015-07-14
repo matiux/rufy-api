@@ -138,6 +138,11 @@ class ReservationController extends BaseController
         }
     }
 
+    public function putReservationAction($id)
+    {
+        return $this->patchReservationAction($id);
+    }
+
     /**
      * Delete existing reservation
      *
