@@ -46,9 +46,6 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
      */
     public function patch($customer, array $parameters)
     {
-        $this->om->persist($customer);
-        $this->om->flush();
-
         return $this->processForm($customer, $parameters, 'PATCH');
     }
 

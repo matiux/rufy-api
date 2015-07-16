@@ -96,6 +96,7 @@ fos_rest:
     #   serialize_null: false
     service:
         serializer: rufy_api.fosrest_serializer
+        exception_handler: rufy_api.fosrest_exception_wrapper_handler
     routing_loader:
         default_format: json
         include_format: false

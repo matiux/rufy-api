@@ -8,42 +8,55 @@ class FormErrorTransformer extends Fractal\TransformerAbstract
 {
     public function transform(ExceptionWrapper $form)
     {
-
         $errors             = array();
-        $children           = $form->getErrors()->all();
+        $children           = $form->getErrors();
 
-        foreach ($children as $child) {
+        if ($children) {
 
-            /**
-             * @var $child Form
-             */
-            if (!$child->isValid()) {
+            $children = $children->all();
+
+            foreach ($children as $child) {
+
                 /**
-                 * @var $childErrors FormError
+                 * @var $child Form
                  */
-                $childErrors    = $child->getErrors(true, true)->getChildren();
-
-                if ($childErrors) {
-
+                if ( ! $child->isValid()) {
                     /**
-                     * Proprietà per creare il messaggio completo di errore
+                     * @var $childErrors FormError
                      */
-                    $cause          = $childErrors->getCause()->getCause();
-                    if ($cause)
-                        $cause      = $cause->getMEssage();
-                    $wrongValue     = $childErrors->getCause()->getInvalidValue();
-                    $msg            = $childErrors->getMessage();
-                    $name           = $child->getName();
+                    $childErrors = $child->getErrors(true, true)->getChildren();
 
-                    $errors['form_errors'][] = [
+                    if ($childErrors) {
 
-                        'name'          => $name,
-                        'generic'       => $msg,
-                        'wrong_value'   => $wrongValue,
-                        'cause'         => $cause
-                    ];
+                        /**
+                         * Proprietà per creare il messaggio completo di errore
+                         */
+                        $cause = $childErrors->getCause()->getCause();
+                        if ($cause)
+                            $cause = $cause->getMEssage();
+                        $wrongValue = $childErrors->getCause()->getInvalidValue();
+                        $msg = $childErrors->getMessage();
+                        $name = $child->getName();
+
+                        $errors['form_errors'][] = [
+
+                            'name' => $name,
+                            'generic' => $msg,
+                            'wrong_value' => $wrongValue,
+                            'cause' => $cause
+                        ];
+                    }
                 }
             }
+
+        } else {
+
+            $errors['form_errors'][] = [
+
+                'code'          => $form->getCode(),
+                'message'       => $form->getMessage(),
+                'errors'        => $form->getErrors(),
+            ];
         }
 
         return $errors;

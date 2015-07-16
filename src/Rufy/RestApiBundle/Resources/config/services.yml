@@ -122,6 +122,11 @@ services:
         class: Rufy\RestApiBundle\Handler\Serializer\RufySerializerHandler
         arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
 
+    ## Custom Exception Handler per FosRestBundle
+    rufy_api.fosrest_exception_wrapper_handler:
+        class: Rufy\RestApiBundle\Handler\Serializer\RufyExceptionSerializerHandler
+        arguments: [@sam_j_fractal.manager, @rufy_api.custom.fractal.serializer]
+
     ###########################################
     ##  Voter
     security.access.voter:

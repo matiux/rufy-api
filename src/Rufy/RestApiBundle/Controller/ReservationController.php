@@ -8,9 +8,9 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Rufy\RestApiBundle\Entity\Customer;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\Config\Definition\Exception\Exception,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
+    Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ReservationController extends BaseController
 {
@@ -107,12 +107,14 @@ class ReservationController extends BaseController
         if (isset($params['customer']) && is_array($params['customer'])) {
 
             $data           = $params['customer'];
-            $cusromerId     = $data['id'];
+
+            if (null == ($customerId = @$data['id']))
+                throw new BadRequestHttpException(sprintf("The id attribute of the customer was not specified"));
 
             unset($params['customer']);
             unset($data['id']);
 
-            $this->container->get('rufy_api.customer.handler')->patch($this->getOr404($cusromerId, 'customer'), $data);
+            $this->container->get('rufy_api.customer.handler')->patch($this->getOr404($customerId, 'customer'), $data);
         }
     }
 
