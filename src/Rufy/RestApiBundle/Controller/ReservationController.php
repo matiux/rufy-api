@@ -201,6 +201,18 @@ class ReservationController extends BaseController
             unset($params['id']);
         }
 
+        if (is_array(current($params['reservationOptions']))) {
+
+            $o = [];
+
+            foreach($params['reservationOptions'] as $resOpts) {
+
+                $o[] = $resOpts['id'];
+            }
+
+            $params['reservationOptions'] = $o;
+        }
+
         return $params;
     }
 }

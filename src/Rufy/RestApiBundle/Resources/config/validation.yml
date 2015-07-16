@@ -87,10 +87,6 @@ Rufy\RestApiBundle\Entity\Reservation:
       - NotBlank:
           message: Indicare l'area della prenotazione
 #    reservationOptions:
-#      - Collection:
-#          fields:
-#              slug:
-#                  - Type:
-#                      type: string
-#                      message: note deve essere passato come string
-#          allowMissingFields: true
+#       - Choice:
+#          callback: getReservationOptions2
+#          message:  Scegliere un genere valido.

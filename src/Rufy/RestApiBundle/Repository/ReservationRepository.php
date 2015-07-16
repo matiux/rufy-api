@@ -7,41 +7,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationRepository extends EntityRepository implements EntityRepositoryInterface
 {
-//    /**
-//     * @param \Reservation $reservation
-//     * @param int $people
-//     * @param int $height
-//     * @return void
-//     */
-//    private function setTableDimension(\Reservation $reservation, $people, $height = 1)
-//    {
-//        $base = (($people % 2) == 0) ? ($people / 2) - 1 : floor($people / 2) ;
-//
-//        if (0 >= $base)
-//            $base = 1;
-//
-//        if ($height > 1)
-//            $base -= $height;
-//
-//        $reservation->setDrawingWidth($base);
-//        $reservation->setDrawingHeight($height);
-//
-//        return;
-//    }
-
-//    /**
-//     *
-//     * @param \Reservation $reservation
-//     * @param $params
-//     */
-//    private function setTablePosition(\Reservation $reservation, $params) {
-//
-//        $reservation->setDrawingPosX(20);
-//        $reservation->setDrawingPosY(30);
-//
-//        return;
-//    }
-
     /**
      * Find a reservation by id
      *

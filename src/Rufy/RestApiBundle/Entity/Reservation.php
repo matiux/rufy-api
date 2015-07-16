@@ -605,4 +605,9 @@ class Reservation implements ReservationInterface, EntityInterface
     {
         return $this->people_extra;
     }
+
+    public static function getReservationOptions2()
+    {
+        return array(1, 2);
+    }
 }
