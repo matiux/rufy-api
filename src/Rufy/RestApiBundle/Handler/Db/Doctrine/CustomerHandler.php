@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
+    protected $waitForTransaction = true;
+
     /**
      * Get a Entity given the identifier
      *

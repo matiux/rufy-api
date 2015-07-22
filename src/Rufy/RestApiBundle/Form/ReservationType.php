@@ -43,7 +43,7 @@ class ReservationType extends AbstractType
 //            ->add('drawing_pos_x')
 //            ->add('drawing_pos_y')
 //            ->add('user', 'entity', array('class' => 'RufyRestApiBundle:User', 'property' => 'id'))
-            ->add('customer', 'entity', ['class' => 'RufyRestApiBundle:Customer', 'property' => 'id'])
+            //->add('customer', 'entity', ['class' => 'RufyRestApiBundle:Customer', 'property' => 'id'])
             ->add('area', 'entity', ['class' => 'RufyRestApiBundle:Area', 'property' => 'id'])
             ->add('reservationOptions', 'entity', array('class' => 'RufyRestApiBundle:ReservationOption',
                                                         'property' => 'slug', 'expanded' => true ,

@@ -4,10 +4,24 @@ Rufy\RestApiBundle\Entity\Customer:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
+      - Length:
+          min: 3
+          minMessage: Il nome deve essere lungo almeno {{ limit }} carattere.
+      - NotBlank:
+          message: Il valore {{ value }} non può essere vuoto.
+      - NotNull:
+          message: Il valore {{ value }} non può essere null.
     phone:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
+      - Length:
+          min: 8
+          minMessage: Il nome deve essere lungo almeno {{ limit }} carattere.
+      - NotBlank:
+          message: Il valore {{ value }} non può essere vuoto.
+      - NotNull:
+          message: Il valore {{ value }} non può essere null.
     email:
       - Email:
           message: The email "{{ value }}" is not a valid email.
@@ -51,9 +65,21 @@ Rufy\RestApiBundle\Entity\Restaurant:
 
 Rufy\RestApiBundle\Entity\Reservation:
   properties:
+    date:
+      - NotBlank:
+          message: Il valore {{ value }} non può essere vuoto.
+      - NotNull:
+          message: Il valore {{ value }} non può essere null.
+    time:
+      - NotBlank:
+          message: Il valore {{ value }} non può essere vuoto.
+      - NotNull:
+          message: Il valore {{ value }} non può essere null.
     people:
       - NotBlank:
           message: Inserire il numero di persone
+      - NotNull:
+          message: Il valore {{ value }} non può essere null.
       - Type:
           type: integer
           message: Il valore {{ value }} non è un {{ type }} valido.
@@ -80,9 +106,9 @@ Rufy\RestApiBundle\Entity\Reservation:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
-    customer:
-      - NotBlank:
-          message: Seleziona un cliente
+#    customer:
+#      - NotBlank:
+#          message: Seleziona un cliente
     area:
       - NotBlank:
           message: Indicare l'area della prenotazione

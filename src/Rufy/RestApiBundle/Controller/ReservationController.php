@@ -6,6 +6,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface,
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Entity\Customer;
+use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException,
@@ -75,10 +76,23 @@ class ReservationController extends BaseController
 
         try {
 
+            /**
+             * Preparo i parametri
+             */
             $params         = $this->prepareParams($this->container->get('request')->request->all());
-            $this->saveWithcustomerCheck($params);
 
-            $reservation                = $this->get('rufy_api.reservation.handler')->post($params);
+            /**
+             * Gestisco il salvataggio del Customer ma senza effettuare il flush
+             * Così sfrutto la transazione per non salvarlo se la Reservation non andrà a buon fine
+             */
+            $this->saveWithcustomerCheck($params, $customer);
+
+            /**
+             * @var $reservation Reservation
+             */
+            $reservation                = $this->get('rufy_api.reservation.handler')->post($params, true);
+
+            $this->get('rufy_api.reservation.handler')->bindCustomerToReservation($reservation, $customer);
 
             return $this->view($reservation, 201);
 
@@ -90,16 +104,22 @@ class ReservationController extends BaseController
         }
     }
 
-    private function saveWithcustomerCheck(array &$params)
+    private function saveWithcustomerCheck(array &$params, &$customer)
     {
         if (is_array($params['customer'])) {
 
             /**
              * @var $customer Customer
              */
-            $customer               = $this->get('rufy_api.customer.handler')->post($params['customer']);
-            $params['customer']     = $customer->getId();
+            $customer               = $this->get('rufy_api.customer.handler')->post($params['customer'], true);
+            $customer               = $customer->getId() ?: $customer;
+
+        } else {
+
+            $customer                   = $params['customer'];
         }
+
+        unset($params['customer']);
     }
 
     private function updateWithcustomerCheck(array &$params)
@@ -201,7 +221,7 @@ class ReservationController extends BaseController
             unset($params['id']);
         }
 
-        if (is_array(current($params['reservationOptions']))) {
+        if (isset($params['reservationOptions']) && is_array(current($params['reservationOptions']))) {
 
             $o = [];
 

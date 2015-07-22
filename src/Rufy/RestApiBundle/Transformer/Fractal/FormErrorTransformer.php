@@ -3,6 +3,9 @@
 use FOS\RestBundle\Util\ExceptionWrapper;
 use League\Fractal;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormErrorIterator;
 
 class FormErrorTransformer extends Fractal\TransformerAbstract
 {
@@ -49,14 +52,42 @@ class FormErrorTransformer extends Fractal\TransformerAbstract
                 }
             }
 
-        } else {
+        }
 
-            $errors['form_errors'][] = [
+
+        if (!$children || empty($errors)) {
+
+            $arrayErrors = [];
+
+            /**
+             * @var $errors Form
+             */
+            $formErrors = $form->getErrors()->getErrors();
+            if (0 < count($formErrors) && $formErrors instanceof FormErrorIterator ) {
+                foreach($formErrors as $e) {
+
+                    /**
+                     * @var $e FormError
+                     */
+
+                    array_push($arrayErrors, [
+
+                        'message'       => $e->getMessage(),
+                        'parameters'    => $e->getMessageParameters(),
+                    ]);
+                }
+            }
+
+            $errors['form_errors'] = [
 
                 'code'          => $form->getCode(),
-                'message'       => $form->getMessage(),
+                'message'       => stripslashes($form->getMessage()),
                 'errors'        => $form->getErrors(),
             ];
+
+            if (!empty($arrayErrors)) {
+                $errors['form_errors']['errors_det'] = $arrayErrors;
+            }
         }
 
         return $errors;

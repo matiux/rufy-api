@@ -79,9 +79,9 @@ class Reservation implements ReservationInterface, EntityInterface
     private $status;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true, options={"default":""})
      */
-    private $note;
+    private $note = "";
 
     /**
      * @ORM\Column(type="string", nullable=false, unique=false)
@@ -122,7 +122,7 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="reservations", cascade={"persist"})
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
      */
     private $customer;
 

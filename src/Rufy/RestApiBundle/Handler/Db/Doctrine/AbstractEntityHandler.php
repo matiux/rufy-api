@@ -50,6 +50,14 @@ abstract class AbstractEntityHandler
     protected $authChecker;
 
     /**
+     * Se true, non fa il flush dell'entità attendendo il prossimo salvataggio.
+     * Si verifica ad esempio nel caso del salvataggio del Customer che viene salvato
+     * prima della Reservation ma deve essere commitato solo se la Reservation è valida
+     * @var bool
+     */
+    protected $waitForTransaction = false;
+
+    /**
      * @var FormFactory
      */
     protected $formFactory;
@@ -116,8 +124,10 @@ abstract class AbstractEntityHandler
     /**
      * {@inheritdoc }
      */
-    public function post(array $parameters)
+    public function post(array $parameters, $wft = false)
     {
+        $this->waitForTransaction = $wft;
+
         $resource = $this->createResource();
 
         return $this->processForm($resource, $parameters, 'POST');
@@ -149,20 +159,24 @@ abstract class AbstractEntityHandler
 
         if ($form->isValid()) {
 
-            /**
-             * @var $resource Reservation
-             */
-            $resource = $form->getData();
-
-            if (false === $this->authChecker->isGranted('CREATE', $resource))
-                throw new AccessDeniedException('Accesso non autorizzato!');
-
-            $this->om->persist($resource);
-            $this->om->flush();
-
-            return $resource;
+            return $this->performSave($form->getData());
         }
 
         throw new InvalidFormException('Invalid submitted data', $form);
+    }
+
+    protected function performSave(EntityInterface $resource)
+    {
+        if (false === $this->authChecker->isGranted('CREATE', $resource))
+            throw new AccessDeniedException('Accesso non autorizzato!');
+
+        $this->om->persist($resource);
+
+        if (!$this->waitForTransaction) {
+
+            $this->om->flush();
+        }
+
+        return $resource;
     }
 }
