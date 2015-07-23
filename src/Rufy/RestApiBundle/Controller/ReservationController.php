@@ -72,6 +72,22 @@ class ReservationController extends BaseController
      */
     public function postReservationAction()
     {
+//        $m = $this->get('memcached');
+//
+////         $m->set('int', 99);
+////         $m->set('string', 'a simple string');
+////         $m->set('array', array(11, 12));
+//
+//        $result = $m->getMulti(array('int', 'string', 'array', 'name', 'surname'), $cas);
+//
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+//
+//        var_dump($cas);
+//
+//        die();  die();
+
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
