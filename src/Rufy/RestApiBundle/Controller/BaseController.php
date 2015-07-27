@@ -11,6 +11,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseController extends FOSRestController implements AuthenticatedFullyController
 {
+    /**
+     * Con array_filter provo a esplodere i valori della queury string. Se ci sono virgole, e quindi più
+     * valori, allora la query verrà assemblata con WHERE IN, altrimenti sarà un semplice WHERE
+     *
+     * @param $limit
+     * @param $offset
+     * @param $params
+     * @param array $source
+     */
     protected function prepareFilters(&$limit, &$offset, &$params, array $source) {
 
         $offset         = null == $source['offset'] ? 0 : $source['offset'];
@@ -18,11 +27,23 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
 
         unset($source['limit'], $source['offset']);
 
-        $params = array_filter($source, function($fValue) {
+        $params = array_filter($source, function(&$fValue) {
 
-            return $fValue != null;
+            if ($fValue != null) {
 
+                $values = explode(',', $fValue);
+
+                if (1 < count($values)) {
+
+                    $fValue = $values;
+                }
+
+                return true;
+            }
+
+            return false;
         });
+
     }
 
     /**

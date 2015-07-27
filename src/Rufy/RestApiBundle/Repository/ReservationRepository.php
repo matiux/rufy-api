@@ -54,8 +54,13 @@ class ReservationRepository extends EntityRepository implements EntityRepository
             ->where('rest.id = :restaurantid')
             ->setParameter('restaurantid', $restaurantId);
 
-        foreach ($filters as $filter => $value)
-            $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+        foreach ($filters as $filter => $value) {
+            if (!is_array($value)) {
+                $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+            } else {
+                $q = $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
+            }
+        }
 
         if (0 != $limit) {
             $q = $q->setMaxResults($limit)->setFirstResult($offset);
