@@ -14,7 +14,7 @@ releases:
     symlink: current
     directory: releases
 hosts:
-    - 192.241.178.210
+    - 46.101.237.153
 tasks:
     pre-deploy:
     on-deploy:
