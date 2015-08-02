@@ -12,9 +12,9 @@ $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 /*
  * commentato da qui...
 */
-$apcLoader = new ApcClassLoader(sha1(__FILE__), $loader);
-$loader->unregister();
-$apcLoader->register(true);
+//$apcLoader = new ApcClassLoader(sha1(__FILE__), $loader);
+//$loader->unregister();
+//$apcLoader->register(true);
 /**
  * ... a qui.
  */

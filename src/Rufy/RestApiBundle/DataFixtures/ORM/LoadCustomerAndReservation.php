@@ -122,7 +122,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             $reservation->setPeopleExtra(rand(1, 4));
             //$reservation->setDate($faker->date('Y-m-d'));
             $reservation->setDate($this->buildDate());
-            $reservation->setTime($faker->time('H:i'));
+            $reservation->setTime($this->buildTime());
             $reservation->setNote($faker->text(rand(50, 200)));
             $reservation->setStatus(rand(0, 2));
             $reservation->addReservationOption($this->getReference('reservationOption_'.$options[rand(0, 1)]));
@@ -175,5 +175,18 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
         $int = mt_rand(time(), strtotime('+2 weeks', time()));
 
         return date('Y-m-d', $int);
+    }
+
+    private function buildTime()
+    {
+        //return $faker->time('H:i')
+
+        $times = [
+            '21:00',
+            '21:30',
+            '22:00',
+        ];
+
+        return $times[rand(0, 2)];
     }
 }
