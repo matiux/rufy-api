@@ -14,14 +14,6 @@ interface ReservationInterface {
     public function getDate();
     public function setStatus($confirmed);
     public function getStatus();
-    public function setDrawingWidth($drawingWidth);
-    public function getDrawingWidth();
-    public function setDrawingHeight($drawingHeight);
-    public function getDrawingHeight();
-    public function setDrawingPosX($drawingPosX);
-    public function getDrawingPosX();
-    public function setDrawingPosY($drawingPosY);
-    public function getDrawingPosY();
     public function setUser(User $user);
     public function getUser();
     public function setArea(Area $area);

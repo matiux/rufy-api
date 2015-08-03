@@ -28,10 +28,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->addReservationOption($this->getReference('reservationOption_outside'));
         $reservation->addReservationOption($this->getReference('reservationOption_animals'));
         $reservation->setTableName('5');
-        $reservation->setDrawingWidth(20);
-        $reservation->setDrawingHeight(10);
-        $reservation->setDrawingPosX(50);
-        $reservation->setDrawingPosY(80);
 
         $this->getReference('user_matteo')->addReservation($reservation);
 
@@ -47,10 +43,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->addReservationOption($this->getReference('reservationOption_outside'));
         $reservation->addReservationOption($this->getReference('reservationOption_smokers'));
         $reservation->setTableName('12');
-        $reservation->setDrawingWidth(50);
-        $reservation->setDrawingHeight(10);
-        $reservation->setDrawingPosX(125);
-        $reservation->setDrawingPosY(90);
 
         $this->getReference('user_emanuele')->addReservation($reservation);
 
@@ -65,10 +57,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
 //        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
 //        $reservation->setNote('Qualche nota circa la prenotazione');
 //        $reservation->setTableName('12');
-//        $reservation->setDrawingWidth(50);
-//        $reservation->setDrawingHeight(10);
-//        $reservation->setDrawingPosX(125);
-//        $reservation->setDrawingPosY(90);
 //
 //        $this->getReference('user_pincopallo')->addReservation($reservation);
     }

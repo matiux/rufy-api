@@ -31,19 +31,14 @@ class ReservationType extends AbstractType
         $builder
             ->add('people')
             ->add('people_extra')
-            //->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
+            ->add('time', 'time', ['input' => 'string', 'with_seconds' => true, 'widget' => 'single_text'])
             ->add($builder->create('time', 'text')->addModelTransformer($timeTransformer))
-            //->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd'])
+            ->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd'])
             ->add($builder->create('date', 'text')->addModelTransformer($dateTransformer))
             ->add('note')
             ->add('status')
             ->add('table_name')
-//            ->add('drawing_width')
-//            ->add('drawing_height')
-//            ->add('drawing_pos_x')
-//            ->add('drawing_pos_y')
-//            ->add('user', 'entity', array('class' => 'RufyRestApiBundle:User', 'property' => 'id'))
-            //->add('customer', 'entity', ['class' => 'RufyRestApiBundle:Customer', 'property' => 'id'])
+            ->add('customer', 'entity', ['class' => 'RufyRestApiBundle:Customer', 'property' => 'id'])
             ->add('area', 'entity', ['class' => 'RufyRestApiBundle:Area', 'property' => 'id'])
             ->add('reservationOptions', 'entity', array('class' => 'RufyRestApiBundle:ReservationOption',
                                                         'property' => 'slug', 'expanded' => true ,

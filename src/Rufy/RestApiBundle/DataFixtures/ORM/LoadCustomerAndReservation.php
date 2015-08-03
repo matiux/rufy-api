@@ -135,11 +135,6 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
 
             $reservation->setCustomer($this->getReference($c));
 
-            $reservation->setDrawingWidth(20);
-            $reservation->setDrawingHeight(10);
-            $reservation->setDrawingPosX(50);
-            $reservation->setDrawingPosY(80);
-
             $this->getReference($aree[$x]['u'])->addReservation($reservation);
 
             $manager->persist($reservation);

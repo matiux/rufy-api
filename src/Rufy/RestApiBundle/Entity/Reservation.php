@@ -19,11 +19,6 @@ class Reservation implements ReservationInterface, EntityInterface
     public function __construct()
     {
         $this->reservationOptions   = new ArrayCollection();
-
-        $this->drawing_height       = 1;
-        $this->drawing_width        = 1;
-        $this->drawing_pos_x        = 0;
-        $this->drawing_pos_y        = 0;
     }
 
     //    /**
@@ -87,26 +82,6 @@ class Reservation implements ReservationInterface, EntityInterface
      * @ORM\Column(type="string", nullable=false, unique=false)
      */
     private $table_name;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned":true, "default":1})
-     */
-    private $drawing_width;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned":true, "default":1})
-     */
-    private $drawing_height;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned":false})
-     */
-    private $drawing_pos_x;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned":false})
-     */
-    private $drawing_pos_y;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reservations")
@@ -175,102 +150,6 @@ class Reservation implements ReservationInterface, EntityInterface
     public function getPeople()
     {
         return $this->people;
-    }
-
-    /**
-     * Set drawingWidth
-     *
-     * @param integer $drawingWidth
-     *
-     * @return Reservation
-     */
-    public function setDrawingWidth($drawingWidth)
-    {
-        $this->drawing_width = $drawingWidth;
-
-        return $this;
-    }
-
-    /**
-     * Get drawingWidth
-     *
-     * @return integer
-     */
-    public function getDrawingWidth()
-    {
-        return $this->drawing_width;
-    }
-
-    /**
-     * Set drawingHeight
-     *
-     * @param integer $drawingHeight
-     *
-     * @return Reservation
-     */
-    public function setDrawingHeight($drawingHeight)
-    {
-        $this->drawing_height = $drawingHeight;
-
-        return $this;
-    }
-
-    /**
-     * Get drawingHeight
-     *
-     * @return integer
-     */
-    public function getDrawingHeight()
-    {
-        return $this->drawing_height;
-    }
-
-    /**
-     * Set drawingPosX
-     *
-     * @param integer $drawingPosX
-     *
-     * @return Reservation
-     */
-    public function setDrawingPosX($drawingPosX)
-    {
-        $this->drawing_pos_x = $drawingPosX;
-
-        return $this;
-    }
-
-    /**
-     * Get drawingPosX
-     *
-     * @return integer
-     */
-    public function getDrawingPosX()
-    {
-        return $this->drawing_pos_x;
-    }
-
-    /**
-     * Set drawingPosY
-     *
-     * @param integer $drawingPosY
-     *
-     * @return Reservation
-     */
-    public function setDrawingPosY($drawingPosY)
-    {
-        $this->drawing_pos_y = $drawingPosY;
-
-        return $this;
-    }
-
-    /**
-     * Get drawingPosY
-     *
-     * @return integer
-     */
-    public function getDrawingPosY()
-    {
-        return $this->drawing_pos_y;
     }
 
     /**

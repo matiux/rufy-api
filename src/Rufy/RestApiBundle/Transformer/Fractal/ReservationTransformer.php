@@ -33,10 +33,6 @@ class ReservationTransformer extends Fractal\TransformerAbstract
 //            'phone'         => $reservation->getCustomer()->getPhone(),
 //            'area_name'     => $reservation->getArea()->getName(),
 //            'restaurantId'  => $reservation->getArea()->getRestaurant()->getId(),
-//            'drawingWidth'  => $reservation->getDrawingWidth(),
-//            'drawingHeight' => $reservation->getDrawingHeight(),
-//            'drawingPosX'   => $reservation->getDrawingPosX(),
-//            'drawingPosY'   => $reservation->getDrawingPosY(),
         ];
     }
 
