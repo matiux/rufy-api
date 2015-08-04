@@ -1,0 +1,12 @@
+rufy_rest_api_dev_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RufyRestApiDevBundle:Default:index }
+
+reservation_form:
+    path:     /form/reservation
+    defaults: { _controller: RufyRestApiDevBundle:Form:reservation }
+
+custromer_form:
+    path:     /form/customer
+    defaults: { _controller: RufyRestApiDevBundle:Form:customer }
+

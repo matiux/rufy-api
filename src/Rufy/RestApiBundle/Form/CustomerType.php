@@ -14,12 +14,19 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('restaurant', 'entity', ['class' => 'RufyRestApiBundle:Restaurant', 'property' => 'id'])
+            ->add('restaurant', 'entity', [
+                'class'         => 'RufyRestApiBundle:Restaurant',
+                'property'      => 'name',
+                'placeholder'   => 'Scegliere un ristorante',
+            ])
             ->add('name')
             ->add('phone')
-            ->add('email')
+            ->add('email', 'email')
             ->add('privacy')
             ->add('newsletter')
+//            ->add('save', 'submit', [
+//                'label' => 'Salva'
+//            ])
         ;
     }
 
@@ -30,6 +37,7 @@ class CustomerType extends AbstractType
     {
         $resolver->setDefaults(array(
 
+            'attr'              => ['novalidate' => 'novalidate'],
             'data_class'        => 'Rufy\RestApiBundle\Entity\Customer',
             'csrf_protection'   => false,
 

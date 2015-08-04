@@ -37,6 +37,11 @@ security:
             anonymous: ~
             security: false
 
+        dev:
+            pattern: ^\/test(\/)?
+            anonymous: ~
+            security: false
+
         command:
             pattern: ^\/command(\/)?
             http_basic: ~

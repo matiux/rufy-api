@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new SamJ\FractalBundle\SamJFractalBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            new Rufy\RestApiDevBundle\RufyRestApiDevBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -85,13 +85,13 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reservations")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      **/
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Area", inversedBy="reservations")
-     * @ORM\JoinColumn(name="area_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="area_id", referencedColumnName="id", nullable=false)
      */
     private $area;
 
@@ -336,7 +336,7 @@ class Reservation implements ReservationInterface, EntityInterface
      * @param $time
      * @return Reservation
      */
-    public function setTime(\DateTime $time)
+    public function setTime(\DateTime $time = null)
     {
         $this->time = $time ? clone $time : null;
 
@@ -367,7 +367,7 @@ class Reservation implements ReservationInterface, EntityInterface
      * @param \DateTime $date
      * @return Reservation
      */
-    public function setDate(\DateTime $date)
+    public function setDate(\DateTime $date = null)
     {
         $this->date = $date ? clone $date : null;
 

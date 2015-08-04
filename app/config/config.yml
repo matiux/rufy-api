@@ -108,7 +108,7 @@ fos_rest:
     view:
         view_response_listener: 'force'
         templating_formats:
-            html: false
+            html: true
 
 nelmio_cors:
     paths:

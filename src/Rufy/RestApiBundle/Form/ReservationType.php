@@ -32,25 +32,39 @@ class ReservationType extends AbstractType
             ->add('time', 'time', ['input' => 'datetime', 'with_seconds' => false, 'widget' => 'single_text', 'model_timezone' => 'Europe/Rome'])
             ->add('date', 'date', ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'model_timezone' => 'Europe/Rome'])
             ->add('note')
-            ->add('status')
-            ->add('table_name')
-            ->add('customer', 'entity', [
-                                'class'     => 'RufyRestApiBundle:Customer',
-                                'property'  => 'id',
+            ->add('status', 'choice', [
+                'choices' => [
+                        0 => 'Waiting list',
+                        1 => 'To confirm',
+                        2 => 'Confirmed',
+                ],
+                'data' => 1,
             ])
-            //->add('area', 'entity', ['class' => 'RufyRestApiBundle:Area', 'property' => 'id'])
-            //->add('area')
-//            ->add('reservationOptions', 'entity', [
-//                                            'class'     => 'RufyRestApiBundle:ReservationOption',
-//                                            'property'  => 'id',
-//                                            'expanded'  => true,
-//                                            'multiple'  => true,
-////                                            'query_builder' => function(EntityRepository $er){
-////
-////                                                return $er->createQueryBuilder('ro')->leftJoin('ro.areas', 'a')->where('a.id');
-////                                            }
-//                ]
-//            )
+            ->add('table_name')
+//            ->add('customer', 'entity', [
+//                                'class'     => 'RufyRestApiBundle:Customer',
+//                                'property'  => 'id',
+//            ])
+            ->add('area', 'entity', [
+                'class'         => 'RufyRestApiBundle:Area',
+                'property'      => 'name',
+                'placeholder'   => 'Scegliere un\'area',
+            ])
+            ->add('reservationOptions', 'entity', [
+                                            'class'     => 'RufyRestApiBundle:ReservationOption',
+                                            'property'  => 'slug',
+                                            'expanded'  => true,
+                                            'multiple'  => true,
+//                                            'query_builder' => function(EntityRepository $er){
+//
+//                                                return $er->createQueryBuilder('ro')->leftJoin('ro.areas', 'a')->where('a.id');
+//                                            }
+                ]
+            )
+        ->add('customer', new CustomerType())
+        ->add('save', 'submit', [
+                'label' => 'Salva'
+            ])
         ;
     }
 
@@ -61,12 +75,11 @@ class ReservationType extends AbstractType
     {
         $resolver->setDefaults(array(
 
+            'attr'              => ['novalidate' => 'novalidate'],
             'data_class'        => 'Rufy\RestApiBundle\Entity\Reservation',
             'csrf_protection'   => false,
 
-        ))
-            ->setRequired(array('em'))
-            ->setAllowedTypes('em', 'Doctrine\Common\Persistence\ObjectManager');
+        ));
     }
 
     /**
