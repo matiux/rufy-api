@@ -34,9 +34,9 @@ Rufy\RestApiBundle\Entity\Customer:
       - Type:
           type: bool
           message: Il valore {{ value }} non è un {{ type }} valido.
-    restaurant:
-      - NotNull:
-          message: Indicare il ristorante del Customer.
+#    restaurant:
+#      - NotNull:
+#          message: Indicare il ristorante del Customer.
 
 Rufy\RestApiBundle\Entity\Area:
   properties:
@@ -109,9 +109,9 @@ Rufy\RestApiBundle\Entity\Reservation:
 #    customer:
 #      - NotBlank:
 #          message: Seleziona un cliente
-    area:
-      - NotBlank:
-          message: Indicare l'area della prenotazione
+#    area:
+#      - NotBlank:
+#          message: Indicare l'area della prenotazione
 #    reservationOptions:
 #       - Choice:
 #          callback: getReservationOptions2

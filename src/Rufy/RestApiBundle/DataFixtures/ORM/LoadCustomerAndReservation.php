@@ -169,7 +169,7 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
     {
         $int = mt_rand(time(), strtotime('+2 weeks', time()));
 
-        return date('Y-m-d', $int);
+        return new \DateTime(date('Y-m-d', $int));
     }
 
     private function buildTime()
@@ -182,6 +182,6 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             '22:00',
         ];
 
-        return $times[rand(0, 2)];
+        return new \DateTime($times[rand(0, 2)]);
     }
 }

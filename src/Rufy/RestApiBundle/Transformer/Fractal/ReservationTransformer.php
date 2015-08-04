@@ -8,8 +8,8 @@ class ReservationTransformer extends Fractal\TransformerAbstract
 {
     protected $defaultIncludes = [
 
-        'reservationOptions',
-        'customer',
+        //'reservationOptions',
+        //'customer',
     ];
 
     public function transform(Reservation $reservation)
@@ -18,15 +18,13 @@ class ReservationTransformer extends Fractal\TransformerAbstract
             'id'                        => $reservation->getId(),
             'people'                    => $reservation->getPeople(),
             'time'                      => $reservation->getTime()->format('H:i'),
-            'date'                      => $reservation->getDate()->format('Y-m-d'),
+            'date'                      => $reservation->getDate()->format('d/m/Y'),
             'note'                      => $reservation->getNote(),
             'people_extra'              => $reservation->getPeopleExtra(),
             'status'                    => $reservation->getStatus(),
             'table_name'                => $reservation->getTableName(),
             //'customer'                  => $reservation->getCustomer(),
-            'area'                      => $reservation->getArea()->getId(),
-
-
+            //'area'                      => $reservation->getArea()->getId(),
 
 
 //            'name'          => $reservation->getCustomer()->getName(),

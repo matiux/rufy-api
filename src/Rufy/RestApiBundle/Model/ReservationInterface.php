@@ -8,9 +8,9 @@ interface ReservationInterface {
 
     public function setPeople($people);
     public function getPeople();
-    public function setTime($time);
+    public function setTime(\DateTime $time);
     public function getTime();
-    public function setDate($date);
+    public function setDate(\DateTime $date);
     public function getDate();
     public function setStatus($confirmed);
     public function getStatus();

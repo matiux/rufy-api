@@ -91,7 +91,7 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Area", inversedBy="reservations")
-     * @ORM\JoinColumn(name="area_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="area_id", referencedColumnName="id", nullable=true)
      */
     private $area;
 
@@ -330,14 +330,15 @@ class Reservation implements ReservationInterface, EntityInterface
     /**
      * Set time
      *
+     * To avoid breaking encapsulation
+     * http://stackoverflow.com/questions/15486402/doctrine2-orm-does-not-save-changes-to-a-datetime-field/15488230#15488230
+     *
      * @param $time
      * @return Reservation
      */
-    public function setTime($time)
+    public function setTime(\DateTime $time)
     {
-        $time = is_string($time) ? new \DateTime($time) : $time;
-
-        $this->time = $time;
+        $this->time = $time ? clone $time : null;
 
         return $this;
     }
@@ -345,11 +346,14 @@ class Reservation implements ReservationInterface, EntityInterface
     /**
      * Get time
      *
+     * To avoid breaking encapsulation
+     * http://stackoverflow.com/questions/15486402/doctrine2-orm-does-not-save-changes-to-a-datetime-field/15488230#15488230
+     *
      * @return \DateTime 
      */
     public function getTime()
     {
-        $time = $this->time;
+        $time = $this->time ? clone $this->time : null;
 
         return $time;
     }
@@ -357,14 +361,15 @@ class Reservation implements ReservationInterface, EntityInterface
     /**
      * Set date
      *
+     * To avoid breaking encapsulation
+     * http://stackoverflow.com/questions/15486402/doctrine2-orm-does-not-save-changes-to-a-datetime-field/15488230#15488230
+     *
      * @param \DateTime $date
      * @return Reservation
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
-        $date = is_string($date) ? new \DateTime($date) : $date;
-
-        $this->date = $date;
+        $this->date = $date ? clone $date : null;
 
         return $this;
     }
@@ -372,11 +377,14 @@ class Reservation implements ReservationInterface, EntityInterface
     /**
      * Get date
      *
+     * To avoid breaking encapsulation
+     * http://stackoverflow.com/questions/15486402/doctrine2-orm-does-not-save-changes-to-a-datetime-field/15488230#15488230
+     *
      * @return \DateTime 
      */
     public function getDate()
     {
-        $date = $this->date;
+        $date = $this->date ? clone $this->date : null;
 
         return $date;
     }
@@ -485,8 +493,8 @@ class Reservation implements ReservationInterface, EntityInterface
         return $this->people_extra;
     }
 
-    public static function getReservationOptions2()
-    {
-        return array(1, 2);
-    }
+//    public static function getReservationOptions2()
+//    {
+//        return array(1, 2);
+//    }
 }

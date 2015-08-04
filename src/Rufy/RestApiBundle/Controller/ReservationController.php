@@ -70,49 +70,48 @@ class ReservationController extends BaseController
      *
      * @throws AccessDeniedException if user is not logged in
      */
+//    public function postReservationAction()
+//    {
+//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+//
+//        try {
+//
+//            /**
+//             * Preparo i parametri
+//             */
+//            $params         = $this->prepareParams($this->container->get('request')->request->all());
+//
+//            /**
+//             * Gestisco il salvataggio del Customer ma senza effettuare il flush
+//             * Così sfrutto la transazione per non salvarlo se la Reservation non andrà a buon fine
+//             */
+//            $this->saveWithcustomerCheck($params, $customer);
+//
+//            /**
+//             * @var $reservation Reservation
+//             */
+//            $reservation                = $this->get('rufy_api.reservation.handler')->post($params, true);
+//
+//            $this->get('rufy_api.reservation.handler')->bindCustomerToReservation($reservation, $customer);
+//
+//            return $this->view($reservation, 201);
+//
+//            //return $this->handleView($view);
+//
+//        } catch (InvalidFormException $exception) {
+//
+//            return $exception->getForm();
+//        }
+//    }
+
     public function postReservationAction()
     {
-//        $m = $this->get('memcached');
-//
-////         $m->set('int', 99);
-////         $m->set('string', 'a simple string');
-////         $m->set('array', array(11, 12));
-//
-//        $result = $m->getMulti(array('int', 'string', 'array', 'name', 'surname'), $cas);
-//
-//        echo '<pre>';
-//        print_r($result);
-//        echo '</pre>';
-//
-//        var_dump($cas);
-//
-//        die();  die();
-
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
-
         try {
+            $params = $this->prepareParams($this->container->get('request')->request->all());
 
-            /**
-             * Preparo i parametri
-             */
-            $params         = $this->prepareParams($this->container->get('request')->request->all());
-
-            /**
-             * Gestisco il salvataggio del Customer ma senza effettuare il flush
-             * Così sfrutto la transazione per non salvarlo se la Reservation non andrà a buon fine
-             */
-            $this->saveWithcustomerCheck($params, $customer);
-
-            /**
-             * @var $reservation Reservation
-             */
-            $reservation                = $this->get('rufy_api.reservation.handler')->post($params, true);
-
-            $this->get('rufy_api.reservation.handler')->bindCustomerToReservation($reservation, $customer);
+            $reservation = $this->get('rufy_api.reservation.handler')->post($params);
 
             return $this->view($reservation, 201);
-
-            //return $this->handleView($view);
 
         } catch (InvalidFormException $exception) {
 
