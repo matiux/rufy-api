@@ -1,23 +1,42 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
+use Doctrine\ORM\EntityManager;
+use Rufy\RestApiBundle\Entity\User;
+use Rufy\RestApiBundle\Repository\RestaurantRepository;
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer,
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class CustomerType extends AbstractType
 {
     /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function __construct(TokenStorage $tokenStorage, EntityManager $em)
+    {
+        $this->em                       = $em;
+        $this->user                     = $tokenStorage->getToken()->getUser();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+         $builder
             ->add('restaurant', 'entity', [
                 'class'         => 'RufyRestApiBundle:Restaurant',
                 'property'      => 'name',
                 'placeholder'   => 'Scegliere un ristorante',
+
             ])
             ->add('name')
             ->add('phone')

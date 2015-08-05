@@ -99,10 +99,10 @@ abstract class AbstractEntityHandler
     public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
     {
         $entities = $this->repository->findMore($limit, $offset, $params, $filters);
-
-        if (0 < count($entities))
-            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
-                throw new AccessDeniedException('Accesso non autorizzato!');
+// TODO
+//        if (0 < count($entities))
+//            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
+//                throw new AccessDeniedException('Accesso non autorizzato!');
 
         return $entities;
     }

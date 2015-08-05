@@ -1,6 +1,9 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Rufy\RestApiBundle\Entity\Area;
+use Rufy\RestApiBundle\Entity\ReservationOption;
 use Rufy\RestApiBundle\Entity\User;
 
 use Symfony\Component\Form\AbstractType,
@@ -15,9 +18,11 @@ class ReservationType extends AbstractType
      * @var User
      */
     private $user;
+    private $em;
 
-    public function __construct(TokenStorage $tokenStorage)
+    public function __construct(TokenStorage $tokenStorage, EntityManager $em)
     {
+        $this->em                       = $em;
         $this->user                     = $tokenStorage->getToken()->getUser();
     }
 
@@ -26,6 +31,15 @@ class ReservationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $qb = $this->em->getRepository('RufyRestApiBundle:Area')
+                        ->createQueryBuilder('area')
+                        ->addSelect('areaOptions, restaurant')
+                        ->where('area.restaurant IN (:restaurant)')
+                        ->setParameter('restaurant', $this->user->getRestaurants())
+                        ->leftJoin('area.restaurant', 'restaurant')
+                        ->leftJoin('area.areaOptions', 'areaOptions')
+            ;
+
         $builder
             ->add('people')
             ->add('people_extra')
@@ -41,31 +55,44 @@ class ReservationType extends AbstractType
                 'data' => 1,
             ])
             ->add('table_name')
-//            ->add('customer', 'entity', [
-//                                'class'     => 'RufyRestApiBundle:Customer',
-//                                'property'  => 'id',
-//            ])
             ->add('area', 'entity', [
                 'class'         => 'RufyRestApiBundle:Area',
                 'property'      => 'name',
                 'placeholder'   => 'Scegliere un\'area',
+                'query_builder' => $qb,
             ])
             ->add('reservationOptions', 'entity', [
-                                            'class'     => 'RufyRestApiBundle:ReservationOption',
-                                            'property'  => 'slug',
-                                            'expanded'  => true,
-                                            'multiple'  => true,
-//                                            'query_builder' => function(EntityRepository $er){
-//
-//                                                return $er->createQueryBuilder('ro')->leftJoin('ro.areas', 'a')->where('a.id');
-//                                            }
+                    'class'             => 'RufyRestApiBundle:ReservationOption',
+                    'property'          => 'name',
+                    'expanded'          => true,
+                    'multiple'          => true,
                 ]
             )
-        ->add('customer', new CustomerType())
+        ->add('customer', 'customer_type')
         ->add('save', 'submit', [
                 'label' => 'Salva'
             ])
         ;
+
+
+//        ->add('reservationOptions', 'collection', [
+//            'class'             => 'RufyRestApiBundle:ReservationOption',
+//            'property'          => function($a, $b, $c) {
+//
+//                dump($a);
+//                dump($b);
+//                dump($c);
+//
+//                die();
+//
+//
+//            },
+//            'expanded'          => true,
+//            'multiple'          => true,
+//            'query_builder'     => $qb,
+//        ]
+//    )
+
     }
 
     /**

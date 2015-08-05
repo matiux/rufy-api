@@ -85,7 +85,7 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reservations")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      **/
     private $user;
 
@@ -97,7 +97,7 @@ class Reservation implements ReservationInterface, EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="reservations", cascade={"persist"})
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
      */
     private $customer;
 
