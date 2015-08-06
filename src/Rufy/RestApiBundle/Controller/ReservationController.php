@@ -79,7 +79,7 @@ class ReservationController extends BaseController
          * $this->container->get('request')->request->all()
          */
 
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+        //$this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
