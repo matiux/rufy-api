@@ -31,11 +31,18 @@ class CustomerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $qb = $this->em->getRepository('RufyRestApiBundle:Restaurant')
+                        ->createQueryBuilder('restaurant')
+                        ->where('restaurant.id IN (:restaurants)')
+                        ->setParameter('restaurants', $this->user->getRestaurants())
+            ;
+
          $builder
             ->add('restaurant', 'entity', [
                 'class'         => 'RufyRestApiBundle:Restaurant',
                 'property'      => 'name',
                 'placeholder'   => 'Scegliere un ristorante',
+                'query_builder' => $qb
 
             ])
             ->add('name')

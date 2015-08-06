@@ -33,11 +33,11 @@ class ReservationType extends AbstractType
     {
         $qb = $this->em->getRepository('RufyRestApiBundle:Area')
                         ->createQueryBuilder('area')
-                        ->addSelect('areaOptions, restaurant')
+                        //->addSelect('restaurant')
                         ->where('area.restaurant IN (:restaurant)')
                         ->setParameter('restaurant', $this->user->getRestaurants())
-                        ->leftJoin('area.restaurant', 'restaurant')
-                        ->leftJoin('area.areaOptions', 'areaOptions')
+                        //->leftJoin('area.restaurant', 'restaurant')
+                        //->leftJoin('area.areaOptions', 'areaOptions')
             ;
 
         $builder
@@ -61,13 +61,13 @@ class ReservationType extends AbstractType
                 'placeholder'   => 'Scegliere un\'area',
                 'query_builder' => $qb,
             ])
-            ->add('reservationOptions', 'entity', [
-                    'class'             => 'RufyRestApiBundle:ReservationOption',
-                    'property'          => 'name',
-                    'expanded'          => true,
-                    'multiple'          => true,
-                ]
-            )
+//            ->add('reservationOptions', 'entity', [
+//                    'class'             => 'RufyRestApiBundle:ReservationOption',
+//                    'property'          => 'name',
+//                    'expanded'          => true,
+//                    'multiple'          => true,
+//                ]
+//            )
         ->add('customer', 'customer_type')
         ->add('save', 'submit', [
                 'label' => 'Salva'
