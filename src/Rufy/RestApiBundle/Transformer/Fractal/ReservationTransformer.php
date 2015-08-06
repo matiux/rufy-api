@@ -24,7 +24,7 @@ class ReservationTransformer extends Fractal\TransformerAbstract
             'status'                    => $reservation->getStatus(),
             'table_name'                => $reservation->getTableName(),
             //'customer'                  => $reservation->getCustomer(),
-            //'area'                      => $reservation->getArea()->getId(),
+            'area'                      => $reservation->getArea()->getId(),
 
 
 //            'name'          => $reservation->getCustomer()->getName(),
