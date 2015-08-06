@@ -9,7 +9,7 @@ class ReservationTransformer extends Fractal\TransformerAbstract
     protected $defaultIncludes = [
 
         //'reservationOptions',
-        //'customer',
+        'customer',
     ];
 
     public function transform(Reservation $reservation)

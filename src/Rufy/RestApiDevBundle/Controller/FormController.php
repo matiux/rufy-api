@@ -12,7 +12,7 @@ class FormController extends Controller
 {
     public function reservationAction(Request $request)
     {
-        $form = $this->createForm('reservation_type', new Reservation(), [
+        $form = $this->createForm(new ReservationType($this->get('security.token_storage'), $this->get('doctrine.orm.entity_manager')), new Reservation(), [
             //'action' => $this->generateUrl('save_reservation'),
             'method' => 'POST'
         ]);

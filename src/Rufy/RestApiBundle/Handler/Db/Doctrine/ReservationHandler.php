@@ -5,7 +5,9 @@ use Rufy\RestApiBundle\Entity\Reservation,
     Rufy\RestApiBundle\Exception\InvalidFormException,
     Rufy\RestApiBundle\Model\EntityInterface;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Rufy\RestApiBundle\Form\ReservationType;
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReservationHandler extends AbstractEntityHandler implements EntityHandlerInterface
 {
@@ -70,29 +72,24 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      * Processes the form.
      *
      * @param $resource
-     * @param array $parameters
+     * @param Request $request
      * @param string $method
-     * @return mixed
-     * @throws InvalidFormException
+     * @return EntityInterface
      */
-    protected function processForm($resource, array $parameters, $method = 'POST')
+    protected function processForm($resource, Request $request, $method = 'POST')
     {
-        $this->prepareResource($resource, $parameters);
-
-
+        $form = $this->formFactory->create(new ReservationType($this->token_storage, $this->om), $resource, ['method' => $method]);
 
         /**
-         * Invece di new ReservationType() passo 'reservation_type' dato che ReservationType
-         * è registrato come servizio
+         * http://symfony.com/it/doc/2.7/book/forms.html#gestione-dell-invio-del-form
+         * $form->submit($parameters, 'PATCH' !== $method);
          */
-        $form = $this->formFactory->create('reservation_type', new Reservation(), array('method' => $method, 'em' => $this->om));
-
-        $form->submit($parameters, 'PATCH' !== $method);
-
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
 
             return $this->performSave($form->getData());
+
         }
 
         throw new InvalidFormException('Invalid submitted data', $form);
@@ -100,17 +97,14 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
 
     protected function performSave(EntityInterface $resource)
     {
+        //TODO
 //        if (false === $this->authChecker->isGranted('CREATE', $resource))
 //            throw new AccessDeniedException('Accesso non autorizzato!');
 
         $resource->setUser($this->om->getReference('RufyRestApiBundle:User', $this->user->getId()));
 
         $this->om->persist($resource);
-
-        if (!$this->waitForTransaction) {
-
-            $this->om->flush();
-        }
+        $this->om->flush();
 
         return $resource;
     }

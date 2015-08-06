@@ -2,11 +2,9 @@
 
 use League\Fractal\Manager,
     League\Fractal\Resource\Item,
-    League\Fractal\Resource\Collection,
-    League\Fractal\Serializer\DataArraySerializer;
+    League\Fractal\Resource\Collection;
 
-use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer,
-    Rufy\RestApiBundle\Exception\InvalidFormException;
+use Rufy\RestApiBundle\Transformer\Fractal\Serializer\CustomSerializer;
 
 use FOS\RestBundle\Util\ExceptionWrapper;
 

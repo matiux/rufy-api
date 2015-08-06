@@ -116,6 +116,6 @@ class ReservationType extends AbstractType
      */
     public function getName()
     {
-        return 'reservation_type';
+        return '';
     }
 }

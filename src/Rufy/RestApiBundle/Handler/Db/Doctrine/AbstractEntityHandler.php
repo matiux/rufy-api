@@ -20,7 +20,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface,
     Symfony\Component\Form\FormFactoryInterface,
     Symfony\Component\Form\FormFactory,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractEntityHandler
 {
@@ -50,17 +51,14 @@ abstract class AbstractEntityHandler
     protected $authChecker;
 
     /**
-     * Se true, non fa il flush dell'entità attendendo il prossimo salvataggio.
-     * Si verifica ad esempio nel caso del salvataggio del Customer che viene salvato
-     * prima della Reservation ma deve essere commitato solo se la Reservation è valida
-     * @var bool
-     */
-    protected $waitForTransaction = false;
-
-    /**
      * @var FormFactory
      */
     protected $formFactory;
+
+    /**
+     * @var TokenStorageInterface
+     */
+    protected $token_storage;
 
     public function setEntityClass(EntityInterface $entityClass)
     {
@@ -75,6 +73,8 @@ abstract class AbstractEntityHandler
 
     public function setUser(TokenStorageInterface $tokenStorage)
     {
+        $this->token_storage            = $tokenStorage;
+
         $this->user                     = $tokenStorage->getToken()->getUser();
     }
 
@@ -99,10 +99,11 @@ abstract class AbstractEntityHandler
     public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
     {
         $entities = $this->repository->findMore($limit, $offset, $params, $filters);
-// TODO
-//        if (0 < count($entities))
-//            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
-//                throw new AccessDeniedException('Accesso non autorizzato!');
+
+        // TODO
+        //        if (0 < count($entities))
+        //            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
+        //                throw new AccessDeniedException('Accesso non autorizzato!');
 
         return $entities;
     }
@@ -124,38 +125,41 @@ abstract class AbstractEntityHandler
     /**
      * {@inheritdoc }
      */
-    public function post(array $parameters, $wft = false)
+    public function post(Request $request)
     {
-        $this->waitForTransaction = $wft;
-
         $resource = $this->createResource();
 
-        return $this->processForm($resource, $parameters, 'POST');
+        return $this->processForm($resource, $request, 'POST');
     }
 
     /**
      * Processes the form.
      *
      * @param $resource
-     * @param array $parameters
+     * @param Request $request
      * @param string $method
-     * @return mixed
-     * @throws InvalidFormException
+     * @return EntityInterface
      */
-    protected function processForm($resource, array $parameters, $method = 'POST')
+    protected function processForm($resource, Request $request, $method = 'POST')
     {
         /**
          * Ottengo qualcosa come reservation_type
-         */
-        $type = explode('\\', strtolower(str_replace('Handler', '_type', get_called_class())))[5];
-
-        /**
+         * $type = explode('\\', strtolower(str_replace('Handler', '_type', get_called_class())))[5];
+         *
          * Invece di new ReservationType() passo 'customer_type' dato che CustomerType
          * è registrato come servizio
+         * ReservationType non è più registrato come servizio in quanto ho dovuto far ritornare al metodo
+         * ReservationType::getName() una stringa vuota per avere gli attributi name dei campi coerenti con
+         * il client
          */
-        $form = $this->formFactory->create($type, $resource, array('method' => $method));
+        //$form = $this->formFactory->create($type, $resource, ['method' => $method]);
+        $form = $this->formFactory->create(new ReservationType($this->token_storage, $this->om), $resource, ['method' => $method]);
 
-        $form->submit($parameters, 'PATCH' !== $method);
+        /**
+         * http://symfony.com/it/doc/2.7/book/forms.html#gestione-dell-invio-del-form
+         * $form->submit($parameters, 'PATCH' !== $method);
+         */
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
 
@@ -171,11 +175,7 @@ abstract class AbstractEntityHandler
             throw new AccessDeniedException('Accesso non autorizzato!');
 
         $this->om->persist($resource);
-
-        if (!$this->waitForTransaction) {
-
-            $this->om->flush();
-        }
+        $this->om->flush();
 
         return $resource;
     }

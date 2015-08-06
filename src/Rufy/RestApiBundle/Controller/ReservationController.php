@@ -1,15 +1,15 @@
 <?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Request\ParamFetcherInterface,
-    FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Rufy\RestApiBundle\Entity\Customer;
-use Rufy\RestApiBundle\Entity\Reservation;
+
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
     Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -68,48 +68,24 @@ class ReservationController extends BaseController
      *   }
      * )
      *
-     * @throws AccessDeniedException if user is not logged in
+     * @param Request $request
+     * @return array|\FOS\RestBundle\View\View|null if user is not logged in
      */
-//    public function postReservationAction()
-//    {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
-//
-//        try {
-//
-//            /**
-//             * Preparo i parametri
-//             */
-//            $params         = $this->prepareParams($this->container->get('request')->request->all());
-//
-//            /**
-//             * Gestisco il salvataggio del Customer ma senza effettuare il flush
-//             * Così sfrutto la transazione per non salvarlo se la Reservation non andrà a buon fine
-//             */
-//            $this->saveWithcustomerCheck($params, $customer);
-//
-//            /**
-//             * @var $reservation Reservation
-//             */
-//            $reservation                = $this->get('rufy_api.reservation.handler')->post($params, true);
-//
-//            $this->get('rufy_api.reservation.handler')->bindCustomerToReservation($reservation, $customer);
-//
-//            return $this->view($reservation, 201);
-//
-//            //return $this->handleView($view);
-//
-//        } catch (InvalidFormException $exception) {
-//
-//            return $exception->getForm();
-//        }
-//    }
-
-    public function postReservationAction()
+    public function postReservationAction(Request $request)
     {
-        try {
-            $params = $this->prepareParams($this->container->get('request')->request->all());
+        /**
+         * Oppure:
+         * $this->container->get('request')->request
+         * $this->container->get('request')->request->all()
+         */
 
-            $reservation = $this->get('rufy_api.reservation.handler')->post($params);
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+
+        try {
+
+            $this->prepareRequest($request);
+
+            $reservation = $this->get('rufy_api.reservation.handler')->post($request);
 
             return $this->view($reservation, 201);
 
@@ -117,24 +93,6 @@ class ReservationController extends BaseController
 
             return $exception->getForm();
         }
-    }
-
-    private function saveWithcustomerCheck(array &$params, &$customer)
-    {
-        if (is_array($params['customer'])) {
-
-            /**
-             * @var $customer Customer
-             */
-            $customer               = $this->get('rufy_api.customer.handler')->post($params['customer'], true);
-            $customer               = $customer->getId() ?: $customer;
-
-        } else {
-
-            $customer                   = $params['customer'];
-        }
-
-        unset($params['customer']);
     }
 
     private function updateWithcustomerCheck(array &$params)
@@ -177,7 +135,7 @@ class ReservationController extends BaseController
 
         try {
 
-            $params         = $this->prepareParams($this->container->get('request')->request->all());
+            $params         = $this->prepareRequest($this->container->get('request')->request->all());
             $this->updateWithcustomerCheck($params);
 
             $reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
@@ -229,25 +187,25 @@ class ReservationController extends BaseController
         $this->container->get('rufy_api.reservation.handler')->delete($reservation);
     }
 
-    private function prepareParams($params)
+    private function prepareRequest(Request $request)
     {
-        if (isset($params['id'])) {
+        if ($request->request->get('id')) {
 
-            unset($params['id']);
+            $request->request->remove('id');
         }
 
-        if (isset($params['reservationOptions']) && is_array(current($params['reservationOptions']))) {
+        $ro = $request->request->get('reservationOptions');
+
+        if ($ro && is_array($ro)) {
 
             $o = [];
 
-            foreach($params['reservationOptions'] as $resOpts) {
+            foreach($ro as $resOpts) {
 
                 $o[] = $resOpts['id'];
             }
 
-            $params['reservationOptions'] = $o;
+            $request->request->set('reservationOptions', $o);
         }
-
-        return $params;
     }
 }

@@ -2,7 +2,6 @@
 
 use FOS\RestBundle\Util\ExceptionWrapper;
 use League\Fractal;
-use Rufy\RestApiBundle\Exception\InvalidFormException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
@@ -39,7 +38,18 @@ class FormErrorTransformer extends Fractal\TransformerAbstract
                             $cause = $cause->getMEssage();
                         $wrongValue = $childErrors->getCause()->getInvalidValue();
                         $msg = $childErrors->getMessage();
-                        $name = $child->getName();
+
+
+                        $propertyPath = explode('.', $childErrors->getCause()->getPropertyPath());
+
+                        if (2 < count($propertyPath)) {
+                            $name = "{$propertyPath[1]}[$propertyPath[2]]";
+                        }
+                        else {
+                            $name = $propertyPath[1];
+                        }
+
+                        //$name = $child->getName();
 
                         $errors['form_errors'][] = [
 

@@ -1,5 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface EntityHandlerInterface
 {
     /**
@@ -29,11 +31,10 @@ interface EntityHandlerInterface
     /**
      * Post Entity, creates a new Entity.
      *
-     * @param array $parameters
-     *
-     * @return Entity
+     * @param Request $request
+     * @return mixed
      */
-    public function post(array $parameters);
+    public function post(Request $request);
 
     /**
      * Edit a Entity.

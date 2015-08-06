@@ -80,11 +80,11 @@ services:
 
     ###########################################
     # Form
-    rufy_api.form.type.reservation:
-        class: Rufy\RestApiBundle\Form\ReservationType
-        arguments: [@security.token_storage, @doctrine.orm.entity_manager]
-        tags:
-            - {name: form.type, alias: reservation_type }
+#    rufy_api.form.type.reservation:
+#        class: Rufy\RestApiBundle\Form\ReservationType
+#        arguments: [@security.token_storage, @doctrine.orm.entity_manager]
+#        tags:
+#            - {name: form.type, alias: reservation_type }
 
     rufy_api.form.type.customer:
         class: Rufy\RestApiBundle\Form\CustomerType

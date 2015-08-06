@@ -6,6 +6,8 @@ class GenericTransformer extends Fractal\TransformerAbstract
 {
     public function transform($generic)
     {
+        $a = 1;
+
         return [
 
             'code'      => $generic->getCode(),
