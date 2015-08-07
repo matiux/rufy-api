@@ -35,7 +35,8 @@ class ReservationController extends BaseController
      * Create a Reservation from the sended data.
      *
      * @param Request $request
-     * @return array|\FOS\RestBundle\View\View|null if user is not logged in
+     * @View()
+     * @return array
      */
     public function postReservationAction(Request $request)
     {
@@ -57,7 +58,7 @@ class ReservationController extends BaseController
 
         } catch (InvalidFormException $exception) {
 
-            return $exception->getForm();
+            return [$exception->getForm()];
         }
     }
 
