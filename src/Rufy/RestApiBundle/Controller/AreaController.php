@@ -3,8 +3,6 @@
 use FOS\RestBundle\Request\ParamFetcherInterface,
     FOS\RestBundle\Controller\Annotations;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
 use Symfony\Component\Config\Definition\Exception\Exception,
@@ -15,18 +13,6 @@ class AreaController extends BaseController
 {
     /**
      * Create an Area
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Creates a new Area.",
-     *   input = "Rufy\RestApiBundle\Form\AreaType",
-     *   output = "Rufy\RestApiBundle\Entity\Area",
-     *   statusCodes = {
-     *     201 = "Returned when successful",
-     *     400 = "Returned when the data is invalid or non-existent",
-     *     403 = "Returned when relationships are not allowed"
-     *   }
-     * )
      *
      * @throws AccessDeniedException if user is not logged in
      */
@@ -51,24 +37,6 @@ class AreaController extends BaseController
 
     /**
      * Get single Area.
-     *
-     * @ApiDoc(
-     *  description = "Gets an Area for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Area",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The area ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get an area of another restaurant",
-     *     404 = "Returned when the area has not been found"
-     *   }
-     * )
      *
      * @param int $id Area id
      *

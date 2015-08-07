@@ -1,0 +1,27 @@
+Rufy\RestApiBundle\Entity\Reservation:
+    exclusion_policy: ALL
+    virtual_properties:
+        getAreaId:
+            serialized_name: area
+            type: integer
+        getCustomerData:
+            serialized_name: customer
+            type: array
+    properties:
+        id:
+            expose: true
+        people:
+            expose: true
+        people_extra:
+            expose: true
+        time:
+            expose: true
+        date:
+            expose: true
+        note:
+            expose: true
+        status:
+            expose: true
+        table_name:
+            expose: true
+

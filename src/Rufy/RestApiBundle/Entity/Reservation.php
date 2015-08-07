@@ -3,6 +3,9 @@
 use Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping AS ORM;
 
+use JMS\Serializer\Annotation\VirtualProperty,
+    JMS\Serializer\Annotation\SerializedName;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Rufy\RestApiBundle\Model\ReservationInterface,
@@ -20,18 +23,6 @@ class Reservation implements ReservationInterface, EntityInterface
     {
         $this->reservationOptions   = new ArrayCollection();
     }
-
-    //    /**
-    //     * @ORM\PrePersist
-    //     */
-    //    public function onPrePersist()
-    //    {
-    //        if (is_string($this->time))
-    //            $this->time = new \DateTime($this->time);
-    //
-    //        if (is_string($this->date))
-    //            $this->date = new \DateTime($this->date);
-    //    }
 
     /**
      * Reservation ID
@@ -201,6 +192,17 @@ class Reservation implements ReservationInterface, EntityInterface
     }
 
     /**
+     * @VirtualProperty()
+     * @SerializedName("area")
+     *
+     * @return int
+     */
+    public function getAreaId()
+    {
+        return $this->area->getId();
+    }
+
+    /**
      * Set table_name
      *
      * @param string $table_name
@@ -246,6 +248,25 @@ class Reservation implements ReservationInterface, EntityInterface
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @VirtualProperty()
+     * @SerializedName("customer")
+     *
+     * @return int
+     */
+    public function getCustomerData()
+    {
+        return [
+            'name'          => $this->customer->getName(),
+            'phone'         => $this->customer->getPhone(),
+            'email'         => $this->customer->getEmail(),
+            'privacy'       => $this->customer->getPrivacy() ? 1 : 0,
+            'newsletter'    => $this->customer->getNewsletter() ? 1 : 0,
+            'restaurant'    => $this->customer->getRestaurant()->getId(),
+            'id'            => $this->customer->getId(),
+        ];
     }
 
     /**

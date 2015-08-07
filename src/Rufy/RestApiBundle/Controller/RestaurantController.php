@@ -3,8 +3,6 @@
 use FOS\RestBundle\Request\ParamFetcherInterface,
     FOS\RestBundle\Controller\Annotations;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 use Rufy\RestApiBundle\Exception\InvalidFormException,
     Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
@@ -17,31 +15,6 @@ class RestaurantController extends BaseController
 {
     /**
      * List all reservations by a given id restaurant
-     *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "Returns a collection of Reservation",
-     *  output="Rufy\RestApiBundle\Entity\Reservation",
-     *  requirements={
-     *      {
-     *          "name"="restaurantId",
-     *          "requirement"="\d+",
-     *          "dataType"="integer",
-     *          "description"="Restaurant ID"
-     *      }
-     *  },
-     *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing reservations."},
-     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="0", "description"="How many reservations to return."},
-     *      {"name"="date", "dataType"="date", "requirements"="\d{4}-\d{2}-\d{2}","nullable"="false", "description"="Reservation date"},
-     *      {"name"="status", "dataType"="string", "requirements"="[012,]*","nullable"="false", "description"="Reservation status"}
-     *  },
-     *  statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get the reservations of another restaurant",
-     *     404 = "Returned when no reservation has been found"
-     *  }
-     * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
@@ -74,29 +47,6 @@ class RestaurantController extends BaseController
     /**
      * List all customers by a given id restaurant
      *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "Returns a collection of Customer",
-     *  output="Rufy\RestApiBundle\Entity\Customer",
-     *  requirements={
-     *      {
-     *          "name"="restaurantId",
-     *          "requirement"="\d+",
-     *          "dataType"="integer",
-     *          "description"="Restaurant ID"
-     *      }
-     *  },
-     *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing customers."},
-     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="0", "description"="How many customers to return."},
-     *  },
-     *  statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get the customers of another restaurants",
-     *     404 = "Returned when no restaurant has been found"
-     *  }
-     * )
-     *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many customers to return per page.")
      *
@@ -125,28 +75,6 @@ class RestaurantController extends BaseController
 
     /**
      * List all areas by a given id restaurant
-     *
-     * @ApiDoc(
-     *  resource = false,
-     *  description="Returns a collection of Area",
-     *  output="Rufy\RestApiBundle\Entity\Area",
-     *  requirements={
-     *      {
-     *          "name"="restaurantId",
-     *          "requirement"="\d+",
-     *          "dataType"="integer",
-     *          "description"="Restaurant ID"
-     *      }
-     *  },
-     *  filters={
-     *      {"name"="offset", "dataType"="integer", "requirements"="\d+", "nullable"="true", "default"="0", "description"="Offset from which to start listing areas."},
-     *      {"name"="limit", "dataType"="integer", "requirements"="\d+","nullable"="false", "default"="0", "description"="How many areas to return."},
-     *  },
-     *  statusCodes = {
-     *     200 = "Returned when successful",
-     *     404 = "Returned when no area has been found"
-     *  }
-     * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many areas to return per page.")
@@ -177,21 +105,6 @@ class RestaurantController extends BaseController
     /**
      * List all the logged user's restaurants
      *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "List all the logged user's restaurants",
-     *  output="Rufy\RestApiBundle\Entity\Restaurant",
-     *  requirements={
-     *  },
-     *  filters={
-     *      {"name"="offset", "dataType"="integer", "nullable"="true", "default"="0", "description"="Offset from which to start listing restaurants."},
-     *      {"name"="limit", "dataType"="integer", "nullable"="false", "default"="0", "description"="How many restaurants to return."}
-     *  },
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *  }
-     * )
-     *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
      *
@@ -214,18 +127,6 @@ class RestaurantController extends BaseController
 
     /**
      * Create a Restaurant
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Creates a new Restaurant.",
-     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
-     *   output = "Rufy\RestApiBundle\Entity\Restaurant",
-     *   statusCodes = {
-     *     201 = "Returned when successful",
-     *     400 = "Returned when the data is invalid or non-existent",
-     *     403 = "Returned when relationships are not allowed"
-     *   }
-     * )
      *
      * @throws AccessDeniedException if user is not logged in
      */
@@ -250,15 +151,6 @@ class RestaurantController extends BaseController
 
     /**
      * Update existing restaurant
-     *
-     * @ApiDoc(
-     *   input = "Rufy\RestApiBundle\Form\RestaurantType",
-     *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors",
-     *     403 = "Returned when the user haven't the right access"
-     *   }
-     * )
      *
      * @param int $id the restaurant id
      *
@@ -285,22 +177,6 @@ class RestaurantController extends BaseController
     /**
      * Delete existing restaurant
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="Restaurant ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     404 = "Returned when the restaurant has not been found",
-     *     403 = "Returned when you try to delete a restaurant of another restaurant"
-     *   }
-     * )
-     *
      * @param int $id Restaurant id
      *
      *
@@ -318,25 +194,6 @@ class RestaurantController extends BaseController
 
     /**
      * Get single Restaurant.
-     *
-     * @ApiDoc(
-     *  resource = false,
-     *  description = "Gets a Restaurant for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Restaurant",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The restaurant ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get a restaurant of another user",
-     *     404 = "Returned when the restaurant has not been found"
-     *   }
-     * )
      *
      * @param int $id - Restaurant id
      *

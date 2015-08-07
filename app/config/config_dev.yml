@@ -47,11 +47,5 @@ assetic:
 twig:
     cache:  false
 
-nelmio_api_doc:
-    name: 'Rufy Rest API'
-    cache:
-        enabled: false
-        file: ~
-
 #swiftmailer:
 #    delivery_address: me@example.com

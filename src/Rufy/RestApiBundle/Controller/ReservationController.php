@@ -1,14 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\View;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
-use Rufy\RestApiBundle\Entity\Customer;
-
+use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\HttpFoundation\Request,
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    Symfony\Component\HttpFoundation\Request,
     Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
     Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -18,55 +16,23 @@ class ReservationController extends BaseController
     /**
      * Get single Reservation.
      *
-     * @ApiDoc(
-     *  description = "Gets a Reservation for a given id",
-     *  output = "Rufy\RestApiBundle\Entity\Reservation",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="Reservation ID"
-     *      }
-     *  },
+     * @param Reservation $reservation
      *
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     403 = "Returned when you try to get a reservation of another restaurant",
-     *     404 = "Returned when the reservation has not been found"
-     *   }
-     * )
-     *
-     * @param int $id Reservation id
-     *
-     * @return json
-     *
-     * @throws NotFoundHttpException when reservation doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return array
+     * @View()
+     * @ParamConverter("reservation", class="Rufy\RestApiBundle\Entity\Reservation")
      */
-    public function getReservationAction($id)
+    public function getReservationAction(Reservation $reservation)
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        $reservation = $this->getOr404($id, 'reservation');
+        //$reservation = $this->getOr404($id, 'reservation');
 
         return $reservation;
     }
 
     /**
      * Create a Reservation from the sended data.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Creates a new reservation from the sended data.",
-     *   input = "Rufy\RestApiBundle\Form\ReservationType",
-     *   output = "Rufy\RestApiBundle\Entity\Reservation",
-     *   statusCodes = {
-     *     201 = "Returned when successful",
-     *     400 = "Returned when the data is invalid or non-existent",
-     *     403 = "Returned when relationships are not allowed"
-     *   }
-     * )
      *
      * @param Request $request
      * @return array|\FOS\RestBundle\View\View|null if user is not logged in
@@ -114,15 +80,6 @@ class ReservationController extends BaseController
     /**
      * Update existing reservation from the submitted data
      *
-     * @ApiDoc(
-     *   input = "Rufy\RestApiBundle\Form\ReservationType",
-     *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors",
-     *     403 = "Returned when the user haven't the right access"
-     *   }
-     * )
-     *
      * @param int $id the reservation id
      *
      * @return FormTypeInterface
@@ -156,24 +113,7 @@ class ReservationController extends BaseController
     /**
      * Delete existing reservation
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="Reservation ID"
-     *      }
-     *  },
-     *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     404 = "Returned when the reservation has not been found",
-     *     403 = "Returned when you try to delete a reservation of another restaurant"
-     *   }
-     * )
-     *
      * @param int $id Reservation id
-     *
      *
      * @throws NotFoundHttpException when reservation doesn't exist
      * @throws AccessDeniedException when role is not allowed

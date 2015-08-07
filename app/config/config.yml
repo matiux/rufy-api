@@ -90,25 +90,20 @@ swiftmailer:
 
 sensio_framework_extra:
     view:    { annotations: false }
-    router:  { annotations: false }
+    router:  { annotations: true }
 
 fos_rest:
-    #serializer:
-    #   serialize_null: false
-    service:
-        serializer: rufy_api.fosrest_serializer
-        exception_handler: rufy_api.fosrest_exception_wrapper_handler
-    routing_loader:
-        default_format: json
-        include_format: false
-    #format_listener: true
-    param_fetcher_listener: force
-    body_listener: true
-    allowed_methods_listener: true
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: [ 'json', 'xml', '*/*'], fallback_format: json, prefer_extension: false }
     view:
-        view_response_listener: 'force'
-        templating_formats:
-            html: true
+        view_response_listener:   true
+
+#jms_serializer:
+#    handlers:
+#        date:
+#            default_format: "d/m/Y"
+#            default_timezone: "UTC"
 
 nelmio_cors:
     paths:
