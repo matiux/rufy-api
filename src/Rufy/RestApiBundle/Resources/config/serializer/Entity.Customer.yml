@@ -1,0 +1,22 @@
+Rufy\RestApiBundle\Entity\Customer:
+    exclusion_policy: ALL
+    virtual_properties:
+        getRestaurantId:
+            serialized_name: restaurant
+            type: integer
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        phone:
+            expose: true
+        email:
+            expose: true
+        privacy:
+            expose: true
+        newsletter:
+            expose: true
+#        restaurant:
+#            expose: true
+

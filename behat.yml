@@ -11,7 +11,7 @@ default:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
                     #entityManager: '@doctrine.orm.entity_manager'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufyfork.local/api'
 
         rufy_restapibundle.restaurant:
             type: symfony_bundle
@@ -22,7 +22,7 @@ default:
                 - FeatureRestaurantContext:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufyfork.local/api'
 
         rufy_restapibundle.area:
             type: symfony_bundle
@@ -33,7 +33,7 @@ default:
                 - FeatureReservationContext:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufyfork.local/api'
 
         rufy_restapibundle.customer:
             type: symfony_bundle
@@ -44,6 +44,6 @@ default:
                 - FeatureReservationContext:
                     #guzzleClient: '@guzzle.client'
                     testClient: '@test.client'
-                    baseUrl: 'http://rufysf.local/api'
+                    baseUrl: 'http://rufyfork.local/api'
     extensions:
         Behat\Symfony2Extension: ~

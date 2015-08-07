@@ -5,6 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Rufy\RestApiBundle\Model\CustomerInterface,
     Rufy\RestApiBundle\Model\EntityInterface;
 
@@ -226,6 +228,17 @@ class Customer implements CustomerInterface, EntityInterface
     public function getRestaurant()
     {
         return $this->restaurant;
+    }
+
+    /**
+     * @VirtualProperty()
+     * @SerializedName("area")
+     *
+     * @return int
+     */
+    public function getRestaurantId()
+    {
+        return $this->restaurant->getId();
     }
 
     /**

@@ -1,14 +1,15 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
-use FOS\RestBundle\Request\ParamFetcherInterface,
+use FOS\RestBundle\Controller\Annotations\View,
+    FOS\RestBundle\Request\ParamFetcherInterface,
     FOS\RestBundle\Controller\Annotations;
 
-use Rufy\RestApiBundle\Exception\InvalidFormException,
+use Rufy\RestApiBundle\Entity\Restaurant,
+    Rufy\RestApiBundle\Exception\InvalidFormException,
     Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
 
-use Symfony\Component\Config\Definition\Exception\Exception,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RestaurantController extends BaseController
@@ -16,17 +17,16 @@ class RestaurantController extends BaseController
     /**
      * List all reservations by a given id restaurant
      *
+     * @param int $restaurantId
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
      * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
      * @Annotations\QueryParam(name="status", requirements="[012,]*", description="Reservation status")
      *
-     * @param int $restaurantId Restaurant id
-     * @param ParamFetcherInterface $paramFetcher param fetcher service
-     *
-     * @return json
-     *
-     * @throws AccessDeniedException when role is not allowed
+     * @return array
+     * @View()
      */
     public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
@@ -41,7 +41,7 @@ class RestaurantController extends BaseController
 
         $restaurantReservations   = $this->getAllOr404($limit, $offset, $filters, $params, 'reservation');
 
-        return $restaurantReservations;
+        return [$restaurantReservations];
     }
 
     /**
