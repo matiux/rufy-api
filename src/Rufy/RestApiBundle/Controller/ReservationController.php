@@ -81,22 +81,28 @@ class ReservationController extends BaseController
     /**
      * Update existing reservation from the submitted data
      *
-     * @param int $id the reservation id
-     *
-     * @return FormTypeInterface
-     *
-     * @throws NotFoundHttpException when Reservation doesn't exist
+     * @param Reservation $reservation
+     * @param Request $request
+     * 
+     * @View()
+     * 
+     * @return array
      */
-    public function patchReservationAction($id)
+    public function patchReservationAction(Reservation $reservation, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $params         = $this->prepareRequest($this->container->get('request')->request->all());
-            $this->updateWithcustomerCheck($params);
+            //$params         = $this->prepareRequest($this->container->get('request')->request->all());
 
-            $reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
+
+
+            //$this->updateWithcustomerCheck($params);
+
+            //$reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
+            //
+            $reservation = $this->get('rufy_api.reservation.handler')->patchAction($reservation, $request);
 
             return $this->view($reservation, 204);
 
