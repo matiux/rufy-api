@@ -165,7 +165,8 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
                 array(
                     'PHP_AUTH_USER'     => $this->user,
                     'PHP_AUTH_PW'       => $this->password,
-                    'CONTENT_TYPE'      => 'application/json'
+                    'CONTENT_TYPE'      => 'application/json',
+                    'ACCEPT'            => 'application/json'
                 ),
                 $this->toSendData);
 
@@ -347,7 +348,7 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
             $array      = $path->pathToArray($this->body);
         }
 
-        PHPUnit_Framework_Assert::assertTrue(empty($array));
+        PHPUnit_Framework_Assert::assertTrue(empty(current($array)));
     }
 
     /**

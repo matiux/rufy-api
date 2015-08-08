@@ -1,5 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
+use Rufy\RestApiBundle\Model\EntityInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 
 interface EntityHandlerInterface
@@ -50,12 +52,11 @@ interface EntityHandlerInterface
     /**
      * Partially update a Entity.
      *
-     * @param $entity
-     * @param array $parameters
-     *
-     * @return Entity
+     * @param EntityInterface $model
+     * @param Request $request
+     * @return mixed
      */
-    public function patch($entity, array $parameters);
+    public function patch(EntityInterface $model, Request $request);
 
     /**
      * Delete an entity

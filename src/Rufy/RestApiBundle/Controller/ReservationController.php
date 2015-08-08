@@ -2,31 +2,31 @@
 
 use FOS\RestBundle\Controller\Annotations\View;
 
-use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    Symfony\Component\HttpFoundation\Request,
+use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
-    Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationController extends BaseController
 {
     /**
      * Get single Reservation.
      *
-     * @param Reservation $reservation
+     * Non uso ParamConverter dato che devo prendere solo le Reservatione valide per l'utente
+     * che le richiede. Potrei creare un converter ad hoc ma per ora uso l'handler e così uso
+     * il voter
+     *
+     * @param int $reservationId
      *
      * @return array
      * @View()
-     * @ParamConverter("reservation", class="Rufy\RestApiBundle\Entity\Reservation")
      */
-    public function getReservationAction(Reservation $reservation)
+    public function getReservationAction($reservationId)
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        //$reservation = $this->getOr404($id, 'reservation');
+        $reservation = $this->getOr404($reservationId, 'reservation');
 
         return $reservation;
     }
@@ -46,7 +46,7 @@ class ReservationController extends BaseController
          * $this->container->get('request')->request->all()
          */
 
-        //$this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
@@ -62,47 +62,23 @@ class ReservationController extends BaseController
         }
     }
 
-    private function updateWithcustomerCheck(array &$params)
-    {
-        if (isset($params['customer']) && is_array($params['customer'])) {
-
-            $data           = $params['customer'];
-
-            if (null == ($customerId = @$data['id']))
-                throw new BadRequestHttpException(sprintf("The id attribute of the customer was not specified"));
-
-            unset($params['customer']);
-            unset($data['id']);
-
-            $this->container->get('rufy_api.customer.handler')->patch($this->getOr404($customerId, 'customer'), $data);
-        }
-    }
-
     /**
      * Update existing reservation from the submitted data
      *
-     * @param Reservation $reservation
+     * @param int $reservationId
      * @param Request $request
      * 
      * @View()
      * 
      * @return array
      */
-    public function patchReservationAction(Reservation $reservation, Request $request)
+    public function patchReservationAction($reservationId, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            //$params         = $this->prepareRequest($this->container->get('request')->request->all());
-
-
-
-            //$this->updateWithcustomerCheck($params);
-
-            //$reservation    = $this->patchAction('reservation', $this->getOr404($id, 'reservation'), $params);
-            //
-            $reservation = $this->get('rufy_api.reservation.handler')->patchAction($reservation, $request);
+            $reservation = $this->patchAction('reservation', $this->getOr404($reservationId, 'reservation'), $request);
 
             return $this->view($reservation, 204);
 
@@ -117,13 +93,10 @@ class ReservationController extends BaseController
         return $this->patchReservationAction($id);
     }
 
+
     /**
-     * Delete existing reservation
-     *
-     * @param int $id Reservation id
-     *
-     * @throws NotFoundHttpException when reservation doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @param $id
+     * @return \FOS\RestBundle\View\View
      */
     public function deleteReservationAction($id)
     {
@@ -132,6 +105,8 @@ class ReservationController extends BaseController
         $reservation = $this->getOr404($id, 'reservation');
 
         $this->container->get('rufy_api.reservation.handler')->delete($reservation);
+
+        return $this->view($reservation, 204);
     }
 
     private function prepareRequest(Request $request)

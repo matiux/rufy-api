@@ -100,10 +100,9 @@ abstract class AbstractEntityHandler
     {
         $entities = $this->repository->findMore($limit, $offset, $params, $filters);
 
-        // TODO
-        //        if (0 < count($entities))
-        //            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
-        //                throw new AccessDeniedException('Accesso non autorizzato!');
+        if (0 < count($entities))
+            if ($entities && false === $this->authChecker->isGranted('LISTING', current($entities)))
+                throw new AccessDeniedException('Accesso non autorizzato!');
 
         return $entities;
     }
@@ -118,7 +117,7 @@ abstract class AbstractEntityHandler
             throw new AccessDeniedException('Accesso non autorizzato!');
 
         //$status = $this->om->remove($this->om->getReference('RufyRestApiBundle:Reservation', $reservationId));
-        $status = $this->om->remove($resource);
+        $this->om->remove($resource);
         $this->om->flush();
     }
 
@@ -152,7 +151,6 @@ abstract class AbstractEntityHandler
          * ReservationType::getName() una stringa vuota per avere gli attributi name dei campi coerenti con
          * il client
          */
-        //$form = $this->formFactory->create($type, $resource, ['method' => $method]);
         $form = $this->formFactory->create(new ReservationType($this->token_storage, $this->om), $resource, ['method' => $method]);
 
         /**

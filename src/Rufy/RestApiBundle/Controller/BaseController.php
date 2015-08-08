@@ -2,12 +2,10 @@
 
 use FOS\RestBundle\Controller\FOSRestController;
 
-use Rufy\RestApiBundle\Model\AreaInterface,
-    Rufy\RestApiBundle\Model\ReservationInterface,
-    Rufy\RestApiBundle\Model\RestaurantInterface,
-    Rufy\RestApiBundle\Model\EntityInterface;
+use Rufy\RestApiBundle\Model\EntityInterface;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseController extends FOSRestController implements AuthenticatedFullyController
 {
@@ -49,28 +47,28 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
     /**
      * Fetch a Entity or throw an 404 Exception.
      *
-     * @param mixed $id
-     *
-     * @return RestaurantInterface|AreaInterface|ReservationInterface
+     * @param int $id               - L'id del modello da aggiornare
+     * @param string $modelName     - Il modello per l'handler
      *
      * @throws NotFoundHttpException
      */
-    protected function getOr404($id, $model)
+    protected function getOr404($id, $modelName = null)
     {
-        if (!($entity = $this->get("rufy_api.$model.handler")->get($id))) {
+        /**
+         * TODO
+         * $model si potrebbe impostare di default a null. Se null allora lo si potrebbe auto dedurre dalla classe
+         * che sta effettuando la chiama al metodo
+         */
 
-            throw new NotFoundHttpException(sprintf("'The $model '%s' was not found.'", $id));
+        if (!($entity = $this->get("rufy_api.$modelName.handler")->get($id))) {
+
+            throw new NotFoundHttpException(sprintf("'The $modelName '%s' was not found.'", $id));
         }
 
         return $entity;
     }
 
-    /**
-     * @param $model
-     * @param EntityInterface $resource
-     * @param array $params
-     * @return mixed
-     */
+
     // protected function patchAction($model, EntityInterface $resource, array $params = null) {
 
     //     $params             = !$params ? $this->container->get('request')->request->all() : $params;
@@ -78,10 +76,16 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
 
     //     return $updatedResource;
     // }
-    protected function patchAction($model, EntityInterface $resource, array $params = null) {
 
-        $params             = !$params ? $this->container->get('request')->request->all() : $params;
-        $updatedResource    = $this->container->get("rufy_api.$model.handler")->patch($resource, $params);
+    /**
+     * @param $modelName                - Il modello per l'handler
+     * @param EntityInterface $model    - Il modello da aggiornare
+     * @param Request $request          - La request con i dati per l'aggiornamento
+     * @return mixed
+     */
+    protected function patchAction($modelName, EntityInterface $model, Request $request) {
+
+        $updatedResource    = $this->container->get("rufy_api.$modelName.handler")->patch($model, $request);
 
         return $updatedResource;
     }

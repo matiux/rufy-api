@@ -1,8 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Repository; 
 
 use Doctrine\Common\Collections\ArrayCollection,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\NoResultException;
+    Doctrine\ORM\EntityRepository;
 
 use Rufy\RestApiBundle\Entity\Restaurant,
     Rufy\RestApiBundle\Entity\User,
@@ -88,19 +87,17 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
     /**
      * Controlla se un ristorante possiede un determinato Customer
      *
-     * @param Restaurant $restaurant
      * @param Customer $customer
      * @param USer $user
      *
      * @return bool
      */
-    public function hasCustomer(Restaurant $restaurant, Customer $customer, User $user)
+    public function hasCustomer(Customer $customer, User $user)
     {
-        /**
-         * "Restaurant $restaurant" non è più in uso da quando ho sotituito il controllo sul db con
-         * il codice attuale che si basa sui dati già presi dall'autenticazione. Vedi anche:
-         * Rufy/RestApiBundle/Security/Authorization/Voter/ReservationVoter.php
-         */
+        // E' un nuovo cliente... E' suo per forza
+        if (!$customer->getId()) {
+            return true;
+        }
 
         $customers = $user->getRestaurants()->map(function($r) use ($customer) {
 
@@ -122,25 +119,5 @@ class RestaurantRepository extends EntityRepository implements EntityRepositoryI
         });
 
         return $customers ? true : false;
-
-//        $q = $this->createQueryBuilder('r')
-//            ->select('c.id')
-//            ->join('r.customers', 'c')
-//            ->where('c.id = :customerid')
-//            ->andWhere('r.id = :restaurantid')
-//            ->setParameter('customerid', $customer->getId())
-//            ->setParameter('restaurantid', $restaurant->getId())
-//            ->getQuery();
-//
-//        try {
-//
-//            $customer = $q->getSingleResult();
-//
-//            return true;
-//
-//        } catch (NoResultException $e) {
-//
-//            return false;
-//        }
     }
 }

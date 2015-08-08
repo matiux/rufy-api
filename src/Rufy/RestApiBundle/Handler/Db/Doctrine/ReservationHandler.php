@@ -97,9 +97,8 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
 
     protected function performSave(EntityInterface $resource)
     {
-        //TODO
-        //if (false === $this->authChecker->isGranted('CREATE', $resource))
-        //  throw new AccessDeniedException('Accesso non autorizzato!');
+        if (false === $this->authChecker->isGranted('CREATE', $resource))
+            throw new AccessDeniedException('Accesso non autorizzato!');
 
         $resource->setUser($this->om->getReference('RufyRestApiBundle:User', $this->user->getId()));
 
@@ -120,13 +119,13 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     /**
      * {@inheritdoc }
      */
-    public function patch($reservation, array $parameters)
+    public function patch(EntityInterface $reservation, Request $request)
     {
-        $reservation->getReservationOptions()->clear();
-        $this->om->persist($reservation);
-        $this->om->flush();
+//        $reservation->getReservationOptions()->clear();
+//        $this->om->persist($reservation);
+//        $this->om->flush();
 
-        return $this->processForm($reservation, $parameters, 'PATCH');
+        return $this->processForm($reservation, $request, 'PATCH');
     }
 
     public function bindCustomerToReservation(Reservation $reservation, $customer)

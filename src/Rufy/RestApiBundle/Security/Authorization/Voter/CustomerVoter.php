@@ -34,7 +34,7 @@ class CustomerVoter extends BaseVoter
             case self::DELETE:
                 if (
                     // Controllo che il clienter che si vuole visualizzare appartenga al ristorante dello user che lo richiede
-                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource->getRestaurant(), $resource, $user)
+                    $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource, $user)
                 )
                     return VoterInterface::ACCESS_GRANTED;
                 break;
