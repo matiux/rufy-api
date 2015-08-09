@@ -17,9 +17,15 @@ abstract class BaseType extends AbstractType
      */
     protected $user;
 
+    /**
+     * @var TokenStorage
+     */
+    protected $tokenStorage;
+
     public function __construct(TokenStorage $tokenStorage, EntityManager $em)
     {
         $this->em                       = $em;
+        $this->tokenStorage             = $tokenStorage;
         $this->user                     = $tokenStorage->getToken()->getUser();
     }
 }

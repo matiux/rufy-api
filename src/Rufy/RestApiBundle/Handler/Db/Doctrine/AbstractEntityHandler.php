@@ -152,7 +152,9 @@ abstract class AbstractEntityHandler
          * il client
          */
         $formType   = $this->getFormType();
-        $form       = $this->formFactory->create(new $formType($this->token_storage, $this->om), $resource, ['method' => $method]);
+        $formType   = new $formType($this->token_storage, $this->om);
+
+        $form       = $this->formFactory->create($formType, $resource, ['method' => $method]);
 
         /**
          * http://symfony.com/it/doc/2.7/book/forms.html#gestione-dell-invio-del-form

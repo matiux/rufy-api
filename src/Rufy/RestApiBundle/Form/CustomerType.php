@@ -29,9 +29,9 @@ class CustomerType extends BaseType
             ->add('email')
             ->add('privacy')
             ->add('newsletter')
-//            ->add('save', 'submit', [
-//                'label' => 'Salva'
-//            ])
+            ->add('save', 'submit', [
+                'label' => 'Salva'
+            ])
         ;
     }
 
@@ -56,6 +56,6 @@ class CustomerType extends BaseType
      */
     public function getName()
     {
-        return 'customer_type';
+        return '';
     }
 }

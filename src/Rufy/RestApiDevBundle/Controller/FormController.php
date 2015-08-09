@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Rufy\RestApiBundle\Entity\Customer;
 use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Entity\Restaurant;
+use Rufy\RestApiBundle\Form\CustomerType;
 use Rufy\RestApiBundle\Form\ReservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,8 +35,6 @@ class FormController extends Controller
             $a = 1;
         }
 
-        $a = 1;
-
         return $this->render('RufyRestApiDevBundle:Forms:formReservation.html.twig', [
 
             'form' => $form->createView()
@@ -44,7 +43,7 @@ class FormController extends Controller
 
     public function customerAction(Request $request)
     {
-        $form = $this->createForm('customer_type', new Customer(), [
+        $form = $this->createForm(new CustomerType($this->get('security.token_storage'), $this->get('doctrine.orm.entity_manager')), new Customer(), [
             //'action' => $this->generateUrl('save_reservation'),
             'method' => 'POST'
         ]);
