@@ -26,6 +26,10 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
         if (false === $this->authChecker->isGranted('CREATE', $resource))
             throw new AccessDeniedException('Accesso non autorizzato!');
 
+        /**
+         * TODO
+         * Refactoring. GEstitlo a livello form con un un campèo hiddene un data transformer
+         */
         $resource->setUser($this->om->getReference('RufyRestApiBundle:User', $this->user->getId()));
 
         $this->om->persist($resource);
