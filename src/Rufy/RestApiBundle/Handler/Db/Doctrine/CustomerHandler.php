@@ -1,11 +1,5 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
-use Rufy\RestApiBundle\Entity\Customer;
-use Rufy\RestApiBundle\Exception\InvalidFormException,
-    Rufy\RestApiBundle\Form\CustomerType,
-    Rufy\RestApiBundle\Model\CustomerInterface;
-
-use Rufy\RestApiBundle\Model\EntityInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInterface
@@ -27,26 +21,4 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
 
         return $customer;
     }
-
-    /**
-     * Edit a Entity.
-     *
-     * @param $entity
-     * @param array $parameters
-     *
-     * @return Entity
-     */
-    public function put($entity, array $parameters)
-    {
-
-    }
-
-    /**
-     * {@inheritdoc }
-     */
-    public function patch($customer, array $parameters)
-    {
-        return $this->processForm($customer, $parameters, 'PATCH');
-    }
-
 }

@@ -4,9 +4,6 @@ Rufy\RestApiBundle\Entity\Reservation:
         getAreaId:
             serialized_name: area
             type: integer
-#        getCustomerData:
-#            serialized_name: customer
-#            type: array
     properties:
         id:
             expose: true

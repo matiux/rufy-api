@@ -1,0 +1,10 @@
+Rufy\RestApiBundle\Entity\Restaurant:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        rest_date:
+            serialized_name: restDate
+            expose: true

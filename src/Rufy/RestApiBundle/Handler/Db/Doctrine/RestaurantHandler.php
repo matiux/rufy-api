@@ -27,27 +27,4 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
 
         return parent::all($limit, $offset, $filters, $params);
     }
-
-    /**
-     * Edit a Entity.
-     *
-     * @api
-     *
-     * @param $entity
-     * @param array $parameters
-     *
-     * @return Entity
-     */
-    public function put($entity, array $parameters)
-    {
-
-    }
-
-    /**
-     * {@inheritdoc }
-     */
-    public function patch($restaurant, array $parameters)
-    {
-        return $this->processForm($restaurant, $parameters, 'PATCH');
-    }
 }

@@ -177,4 +177,20 @@ abstract class AbstractEntityHandler
 
         return $resource;
     }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function put($entity, array $parameters)
+    {
+
+    }
+
+    /**
+     * {@inheritdoc }
+     */
+    public function patch(EntityInterface $entity, Request $request)
+    {
+        return $this->processForm($entity, $request, 'PATCH');
+    }
 }

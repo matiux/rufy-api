@@ -53,9 +53,9 @@ class RestaurantController extends BaseController
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
-     * @return json
+     * @return array
+     * @View()
      *
-     * @throws AccessDeniedException when role is not allowed
      */
     public function getRestaurantCustomersAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
@@ -70,7 +70,7 @@ class RestaurantController extends BaseController
 
         $restaurantCustomers   = $this->getAllOr404($limit, $offset, $filters, $params, 'customer');
 
-        return $restaurantCustomers;
+        return [$restaurantCustomers];
     }
 
     /**
@@ -83,8 +83,7 @@ class RestaurantController extends BaseController
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
      * @return array
-     *
-     * @throws AccessDeniedException when role is not allowed
+     * @View()
      */
     public function getRestaurantAreasAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
@@ -99,7 +98,7 @@ class RestaurantController extends BaseController
 
         $restaurantAreas   = $this->getAllOr404($limit, $offset, $filters, $params, 'area');
 
-        return $restaurantAreas;
+        return [$restaurantAreas];
     }
 
     /**
@@ -111,8 +110,7 @@ class RestaurantController extends BaseController
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
      * @return array
-     *
-     * @throws AccessDeniedException when role is not allowed
+     * @View()
      */
     public function getRestaurantsAction(ParamFetcherInterface $paramFetcher)
     {
@@ -122,7 +120,7 @@ class RestaurantController extends BaseController
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
 
-        return $restaurants;
+        return [$restaurants];
     }
 
     /**
@@ -179,9 +177,7 @@ class RestaurantController extends BaseController
      *
      * @param int $id Restaurant id
      *
-     *
-     * @throws NotFoundHttpException when restaurant doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return \FOS\RestBundle\View\View
      */
     public function deleteRestaurantAction($id)
     {
@@ -190,6 +186,8 @@ class RestaurantController extends BaseController
         $restaurant = $this->getOr404($id, 'restaurant');
 
         $this->container->get('rufy_api.restaurant.handler')->delete($restaurant);
+
+        return $this->view($restaurant, 204);
     }
 
     /**
@@ -197,10 +195,8 @@ class RestaurantController extends BaseController
      *
      * @param int $id - Restaurant id
      *
-     * @return json
-     *
-     * @throws NotFoundHttpException when restaurant doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return array
+     * @View()
      */
     public function getRestaurantAction($id)
     {
@@ -208,7 +204,7 @@ class RestaurantController extends BaseController
 
         $restaurant = $this->getOr404($id, 'restaurant');
 
-        return $restaurant;
+        return [$restaurant];
     }
 
     /**

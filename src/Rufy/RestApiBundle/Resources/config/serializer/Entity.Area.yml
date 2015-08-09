@@ -1,0 +1,17 @@
+Rufy\RestApiBundle\Entity\Area:
+    exclusion_policy: ALL
+    virtual_properties:
+        getRestaurantId:
+            serialized_name: restaurantId
+            type: integer
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        maxPeople:
+            expose: true
+        maxPeopleTable:
+            expose: true
+        minPeopleTable:
+            expose: true

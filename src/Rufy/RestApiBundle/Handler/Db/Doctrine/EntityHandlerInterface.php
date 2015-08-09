@@ -1,7 +1,6 @@
 <?php namespace Rufy\RestApiBundle\Handler\Db\Doctrine;
 
 use Rufy\RestApiBundle\Model\EntityInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
 interface EntityHandlerInterface

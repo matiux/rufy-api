@@ -39,6 +39,18 @@ class Area implements AreaInterface, EntityInterface
     private $maxPeople = 1;
 
     /**
+     * The maximum number of people per table
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
+     */
+    private $maxPeopleTable = 1;
+
+    /**
+     * The minimum number of people per table
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned":true, "default":1})
+     */
+    private $minPeopleTable = 2;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="areas", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      */
@@ -122,6 +134,11 @@ class Area implements AreaInterface, EntityInterface
     public function getRestaurant()
     {
         return $this->restaurant;
+    }
+
+    public function getRestaurantId()
+    {
+        return $this->restaurant->getId();
     }
 
     /**
@@ -284,11 +301,6 @@ class Area implements AreaInterface, EntityInterface
         return $this->areaOptions;
     }
 
-//    public function __toString()
-//    {
-//        return $this->id;
-//    }
-
     /**
      * Set maxPeople
      *
@@ -311,5 +323,53 @@ class Area implements AreaInterface, EntityInterface
     public function getMaxPeople()
     {
         return $this->maxPeople;
+    }
+
+    /**
+     * Set maxPeopleTable
+     *
+     * @param integer $maxPeopleTable
+     *
+     * @return Area
+     */
+    public function setMaxPeopleTale($maxPeopleTable)
+    {
+        $this->maxPeopleTable = $maxPeopleTable;
+
+        return $this;
+    }
+
+    /**
+     * Get maxPeopleTable
+     *
+     * @return integer
+     */
+    public function getMaxPeopleTable()
+    {
+        return $this->maxPeopleTable;
+    }
+
+    /**
+     * Set minPeopleTable
+     *
+     * @param integer $minPeopleTable
+     *
+     * @return Area
+     */
+    public function setMinPeopleTale($minPeopleTable)
+    {
+        $this->minPeopleTable = $minPeopleTable;
+
+        return $this;
+    }
+
+    /**
+     * Get minPeopleTable
+     *
+     * @return integer
+     */
+    public function getMinPeopleTable()
+    {
+        return $this->minPeopleTable;
     }
 }

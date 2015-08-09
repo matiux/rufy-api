@@ -4,9 +4,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 class ReservationController extends BaseController
 {

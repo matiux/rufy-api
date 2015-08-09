@@ -15,32 +15,64 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
      */
     function load(ObjectManager $manager)
     {
+//        $ristoranti     = [
+//
+//            'pousada'   => [
+//
+//                'Corridoio'     => ['maxPeople' => 10, 'options' => ['animals'], 'maxPeopleTable' => 2, 'minPeopleTable' => 2 ],
+//                'Sala'          => ['maxPeople' => 10, 'options' => ['animals'], 'maxPeopleTable' => 10, 'minPeopleTable' => 8],
+//                'Atras'         => ['maxPeople' => 10, 'options' => ['animals'], 'maxPeopleTable' => 6, 'minPeopleTable' => 4],
+//                'Tondo'         => ['maxPeople' => 5, 'options' => ['animals'], 'maxPeopleTable' => 5, 'minPeopleTable' => 3],
+//                'Frida'         => ['maxPeople' => 22, 'options' => ['animals'], 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+//                'Camarote'      => ['maxPeople' => 20, 'options' => ['animals'], 'maxPeopleTable' => 20, 'minPeopleTable' => 4],
+//                'Fuori'         => ['maxPeople' => 25, 'options' => ['animals', 'smokers'], 'maxPeopleTable' => 15, 'minPeopleTable' => 2],
+//
+//            ],
+//            'hotelito'  => [
+//
+//                'Tavoli da 2'   => ['maxPeople' => 6, 'options' => ['animals'], 'maxPeopleTable' => 2, 'minPeopleTable' => 2],
+//                'Fronte'        => ['maxPeople' => 28, 'options' => ['animals'], 'maxPeopleTable' => 28, 'minPeopleTable' => 4],
+//                'Lato'          => ['maxPeople' => 22, 'options' => ['animals'], 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+//                'Tenda'         => ['maxPeople' => 18, 'options' => ['animals', 'smokers'], 'maxPeopleTable' => 10, 'minPeopleTable' => 4],
+//                'Fuori'         => ['maxPeople' => 40, 'options' => ['animals', 'smokers'], 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+//            ],
+//            'lochiamavanocariola'   => [
+//
+//                'Sopra'         => ['maxPeople' => 58, 'options' => ['animals']],
+//                'Sotto'         => ['maxPeople' => 65, 'options' => ['animals']],
+//                'Fuori'         => ['maxPeople' => 28, 'options' => ['animals', 'smokers']],
+//            ],
+//        ];
+
         $ristoranti     = [
 
             'pousada'   => [
 
-                'Corridoio'     => ['maxPeople' => 10, 'options' => ['animals']],
-                'Sala'          => ['maxPeople' => 14, 'options' => ['animals']],
-                'Atras'         => ['maxPeople' => 6, 'options' => ['animals']],
-                'Tondo'         => ['maxPeople' => 5, 'options' => ['animals']],
-                'Frida'         => ['maxPeople' => 22, 'options' => ['animals']],
-                'Camarote'      => ['maxPeople' => 20, 'options' => ['animals']],
-                'Fuori'         => ['maxPeople' => 25, 'options' => ['animals', 'smokers']],
-
+                'Corridoio'     => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 2, 'minPeopleTable' => 2 ],
+                'Sala'          => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 10, 'minPeopleTable' => 8],
+                'Atras'         => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 6, 'minPeopleTable' => 4],
+                'Tondo'         => ['options' => [], 'maxPeople' => 5, 'maxPeopleTable' => 5, 'minPeopleTable' => 3],
+                'Frida'         => ['options' => [], 'maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+                'Camarote'      => ['options' => [], 'maxPeople' => 20, 'maxPeopleTable' => 20, 'minPeopleTable' => 4],
+                'Fuori'         => ['options' => [], 'maxPeople' => 25, 'maxPeopleTable' => 15, 'minPeopleTable' => 2],
             ],
             'hotelito'  => [
 
-                'Tavoli da 2'   => ['maxPeople' => 8, 'options' => ['animals']],
-                'Fronte'        => ['maxPeople' => 30, 'options' => ['animals']],
-                'Lato'          => ['maxPeople' => 22, 'options' => ['animals']],
-                'Tenda'         => ['maxPeople' => 18, 'options' => ['animals', 'smokers']],
-                'Fuori'         => ['maxPeople' => 44, 'options' => ['animals', 'smokers']],
+                'Tavoli da 2'   => ['options' => [], 'maxPeople' => 6, 'maxPeopleTable' => 2, 'minPeopleTable' => 2],
+                'Fronte'        => ['options' => [], 'maxPeople' => 28, 'maxPeopleTable' => 28, 'minPeopleTable' => 4],
+                'Lato'          => ['options' => [], 'maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+                'Tenda'         => ['options' => [], 'maxPeople' => 18, 'maxPeopleTable' => 10, 'minPeopleTable' => 4],
+                'Fuori'         => ['options' => [], 'maxPeople' => 40, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+            ],
+            'giardino' => [
+
+                'esterno'       => ['options' => [], 'maxPeople' => 30, 'maxPeopleTable' => 15, 'minPeopleTable' => 3],
             ],
             'lochiamavanocariola'   => [
 
-                'Sopra'         => ['maxPeople' => 58, 'options' => ['animals']],
-                'Sotto'         => ['maxPeople' => 65, 'options' => ['animals']],
-                'Fuori'         => ['maxPeople' => 28, 'options' => ['animals', 'smokers']],
+                'Sopra'         => ['options' => [], 'maxPeople' => 58, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
+                'Sotto'         => ['options' => [], 'maxPeople' => 65, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
+                'Fuori'         => ['options' => [], 'maxPeople' => 28, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
             ],
         ];
 

@@ -111,14 +111,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
     /**
      * {@inheritdoc }
      */
-    public function put($reservation, array $parameters)
-    {
-        //return $this->processForm($reservation, $parameters, 'PUT');
-    }
-
-    /**
-     * {@inheritdoc }
-     */
     public function patch(EntityInterface $reservation, Request $request)
     {
 //        $reservation->getReservationOptions()->clear();
