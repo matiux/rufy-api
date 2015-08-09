@@ -216,7 +216,7 @@ Feature: Testing Reservation API
 
   @collectionnotpermitted
   Scenario: Get a collection of Reservation by not permitted restaurant ID
-    Given that I want to find a "/v1/restaurants/2/reservations"
+    Given that I want to find a "/v1/restaurants/3/reservations"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"

@@ -1,31 +1,10 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
-use Doctrine\ORM\EntityManager;
-use Rufy\RestApiBundle\Entity\User;
-use Rufy\RestApiBundle\Repository\RestaurantRepository;
-use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CustomerType extends AbstractType
+class CustomerType extends BaseType
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function __construct(TokenStorage $tokenStorage, EntityManager $em)
-    {
-        $this->em                       = $em;
-        $this->user                     = $tokenStorage->getToken()->getUser();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -37,7 +16,7 @@ class CustomerType extends AbstractType
                         ->setParameter('restaurants', $this->user->getRestaurants())
             ;
 
-         $builder
+        $builder
             ->add('restaurant', 'entity', [
                 'class'         => 'RufyRestApiBundle:Restaurant',
                 'property'      => 'name',
@@ -47,7 +26,7 @@ class CustomerType extends AbstractType
             ])
             ->add('name')
             ->add('phone')
-            ->add('email', 'email')
+            ->add('email')
             ->add('privacy')
             ->add('newsletter')
 //            ->add('save', 'submit', [

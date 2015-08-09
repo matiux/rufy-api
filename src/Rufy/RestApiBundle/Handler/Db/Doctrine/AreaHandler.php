@@ -17,4 +17,9 @@ class AreaHandler extends AbstractEntityHandler implements EntityHandlerInterfac
 
         return $area;
     }
+
+    protected function getFormType()
+    {
+        return 'Rufy\RestApiBundle\Form\AreaType';
+    }
 }

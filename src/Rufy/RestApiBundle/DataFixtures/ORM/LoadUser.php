@@ -36,6 +36,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setEmail('m.galacci@gmail.com');
         $user->addRestaurant($this->getReference('pousada'));
         $user->addRestaurant($this->getReference('hotelito'));
+        $user->addRestaurant($this->getReference('giardino'));
         $this->addReference('user_matteo', $user);
         $manager->persist($user);
 
@@ -48,6 +49,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setEmail('pinco@pallo.it');
         $user->addRestaurant($this->getReference('pousada'));
         $user->addRestaurant($this->getReference('hotelito'));
+        $user->addRestaurant($this->getReference('giardino'));
         $this->addReference('user_pinco', $user);
         $manager->persist($user);
 
@@ -60,6 +62,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface, Fixtu
         $user->setEmail('mat@mat.it');
         $user->addRestaurant($this->getReference('pousada'));
         $user->addRestaurant($this->getReference('hotelito'));
+        $user->addRestaurant($this->getReference('giardino'));
         $this->addReference('user_mat', $user);
         $manager->persist($user);
 

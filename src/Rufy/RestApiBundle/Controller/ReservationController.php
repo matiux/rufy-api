@@ -48,7 +48,11 @@ class ReservationController extends BaseController
 
         try {
 
-            $this->prepareRequest($request);
+            /**
+             * TODO
+             * Da testare
+             */
+            //$this->prepareRequest($request);
 
             $reservation = $this->get('rufy_api.reservation.handler')->post($request);
 

@@ -21,4 +21,9 @@ class CustomerHandler extends AbstractEntityHandler implements EntityHandlerInte
 
         return $customer;
     }
+
+    protected function getFormType()
+    {
+        return 'Rufy\RestApiBundle\Form\CustomerType';
+    }
 }

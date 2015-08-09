@@ -151,7 +151,8 @@ abstract class AbstractEntityHandler
          * ReservationType::getName() una stringa vuota per avere gli attributi name dei campi coerenti con
          * il client
          */
-        $form = $this->formFactory->create(new ReservationType($this->token_storage, $this->om), $resource, ['method' => $method]);
+        $formType   = $this->getFormType();
+        $form       = $this->formFactory->create(new $formType($this->token_storage, $this->om), $resource, ['method' => $method]);
 
         /**
          * http://symfony.com/it/doc/2.7/book/forms.html#gestione-dell-invio-del-form
@@ -193,4 +194,6 @@ abstract class AbstractEntityHandler
     {
         return $this->processForm($entity, $request, 'PATCH');
     }
+
+    abstract protected function getFormType();
 }

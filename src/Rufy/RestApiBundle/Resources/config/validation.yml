@@ -4,9 +4,6 @@ Rufy\RestApiBundle\Entity\Customer:
       - Type:
           type: string
           message: Il valore {{ value }} non è un {{ type }} valido.
-      - Length:
-          min: 3
-          minMessage: Il nome deve essere lungo almeno {{ limit }} carattere.
       - NotBlank:
           message: Il valore {{ value }} non può essere vuoto.
       - NotNull:

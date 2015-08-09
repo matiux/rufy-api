@@ -1,11 +1,9 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
-use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RestaurantType extends AbstractType
+class RestaurantType extends BaseType
 {
     /**
      * {@inheritdoc}
@@ -15,6 +13,9 @@ class RestaurantType extends AbstractType
         $builder
             ->add('name')
             ->add('rest_date')
+            ->add('save', 'submit', [
+                'label' => 'Salva'
+            ])
         ;
     }
 
@@ -25,6 +26,7 @@ class RestaurantType extends AbstractType
     {
         $resolver->setDefaults(array(
 
+            'attr'              => ['novalidate' => 'novalidate'],
             'data_class'        => 'Rufy\RestApiBundle\Entity\Restaurant',
             'csrf_protection'   => false,
 

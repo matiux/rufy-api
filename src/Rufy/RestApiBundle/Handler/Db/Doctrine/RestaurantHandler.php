@@ -27,4 +27,10 @@ class RestaurantHandler extends AbstractEntityHandler implements EntityHandlerIn
 
         return parent::all($limit, $offset, $filters, $params);
     }
+
+    protected function getFormType()
+    {
+
+        return 'Rufy\RestApiBundle\Form\RestaurantType';
+    }
 }

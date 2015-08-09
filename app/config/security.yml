@@ -38,7 +38,7 @@ security:
             security: false
 
         dev:
-            pattern: ^\/test(.)*$
+            pattern: ^\/test.*
             anonymous: ~
             security: false
 

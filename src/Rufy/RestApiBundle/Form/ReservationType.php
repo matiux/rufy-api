@@ -1,31 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Rufy\RestApiBundle\Entity\Area;
-use Rufy\RestApiBundle\Entity\ReservationOption;
-use Rufy\RestApiBundle\Entity\User;
 
-use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer,
-    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReservationType extends AbstractType
+class ReservationType extends BaseType
 {
-    /**
-     * @var User
-     */
-    private $user;
-    private $em;
-
-    public function __construct(TokenStorage $tokenStorage, EntityManager $em)
-    {
-        $this->em                       = $em;
-        $this->user                     = $tokenStorage->getToken()->getUser();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -73,26 +54,6 @@ class ReservationType extends AbstractType
                 'label' => 'Salva'
             ])
         ;
-
-
-//        ->add('reservationOptions', 'collection', [
-//            'class'             => 'RufyRestApiBundle:ReservationOption',
-//            'property'          => function($a, $b, $c) {
-//
-//                dump($a);
-//                dump($b);
-//                dump($c);
-//
-//                die();
-//
-//
-//            },
-//            'expanded'          => true,
-//            'multiple'          => true,
-//            'query_builder'     => $qb,
-//        ]
-//    )
-
     }
 
     /**

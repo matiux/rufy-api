@@ -1,12 +1,12 @@
 <?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Request\ParamFetcherInterface,
-    FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations,
+    FOS\RestBundle\Controller\Annotations\View;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomerController extends BaseController
@@ -14,21 +14,23 @@ class CustomerController extends BaseController
     /**
      * Create a Customer from the sended data.
      *
-     * @throws AccessDeniedException if user is not logged in
+     * @param Request $request
+     * @View()
+     * @return array
      */
-    public function postCustomerAction()
+    public function postCustomerAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $customer    = $this->get('rufy_api.customer.handler')->post($this->container->get('request')->request->all());
+            $customer = $this->get('rufy_api.customer.handler')->post($request);
 
             return $this->view($customer, 201);
 
         } catch (InvalidFormException $exception) {
 
-            return $exception->getForm();
+            return [$exception->getForm()];
         }
     }
 

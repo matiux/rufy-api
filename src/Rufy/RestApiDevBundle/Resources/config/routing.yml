@@ -10,3 +10,7 @@ custromer_form:
     path:     /form/customer
     defaults: { _controller: RufyRestApiDevBundle:Form:customer }
 
+restaurant_form:
+    path:     /form/restaurant
+    defaults: { _controller: RufyRestApiDevBundle:Form:restaurant }
+
