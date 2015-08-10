@@ -26,8 +26,7 @@ Feature: Testing Customer API
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       name
@@ -36,9 +35,6 @@ Feature: Testing Customer API
       privacy
       newsletter
       restaurant
-      """
-    And "data" doesn't contains:
-      """
       """
 
   @singlecustomer
@@ -47,8 +43,7 @@ Feature: Testing Customer API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       name
@@ -57,9 +52,6 @@ Feature: Testing Customer API
       privacy
       newsletter
       restaurant
-      """
-    And "data" doesn't contains:
-      """
       """
 
   @singlenotpermittedcustomer
@@ -126,9 +118,8 @@ Feature: Testing Customer API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" is a collection
-    And each "data" item contains:
+    And the response is a collection
+    And each response item contains:
       """
       id
       name
@@ -141,7 +132,7 @@ Feature: Testing Customer API
 
   @collectionnotpermittedcustomer
   Scenario: Get a collection of Customer by not permitted restaurant ID
-    Given that I want to find a "/v1/restaurants/2/customers"
+    Given that I want to find a "/v1/restaurants/3/customers"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
@@ -150,8 +141,9 @@ Feature: Testing Customer API
   Scenario: Get a collection of Customer from not existing restaurant
     Given that I want to find a "/v1/restaurants/281285/customers"
     When I request a resource
-    Then the response status code should be 404
+    Then the response status code should be 200
     And the response type should be "application/json"
+    And response is void
 
   @endtest
   Scenario: Terminate test

@@ -4,12 +4,11 @@ use FOS\RestBundle\Controller\Annotations\View,
     FOS\RestBundle\Request\ParamFetcherInterface,
     FOS\RestBundle\Controller\Annotations;
 
-use Rufy\RestApiBundle\Entity\Restaurant,
-    Rufy\RestApiBundle\Exception\InvalidFormException,
+use Rufy\RestApiBundle\Exception\InvalidFormException,
     Rufy\RestApiBundle\Model\RestaurantInterface,
     Rufy\RestApiBundle\Model\AreaInterface;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException,
+use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RestaurantController extends BaseController
@@ -41,7 +40,7 @@ class RestaurantController extends BaseController
 
         $restaurantReservations   = $this->getAllOr404($limit, $offset, $filters, $params, 'reservation');
 
-        return [$restaurantReservations];
+        return $restaurantReservations;
     }
 
     /**
@@ -70,7 +69,7 @@ class RestaurantController extends BaseController
 
         $restaurantCustomers   = $this->getAllOr404($limit, $offset, $filters, $params, 'customer');
 
-        return [$restaurantCustomers];
+        return $restaurantCustomers;
     }
 
     /**
@@ -98,7 +97,7 @@ class RestaurantController extends BaseController
 
         $restaurantAreas   = $this->getAllOr404($limit, $offset, $filters, $params, 'area');
 
-        return [$restaurantAreas];
+        return $restaurantAreas;
     }
 
     /**
@@ -120,26 +119,31 @@ class RestaurantController extends BaseController
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
 
-        return [$restaurants];
+        return $restaurants;
     }
 
     /**
      * Create a Restaurant
      *
-     * @throws AccessDeniedException if user is not logged in
+     * @param Request $request
+     * @View()
+     * @return array
      */
-    public function postRestaurantAction()
+    public function postRestaurantAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $params         = $this->container->get('request')->request->all();
-            $restaurant     = $this->get('rufy_api.restaurant.handler')->post($params);
+            /**
+             * TODO
+             * Da testare
+             */
+            //$this->prepareRequest($request);
+
+            $restaurant = $this->get('rufy_api.restaurant.handler')->post($request);
 
             return $this->view($restaurant, 201);
-
-            //return $this->handleView($view);
 
         } catch (InvalidFormException $exception) {
 
@@ -151,18 +155,19 @@ class RestaurantController extends BaseController
      * Update existing restaurant
      *
      * @param int $id the restaurant id
+     * @param Request $request
      *
-     * @return FormTypeInterface
+     * @View()
      *
-     * @throws NotFoundHttpException when Restaurant doesn't exist
+     * @return array
      */
-    public function patchRestaurantAction($id)
+    public function patchRestaurantAction($id, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $restaurant = $this->patchAction('restaurant', $this->getOr404($id, 'restaurant'));
+            $restaurant = $this->patchAction('restaurant', $this->getOr404($id, 'restaurant'), $request);
 
             return $this->view($restaurant, 204);
 
@@ -204,7 +209,7 @@ class RestaurantController extends BaseController
 
         $restaurant = $this->getOr404($id, 'restaurant');
 
-        return [$restaurant];
+        return $restaurant;
     }
 
     /**

@@ -30,7 +30,7 @@ class CustomerController extends BaseController
 
         } catch (InvalidFormException $exception) {
 
-            return [$exception->getForm()];
+            return $exception->getForm();
         }
     }
 
@@ -39,10 +39,8 @@ class CustomerController extends BaseController
      *
      * @param int $id Customer id
      *
-     * @return json
-     *
-     * @throws NotFoundHttpException when customer doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return array
+     * @View()
      */
     public function getCustomerAction($id)
     {
@@ -57,21 +55,19 @@ class CustomerController extends BaseController
      * Update existing customer
      *
      * @param int $id the customer id
+     * @param Request $request
      *
-     * @return FormTypeInterface
+     * @View()
      *
-     * @throws NotFoundHttpException when Customer doesn't exist
+     * @return array
      */
-    public function patchCustomerAction($id)
+    public function patchCustomerAction($id, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $customer = $this->container->get('rufy_api.customer.handler')->patch(
-                $this->getOr404($id, 'customer'),
-                $this->container->get('request')->request->all()
-            );
+            $customer = $this->patchAction('customer', $this->getOr404($id, 'customer'), $request);
 
             return $this->view($customer, 204);
 
@@ -86,8 +82,7 @@ class CustomerController extends BaseController
      *
      * @param int $id Customer id
      *
-     * @throws NotFoundHttpException when customer doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return \FOS\RestBundle\View\View
      */
     public function deleteCustomerAction($id)
     {
@@ -96,5 +91,7 @@ class CustomerController extends BaseController
         $customer = $this->getOr404($id, 'customer');
 
         $this->container->get('rufy_api.customer.handler')->delete($customer);
+
+        return $this->view($customer, 204);
     }
 }

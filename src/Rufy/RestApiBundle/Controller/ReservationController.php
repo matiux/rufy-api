@@ -60,7 +60,7 @@ class ReservationController extends BaseController
 
         } catch (InvalidFormException $exception) {
 
-            return [$exception->getForm()];
+            return $exception->getForm();
         }
     }
 

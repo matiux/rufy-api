@@ -40,6 +40,6 @@ class RestaurantType extends BaseType
      */
     public function getName()
     {
-        return 'restaurant_type';
+        return '';
     }
 }

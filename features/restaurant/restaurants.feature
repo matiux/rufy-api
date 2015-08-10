@@ -22,15 +22,11 @@ Feature: Testing Restaurant API
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       name
       restDate
-      """
-    And "data" doesn't contains:
-      """
       """
 
   @updaterestaurant
@@ -44,7 +40,7 @@ Feature: Testing Restaurant API
 
   @updatenotpermittedrestaurant
   Scenario: Update an existing Reservation of another restaurant
-    Given that I want update an existing "/v1/restaurants/2" with values:
+    Given that I want update an existing "/v1/restaurants/3" with values:
       | field     | value           |
       | name      | La nuova stalla |
       | rest_date | 3               |
@@ -57,8 +53,7 @@ Feature: Testing Restaurant API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       name
@@ -67,7 +62,7 @@ Feature: Testing Restaurant API
 
   @notpermittedsinglerestaurant
   Scenario: Get a Restaurant by ID
-    Given that I want to find a "/v1/restaurants/2"
+    Given that I want to find a "/v1/restaurants/3"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
@@ -85,9 +80,7 @@ Feature: Testing Restaurant API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" is a collection
-    And each "data" item contains:
+    And each response item contains:
       """
       id
       name
