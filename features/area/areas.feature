@@ -19,20 +19,18 @@ Feature: Testing Area API
       | field      | value       |
       | name       | Sala grande |
       | restaurant | 1           |
-      | maxPeople  | 55          |
+      | maxPeople  | 30          |
+      | maxPeopleTable  | 12          |
+      | minPeopleTable  | 2          |
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       restaurantId
       name
       max_people
-      """
-    And "data" doesn't contains:
-      """
       """
 
   @singlearea
@@ -41,16 +39,12 @@ Feature: Testing Area API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" contains:
+    And the response contains:
       """
       id
       restaurantId
       name
       max_people
-      """
-    And "data" doesn't contains:
-      """
       """
 
   @singlenotpermittedarea
@@ -73,22 +67,18 @@ Feature: Testing Area API
     When I request a resource
     Then the response status code should be 200
     And the response type should be "application/json"
-    And the response contains key "data"
-    And "data" is a collection
-    And each "data" item contains:
+    And the response is a collection
+    And each "response" item contains:
       """
       id
       restaurantId
       name
       max_people
       """
-    And each "data" item doesn't contains:
-      """
-      """
 
   @collectionnotpermittedarea
   Scenario: Get a collection of Area by not permitted restaurant ID
-    Given that I want to find a "/v1/restaurants/2/areas"
+    Given that I want to find a "/v1/restaurants/3/areas"
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"

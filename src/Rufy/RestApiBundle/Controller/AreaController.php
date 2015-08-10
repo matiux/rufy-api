@@ -28,7 +28,7 @@ class AreaController extends BaseController
              */
             //$this->prepareRequest($request);
 
-            $area = $this->get('rufy_api.area.handler.handler')->post($request);
+            $area = $this->get('rufy_api.area.handler')->post($request);
 
             return $this->view($area, 201);
 
@@ -41,12 +41,10 @@ class AreaController extends BaseController
     /**
      * Get single Area.
      *
-     * @param int $id Area id
+     * @param int $reservationId
      *
-     * @return json
-     *
-     * @throws NotFoundHttpException when area doesn't exist
-     * @throws AccessDeniedException when role is not allowed
+     * @return array
+     * @View()
      */
     public function getAreaAction($id)
     {
