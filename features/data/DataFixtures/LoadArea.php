@@ -22,8 +22,8 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area->setName('2° Piano  - Terrazzo');
         $area->setRestaurant($pousada);
         $area->setMaxPeople(22);
-        $area->setMaxPeopleTale('4');
-        $area->setMinPeopleTale(14);
+        $area->setMaxPeopleTable('4');
+        $area->setMinPeopleTable(14);
         $area->addAreaOption($this->getReference('reservationOption_outside'));
         $area->addAreaOption($this->getReference('reservationOption_invalids'));
         $area->addAreaOption($this->getReference('reservationOption_animals'));
@@ -33,8 +33,8 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
         $area = new Area();
         $area->setName('1° Piano  - Sala Grande');
         $area->setMaxPeople(15);
-        $area->setMaxPeopleTale('2');
-        $area->setMinPeopleTale(15);
+        $area->setMaxPeopleTable('2');
+        $area->setMinPeopleTable(15);
         $area->setRestaurant($hotelito);
         $area->addAreaOption($this->getReference('reservationOption_outside'));
         $area->addAreaOption($this->getReference('reservationOption_smokers'));
