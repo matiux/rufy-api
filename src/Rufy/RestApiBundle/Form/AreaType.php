@@ -1,21 +1,37 @@
 <?php namespace Rufy\RestApiBundle\Form;
 
-use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AreaType extends AbstractType
+class AreaType extends BaseType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $qb = $this->em->getRepository('RufyRestApiBundle:Restaurant')
+            ->createQueryBuilder('restaurant')
+            ->where('restaurant.id IN (:restaurants)')
+            ->setParameter('restaurants', $this->user->getRestaurants())
+        ;
+
         $builder
-            ->add('restaurant', 'entity', ['class' => 'RufyRestApiBundle:Restaurant', 'property' => 'id'])
+            ->add('restaurant', 'entity', [
+                'class'         => 'RufyRestApiBundle:Restaurant',
+                'property'      => 'name',
+                'placeholder'   => 'Scegliere un ristorante',
+                'query_builder' => $qb
+
+            ])
             ->add('name')
             ->add('maxPeople')
+            ->add('minPeopleTable')
+            ->add('maxPeopleTable')
+
+            ->add('save', 'submit', [
+                'label' => 'Salva'
+            ])
         ;
     }
 
@@ -26,6 +42,7 @@ class AreaType extends AbstractType
     {
         $resolver->setDefaults(array(
 
+            'attr'              => ['novalidate' => 'novalidate'],
             'data_class'        => 'Rufy\RestApiBundle\Entity\Area',
             'csrf_protection'   => false,
 
@@ -39,6 +56,6 @@ class AreaType extends AbstractType
      */
     public function getName()
     {
-        return 'area_type';
+        return '';
     }
 }

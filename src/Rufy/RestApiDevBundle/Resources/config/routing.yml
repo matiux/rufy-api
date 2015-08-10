@@ -14,3 +14,7 @@ restaurant_form:
     path:     /form/restaurant
     defaults: { _controller: RufyRestApiDevBundle:Form:restaurant }
 
+area_form:
+    path:     /form/area
+    defaults: { _controller: RufyRestApiDevBundle:Form:area }
+

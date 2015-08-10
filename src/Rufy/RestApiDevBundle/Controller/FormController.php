@@ -3,9 +3,11 @@
 namespace Rufy\RestApiDevBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View;
+use Rufy\RestApiBundle\Entity\Area;
 use Rufy\RestApiBundle\Entity\Customer;
 use Rufy\RestApiBundle\Entity\Reservation;
 use Rufy\RestApiBundle\Entity\Restaurant;
+use Rufy\RestApiBundle\Form\AreaType;
 use Rufy\RestApiBundle\Form\CustomerType;
 use Rufy\RestApiBundle\Form\ReservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -102,6 +104,42 @@ class FormController extends Controller
         $a = 1;
 
         return $this->render('RufyRestApiDevBundle:Forms:formRestaurant.html.twig', [
+
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * * @View()
+     */
+    public function areaAction(Request $request)
+    {
+        $form = $this->createForm(new AreaType($this->get('security.token_storage'), $this->get('doctrine.orm.entity_manager')), new Area(), [
+            //'action' => $this->generateUrl('save_reservation'),
+            'method' => 'POST'
+        ]);
+
+        /**
+         * http://symfony.com/it/doc/2.7/book/forms.html#gestione-dell-invio-del-form
+         */
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $this->getDoctrine()->getManager()->persist($form->getData());
+            $this->getDoctrine()->getManager()->flush();
+
+        } else {
+
+            $a = 1;
+        }
+
+        $a = 1;
+
+        return $this->render('RufyRestApiDevBundle:Forms:formArea.html.twig', [
 
             'form' => $form->createView()
         ]);

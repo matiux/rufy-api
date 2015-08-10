@@ -332,7 +332,7 @@ class Area implements AreaInterface, EntityInterface
      *
      * @return Area
      */
-    public function setMaxPeopleTale($maxPeopleTable)
+    public function setMaxPeopleTable($maxPeopleTable)
     {
         $this->maxPeopleTable = $maxPeopleTable;
 
@@ -356,7 +356,7 @@ class Area implements AreaInterface, EntityInterface
      *
      * @return Area
      */
-    public function setMinPeopleTale($minPeopleTable)
+    public function setMinPeopleTable($minPeopleTable)
     {
         $this->minPeopleTable = $minPeopleTable;
 

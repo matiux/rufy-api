@@ -98,11 +98,11 @@ services:
         tags:
             - {name: form.type, alias: restaurant_type }
 
-    rufy_api.form.type.area:
-        class: Rufy\RestApiBundle\Form\AreaType
-        arguments: [@security.token_storage]
-        tags:
-            - {name: form.type, alias: area_type }
+#    rufy_api.form.type.area:
+#        class: Rufy\RestApiBundle\Form\AreaType
+#        arguments: [@security.token_storage]
+#        tags:
+#            - {name: form.type, alias: area_type }
     ## Fine Form
     #############################################
 

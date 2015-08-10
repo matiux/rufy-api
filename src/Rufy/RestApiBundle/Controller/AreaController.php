@@ -1,33 +1,36 @@
 <?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Request\ParamFetcherInterface,
-    FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations;
 
+use FOS\RestBundle\Controller\Annotations\View;
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
-use Symfony\Component\Config\Definition\Exception\Exception,
+use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AreaController extends BaseController
 {
     /**
-     * Create an Area
-     *
-     * @throws AccessDeniedException if user is not logged in
+     * @param Request $request
+     * @View()
+     * @return array
      */
-    public function postAreaAction()
+    public function postAreaAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OWNER', null, 'Non si può accedere a questa risorsa!');
 
         try {
 
-            $params         = $this->container->get('request')->request->all();
-            $area           = $this->get('rufy_api.area.handler')->post($params);
+            /**
+             * TODO
+             * Da testare
+             */
+            //$this->prepareRequest($request);
+
+            $area = $this->get('rufy_api.area.handler.handler')->post($request);
 
             return $this->view($area, 201);
-
-            //return $this->handleView($view);
 
         } catch (InvalidFormException $exception) {
 

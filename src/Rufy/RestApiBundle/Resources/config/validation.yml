@@ -38,16 +38,20 @@ Rufy\RestApiBundle\Entity\Customer:
 Rufy\RestApiBundle\Entity\Area:
   properties:
     name:
-      - Type:
-          type: string
-          message: Il valore {{ value }} non è un {{ type }} valido.
+      - NotBlank:
+          message: Inserire il nome della sala.
     maxPeople:
-      - Type:
-          type: integer
-          message: Il valore {{ value }} non è un {{ type }} valido.
+      - NotBlank:
+          message: Inserire la capienza massima della sala.
+    minPeopleTable:
+      - NotBlank:
+          message: Inserire il numero di persone per il tavolo più piccolo.
+    maxPeopleTable:
+      - NotBlank:
+          message: Inserire il numero di persone per il tavolo più grande.
     restaurant:
       - NotNull:
-          message: Indicare il ristorante del Customer.
+          message: Indicare a quale ristorante appartiene la sala.
 
 Rufy\RestApiBundle\Entity\Restaurant:
   properties:
