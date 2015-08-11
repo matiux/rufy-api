@@ -13,8 +13,10 @@ Rufy\RestApiBundle\Entity\Reservation:
             expose: true
         time:
             expose: true
+            type: DateTime<'H:m'>
         date:
             expose: true
+            type: DateTime<'Y-m-d'>
         note:
             expose: true
         status:

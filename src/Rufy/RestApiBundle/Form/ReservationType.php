@@ -50,9 +50,9 @@ class ReservationType extends BaseType
 //                ]
 //            )
         ->add('customer', new CustomerType($this->tokenStorage, $this->em))
-        ->add('save', 'submit', [
-                'label' => 'Salva'
-            ])
+//        ->add('save', 'submit', [
+//                'label' => 'Salva'
+//            ])
         ;
     }
 

@@ -52,7 +52,7 @@ class ReservationController extends BaseController
              * TODO
              * Da testare
              */
-            //$this->prepareRequest($request);
+            $this->prepareRequest($request);
 
             $reservation = $this->get('rufy_api.reservation.handler')->post($request);
 
@@ -80,6 +80,8 @@ class ReservationController extends BaseController
 
         try {
 
+            $this->prepareRequest($request);
+
             $reservation = $this->patchAction('reservation', $this->getOr404($reservationId, 'reservation'), $request);
 
             return $this->view($reservation, 204);
@@ -90,9 +92,19 @@ class ReservationController extends BaseController
         }
     }
 
-    public function putReservationAction($id)
+    /**
+     * Update existing reservation from the submitted data
+     *
+     * @param int $reservationId
+     * @param Request $request
+     *
+     * @View()
+     *
+     * @return array
+     */
+    public function putReservationAction($reservationId, Request $request)
     {
-        return $this->patchReservationAction($id);
+        return $this->patchReservationAction($reservationId, $request);
     }
 
 
@@ -116,6 +128,20 @@ class ReservationController extends BaseController
         if ($request->request->get('id')) {
 
             $request->request->remove('id');
+        }
+
+        if ($request->request->get('date') && strstr($request->request->get('date'), '/')) {
+
+            $date = new \DateTime($request->request->get('date'));
+            $request->request->set('date', $date->format('Y-m-d'));
+        }
+
+        if ($request->request->get('customer') && isset($request->request->get('customer')['id'])) {
+
+            $c = $request->request->get('customer');
+            unset($c['id']);
+
+            $request->request->set('customer', $c);
         }
 
         $ro = $request->request->get('reservationOptions');

@@ -401,7 +401,7 @@ class Reservation implements ReservationInterface, EntityInterface
      * To avoid breaking encapsulation
      * http://stackoverflow.com/questions/15486402/doctrine2-orm-does-not-save-changes-to-a-datetime-field/15488230#15488230
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
