@@ -48,16 +48,35 @@ class ReservationRepository extends EntityRepository implements EntityRepository
         $restaurantId = $params['restaurantId'];
 
         $q = $this->createQueryBuilder('rese')
-            ->addSelect('a, rest')
+            ->addSelect('a, rest, c')
             ->join('rese.area', 'a')
             ->join('a.restaurant', 'rest')
+            ->join('rese.customer', 'c')
             ->where('rest.id = :restaurantid')
             ->setParameter('restaurantid', $restaurantId);
 
         foreach ($filters as $filter => $value) {
-            if (!is_array($value)) {
+
+            if (!is_array($value) && false === strpos($filter, '.')) {
+
                 $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
-            } else {
+
+            } else if (false !== strpos($filter, '.')) {
+
+                switch ($filter) {
+
+                    case 'customer.name':
+                        $q = $q->andWhere("c.name LIKE :cnamevalue")->setParameter('cnamevalue', "%$value%");
+                        break;
+                    case 'customer.phone':
+                        $q = $q->andWhere("c.phone LIKE :cphonevalue")->setParameter('cphonevalue', "%$value%");
+                        break;
+                    case 'customer.email':
+                        $q = $q->andWhere("c.email LIKE :cemailvalue")->setParameter('cemailvalue', "%$value%");
+                        break;
+                }
+            }
+            else {
                 $q = $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
             }
         }

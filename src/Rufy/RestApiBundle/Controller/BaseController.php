@@ -25,22 +25,37 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
 
         unset($source['limit'], $source['offset']);
 
-        $params = array_filter($source, function(&$fValue) {
+        foreach ($source as $fKey => $fValue) {
 
-            if ($fValue != null) {
-
-                $values = explode(',', $fValue);
-
-                if (1 < count($values)) {
-
-                    $fValue = $values;
-                }
-
-                return true;
+            if (null == $fValue) {
+                continue;
             }
 
-            return false;
-        });
+            if (false !== strpos($fKey, '_')) {
+                $fKey = str_replace('_', '.', $fKey);
+            }
+
+            $values         = explode(',', $fValue);
+
+            $params[$fKey]  = 1 < count($values) ? $values: $fValue;
+        }
+
+//        $params = array_filter($source, function(&$fValue, $fKey) {
+//
+//            if ($fValue != null) {
+//
+//                $values = explode(',', $fValue);
+//
+//                if (1 < count($values)) {
+//
+//                    $fValue = $values;
+//                }
+//
+//                return true;
+//            }
+//
+//            return false;
+//        });
 
     }
 

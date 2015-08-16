@@ -23,6 +23,9 @@ class RestaurantController extends BaseController
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
      * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
      * @Annotations\QueryParam(name="status", requirements="[012,]*", description="Reservation status")
+     * @Annotations\QueryParam(name="customer_name", requirements="\w+", description="Customer name")
+     * @Annotations\QueryParam(name="customer_phone", requirements="\w+", description="Customer phone")
+     * @Annotations\QueryParam(name="customer_email", requirements="\w+", description="Customer email")
      *
      * @return array
      * @View()
