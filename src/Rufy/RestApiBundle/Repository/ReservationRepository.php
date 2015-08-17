@@ -41,6 +41,7 @@ class ReservationRepository extends EntityRepository implements EntityRepository
     }
 
     /**
+     * TODO - Rifattorizzare
      * {@inheritdoc }
      */
     public function findMore($limit, $offset, $params, $filters = array())
@@ -76,7 +77,8 @@ class ReservationRepository extends EntityRepository implements EntityRepository
                         break;
                 }
             }
-            else {
+            else if(is_array($value)) {
+
                 $q = $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
             }
         }

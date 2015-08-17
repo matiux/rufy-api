@@ -22,6 +22,11 @@ class RestaurantController extends BaseController
      * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
      * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
+     *
+     * @Annotations\QueryParam(name="date_range", requirements="\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}", description="Date range reservation")
+     * @Annotations\QueryParam(name="month", requirements="\d{2}", description="Month reservation")
+     * @Annotations\QueryParam(name="year", requirements="\d{4}", description="Year reservation")
+     *
      * @Annotations\QueryParam(name="status", requirements="[012,]*", description="Reservation status")
      * @Annotations\QueryParam(name="customer_name", requirements="\w+", description="Customer name")
      * @Annotations\QueryParam(name="customer_phone", requirements="\w+", description="Customer phone")
