@@ -26,15 +26,14 @@ class RestaurantController extends BaseController
      * @Annotations\QueryParam(name="customer_name", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer name")
      * @Annotations\QueryParam(name="customer_phone", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer phone")
      * @Annotations\QueryParam(name="customer_email", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer email")
-     *
-     * TODO
+     * @Annotations\QueryParam(name="people", strict=true, allowBlank=true, nullable=true, requirements="\d+", description="People")
+     * @Annotations\QueryParam(name="people_extra", strict=true, allowBlank=true, nullable=true, requirements="\d+", description="Extra people")
      * @Annotations\QueryParam(name="date_range", strict=true, allowBlank=true, nullable=true, requirements="\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}", description="Date range reservation")
-     * @Annotations\QueryParam(name="month", strict=true, allowBlank=true, nullable=true, requirements="\d{2}", description="Month reservation")
      *
      * @return array
      * @View()
      */
-    public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher, Request $request)
+    public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 

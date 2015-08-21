@@ -69,13 +69,14 @@ class ReservationRepository extends EntityRepository implements EntityRepository
         return $reservations ?: false;
     }
 
-    private function handleFilters(array $filters, QueryBuilder $q)
+    private function handleFilters($filters = [], QueryBuilder $q)
     {
-        /**
-         * TODO
-         * Tirare fuori da $filters quelli custom e gestirli separatamente....
-         */
-        $customFilters  = ['date_range', 'month'];
+        if (!$filters)
+            return;
+
+        $customFilters          = ['date_range' => '', 'month' => ''];
+        $customFilters          = array_intersect_key($filters, $customFilters);
+        $filters                = array_diff_key($filters, $customFilters);
 
         foreach ($filters as $filter => $value) {
 
@@ -87,18 +88,20 @@ class ReservationRepository extends EntityRepository implements EntityRepository
 
                 $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
 
-            } else if ('date_range' == $filter) {
-
-                $dates = explode('|', $value);
-
-                $q->where('rese.date BETWEEN :start AND :end')
-                    ->setParameter('start', $dates[0])
-                    ->setParameter('end', $dates[1]);
-
-
             } else {
 
                 $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+            }
+        }
+
+        foreach ($customFilters as $filter => $value) {
+
+            switch ($filter) {
+
+                case 'date_range':
+                    $dates = explode('|', $value);
+                    $q->andWhere('rese.date BETWEEN :start AND :end')->setParameter('start', $dates[0])->setParameter('end', $dates[1]);
+                    break;
             }
         }
     }
