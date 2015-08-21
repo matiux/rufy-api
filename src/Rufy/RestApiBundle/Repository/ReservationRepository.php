@@ -3,6 +3,7 @@
 use Doctrine\ORM\EntityRepository,
     Doctrine\ORM\NoResultException;
 
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReservationRepository extends EntityRepository implements EntityRepositoryInterface
@@ -46,7 +47,7 @@ class ReservationRepository extends EntityRepository implements EntityRepository
      */
     public function findMore($limit, $offset, $params, $filters = array())
     {
-        $restaurantId = $params['restaurantId'];
+        $restaurantId   = $params['restaurantId'];
 
         $q = $this->createQueryBuilder('rese')
             ->addSelect('a, rest, c')
@@ -56,32 +57,7 @@ class ReservationRepository extends EntityRepository implements EntityRepository
             ->where('rest.id = :restaurantid')
             ->setParameter('restaurantid', $restaurantId);
 
-        foreach ($filters as $filter => $value) {
-
-            if (!is_array($value) && false === strpos($filter, '.')) {
-
-                $q = $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
-
-            } else if (false !== strpos($filter, '.')) {
-
-                switch ($filter) {
-
-                    case 'customer.name':
-                        $q = $q->andWhere("c.name LIKE :cnamevalue")->setParameter('cnamevalue', "%$value%");
-                        break;
-                    case 'customer.phone':
-                        $q = $q->andWhere("c.phone LIKE :cphonevalue")->setParameter('cphonevalue', "%$value%");
-                        break;
-                    case 'customer.email':
-                        $q = $q->andWhere("c.email LIKE :cemailvalue")->setParameter('cemailvalue', "%$value%");
-                        break;
-                }
-            }
-            else if(is_array($value)) {
-
-                $q = $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
-            }
-        }
+        $this->handleFilters($filters, $q);
 
         if (0 != $limit) {
             $q = $q->setMaxResults($limit)->setFirstResult($offset);
@@ -90,6 +66,56 @@ class ReservationRepository extends EntityRepository implements EntityRepository
         $q              = $q->getQuery();
         $reservations   = $q->getResult();
 
-        return $reservations ? $reservations : false;
+        return $reservations ?: false;
+    }
+
+    private function handleFilters(array $filters, QueryBuilder $q)
+    {
+        /**
+         * TODO
+         * Tirare fuori da $filters quelli custom e gestirli separatamente....
+         */
+        $customFilters  = ['date_range', 'month'];
+
+        foreach ($filters as $filter => $value) {
+
+            if (false !== strpos($filter, 'customer_')) {
+
+                $this->addCustomerFilter($filter, $value, $q);
+            }
+            else if(is_array($value)) {
+
+                $q->andWhere("rese.$filter IN (:{$filter}value)")->setParameter("{$filter}value", $value);
+
+            } else if ('date_range' == $filter) {
+
+                $dates = explode('|', $value);
+
+                $q->where('rese.date BETWEEN :start AND :end')
+                    ->setParameter('start', $dates[0])
+                    ->setParameter('end', $dates[1]);
+
+
+            } else {
+
+                $q->andWhere("rese.$filter = :{$filter}value")->setParameter("{$filter}value", $value);
+            }
+        }
+    }
+
+    private function addCustomerFilter($filter, $value, QueryBuilder $q)
+    {
+        switch ($filter) {
+
+            case 'customer_name':
+                $q->andWhere("c.name LIKE :cnamevalue")->setParameter('cnamevalue', "%$value%");
+                break;
+            case 'customer_phone':
+                $q->andWhere("c.phone LIKE :cphonevalue")->setParameter('cphonevalue', "%$value%");
+                break;
+            case 'customer_email':
+                $q->andWhere("c.email LIKE :cemailvalue")->setParameter('cemailvalue', "%$value%");
+                break;
+        }
     }
 }

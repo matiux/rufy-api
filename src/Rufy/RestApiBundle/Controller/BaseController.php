@@ -1,6 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Controller; 
 
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\FOSRestController,
+    FOS\RestBundle\Request\ParamFetcherInterface;
 
 use Rufy\RestApiBundle\Model\EntityInterface;
 
@@ -16,9 +17,11 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
      * @param $limit
      * @param $offset
      * @param $params
-     * @param array $source
+     * @param ParamFetcherInterface $source
      */
-    protected function prepareFilters(&$limit, &$offset, &$params, array $source) {
+    protected function prepareFilters(&$limit, &$offset, &$params, ParamFetcherInterface $source) {
+
+        $source         = $source->all();
 
         $offset         = null == $source['offset'] ? 0 : $source['offset'];
         $limit          = $source['limit'];
@@ -31,32 +34,10 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
                 continue;
             }
 
-            if (false !== strpos($fKey, '_')) {
-                $fKey = str_replace('_', '.', $fKey);
-            }
-
             $values         = explode(',', $fValue);
 
             $params[$fKey]  = 1 < count($values) ? $values: $fValue;
         }
-
-//        $params = array_filter($source, function(&$fValue, $fKey) {
-//
-//            if ($fValue != null) {
-//
-//                $values = explode(',', $fValue);
-//
-//                if (1 < count($values)) {
-//
-//                    $fValue = $values;
-//                }
-//
-//                return true;
-//            }
-//
-//            return false;
-//        });
-
     }
 
     /**

@@ -19,27 +19,26 @@ class RestaurantController extends BaseController
      * @param int $restaurantId
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
-     * @Annotations\QueryParam(name="date", requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
+     * @Annotations\QueryParam(name="offset", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", description="How many reservations to return per page.")
+     * @Annotations\QueryParam(name="date", strict=true, allowBlank=true, nullable=true, requirements="\d{4}-\d{2}-\d{2}", description="Reservation date")
+     * @Annotations\QueryParam(name="status", strict=true, allowBlank=true, nullable=true, requirements="[012,]*", description="Reservation status")
+     * @Annotations\QueryParam(name="customer_name", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer name")
+     * @Annotations\QueryParam(name="customer_phone", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer phone")
+     * @Annotations\QueryParam(name="customer_email", strict=true, allowBlank=true, nullable=true, requirements="\w+", description="Customer email")
      *
-     * @Annotations\QueryParam(name="date_range", requirements="\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}", description="Date range reservation")
-     * @Annotations\QueryParam(name="month", requirements="\d{2}", description="Month reservation")
-     * @Annotations\QueryParam(name="year", requirements="\d{4}", description="Year reservation")
-     *
-     * @Annotations\QueryParam(name="status", requirements="[012,]*", description="Reservation status")
-     * @Annotations\QueryParam(name="customer_name", requirements="\w+", description="Customer name")
-     * @Annotations\QueryParam(name="customer_phone", requirements="\w+", description="Customer phone")
-     * @Annotations\QueryParam(name="customer_email", requirements="\w+", description="Customer email")
+     * TODO
+     * @Annotations\QueryParam(name="date_range", strict=true, allowBlank=true, nullable=true, requirements="\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}", description="Date range reservation")
+     * @Annotations\QueryParam(name="month", strict=true, allowBlank=true, nullable=true, requirements="\d{2}", description="Month reservation")
      *
      * @return array
      * @View()
      */
-    public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher)
+    public function getRestaurantReservationsAction($restaurantId, ParamFetcherInterface $paramFetcher, Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher);
 
         $params         = [
 
@@ -54,8 +53,8 @@ class RestaurantController extends BaseController
     /**
      * List all customers by a given id restaurant
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many customers to return per page.")
+     * @Annotations\QueryParam(name="offset", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", description="How many customers to return per page.")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -68,7 +67,7 @@ class RestaurantController extends BaseController
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher);
 
         $params         = [
 
@@ -83,8 +82,8 @@ class RestaurantController extends BaseController
     /**
      * List all areas by a given id restaurant
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many areas to return per page.")
+     * @Annotations\QueryParam(name="offset", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", description="How many areas to return per page.")
      *
      * @param int $restaurantId Restaurant id
      * @param ParamFetcherInterface $paramFetcher param fetcher service
@@ -96,7 +95,7 @@ class RestaurantController extends BaseController
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher);
 
         $params         = [
 
@@ -111,8 +110,8 @@ class RestaurantController extends BaseController
     /**
      * List all the logged user's restaurants
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="0", description="How many reservations to return per page.")
+     * @Annotations\QueryParam(name="offset", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", strict=true, allowBlank=true, nullable=true, requirements="\d+", default="0", description="How many reservations to return per page.")
      *
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
@@ -123,7 +122,7 @@ class RestaurantController extends BaseController
     {
         $this->denyAccessUnlessGranted('ROLE_READER', null, 'Non si può accedere a questa risorsa!');
 
-        $this->prepareFilters($limit, $offset, $filters, $paramFetcher->all());
+        $this->prepareFilters($limit, $offset, $filters, $paramFetcher);
 
         $restaurants = $this->container->get('rufy_api.restaurant.handler')->all($limit, $offset);
 

@@ -1,6 +1,7 @@
 <?php namespace Rufy\RestApiBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\View,
+    FOS\RestBundle\Controller\Annotations;
 
 use Rufy\RestApiBundle\Exception\InvalidFormException;
 
