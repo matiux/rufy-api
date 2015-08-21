@@ -64,15 +64,6 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
         return $entity;
     }
 
-
-    // protected function patchAction($model, EntityInterface $resource, array $params = null) {
-
-    //     $params             = !$params ? $this->container->get('request')->request->all() : $params;
-    //     $updatedResource    = $this->container->get("rufy_api.$model.handler")->patch($resource, $params);
-
-    //     return $updatedResource;
-    // }
-
     /**
      * @param $modelName                - Il modello per l'handler
      * @param EntityInterface $model    - Il modello da aggiornare
