@@ -42,13 +42,6 @@ class ReservationType extends BaseType
                 'placeholder'   => 'Scegliere un\'area',
                 'query_builder' => $qb,
             ])
-//            ->add('reservationOptions', 'entity', [
-//                    'class'             => 'RufyRestApiBundle:ReservationOption',
-//                    'property'          => 'name',
-//                    'expanded'          => true,
-//                    'multiple'          => true,
-//                ]
-//            )
         ->add('customer', new CustomerType($this->tokenStorage, $this->em))
 //        ->add('save', 'submit', [
 //                'label' => 'Salva'

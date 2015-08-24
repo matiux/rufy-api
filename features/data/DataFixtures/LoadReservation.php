@@ -25,8 +25,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setDate(new \DateTime('28-03-2015'));
         $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setStatus(1);
-        $reservation->addReservationOption($this->getReference('reservationOption_outside'));
-        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
         $reservation->setTableName('5');
 
         $this->getReference('user_matteo')->addReservation($reservation);
@@ -40,8 +38,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
         $reservation->setDate(new \DateTime('30-04-2015'));
         $reservation->setNote('Qualche nota circa la prenotazione');
         $reservation->setStatus(2);
-        $reservation->addReservationOption($this->getReference('reservationOption_outside'));
-        $reservation->addReservationOption($this->getReference('reservationOption_smokers'));
         $reservation->setTableName('12');
 
         $this->getReference('user_emanuele')->addReservation($reservation);
@@ -54,7 +50,6 @@ class LoadReservation extends AbstractFixture implements OrderedFixtureInterface
 //        $reservation->setTime(new \DateTime('21:30'));
 //        $reservation->setDate(new \DateTime('31-12-2014'));
 //        $reservation->setStatus(0);
-//        $reservation->addReservationOption($this->getReference('reservationOption_animals'));
 //        $reservation->setNote('Qualche nota circa la prenotazione');
 //        $reservation->setTableName('12');
 //

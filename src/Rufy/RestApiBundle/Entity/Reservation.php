@@ -21,7 +21,6 @@ class Reservation implements ReservationInterface, EntityInterface
 {
     public function __construct()
     {
-        $this->reservationOptions   = new ArrayCollection();
     }
 
     /**
@@ -91,12 +90,6 @@ class Reservation implements ReservationInterface, EntityInterface
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
      */
     private $customer;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="ReservationOption", inversedBy="reservations")
-     * @ORM\JoinTable(name="reservations_options")
-     */
-    private $reservationOptions;
 
     /**
      * @var datetime $created
@@ -434,39 +427,6 @@ class Reservation implements ReservationInterface, EntityInterface
     }
 
     /**
-     * Add reservationOptions
-     *
-     * @param ReservationOption $reservationOptions
-     * @return Reservation
-     */
-    public function addReservationOption(ReservationOption $reservationOptions)
-    {
-        $this->reservationOptions[] = $reservationOptions;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservationOptions
-     *
-     * @param \Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions
-     */
-    public function removeReservationOption(\Rufy\RestApiBundle\Entity\ReservationOption $reservationOptions)
-    {
-        $this->reservationOptions->removeElement($reservationOptions);
-    }
-
-    /**
-     * Get reservationOptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getReservationOptions()
-    {
-        return $this->reservationOptions;
-    }
-
-    /**
      * Set status
      *
      * @param integer $status
@@ -513,9 +473,4 @@ class Reservation implements ReservationInterface, EntityInterface
     {
         return $this->people_extra;
     }
-
-//    public static function getReservationOptions2()
-//    {
-//        return array(1, 2);
-//    }
 }

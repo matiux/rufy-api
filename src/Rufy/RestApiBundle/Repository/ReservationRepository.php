@@ -21,10 +21,9 @@ class ReservationRepository extends EntityRepository implements EntityRepository
         //$reservation = $this->find($id);
 
         $q = $this->createQueryBuilder('rese')
-            ->select('rese, a, c, opt')
+            ->select('rese, a, c')
             ->join('rese.area', 'a')
             ->join('rese.customer', 'c')
-            ->leftJoin('rese.reservationOptions', 'opt')
             ->where('rese.id = :reservationid')
             ->setParameter('reservationid', $id)
             ->getQuery();
@@ -45,7 +44,7 @@ class ReservationRepository extends EntityRepository implements EntityRepository
      * TODO - Rifattorizzare
      * {@inheritdoc }
      */
-    public function findMore($limit, $offset, $params, $filters = array())
+    public function findMore($limit, $offset, $params, $filters = [])
     {
         $restaurantId   = $params['restaurantId'];
 

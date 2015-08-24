@@ -10,37 +10,10 @@ use Rufy\RestApiBundle\Entity\Area,
 
 class AreaRepository extends EntityRepository implements EntityRepositoryInterface
 {
-    public function hasOptions(Reservation $reservation)
-    {
-        /**
-         * @var $area Area
-         * @var $areaOptions PersistentCollection - Le opzioni valide per una determinata Area
-         * @var $reservationAreaOptions ArrayCollection
-         */
-        $area                       = $reservation->getArea();
-        $areaOptions                = $area->getAreaOptions();
-        $reservationAreaOptions     = $reservation->getReservationOptions();
-
-        if (!$areaOptions->isEmpty()) {
-
-            //$col = $reservationAreaOptions->map(function($o) use ($areaOptions) {
-            //
-            //    return $areaOptions->contains($o);
-            //
-            //});
-            foreach ($reservationAreaOptions as $resOpt)
-                if (!$areaOptions->contains($resOpt))
-                    return false;
-
-        }
-
-        return true;
-    }
-
     /**
      * {@inheritdoc }
      */
-    public function findMore($limit, $offset, $params, $filters = array())
+    public function findMore($limit, $offset, $params, $filters = [])
     {
         $restaurantId = $params['restaurantId'];
 

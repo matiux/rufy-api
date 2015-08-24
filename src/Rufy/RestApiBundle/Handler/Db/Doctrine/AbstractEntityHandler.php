@@ -96,7 +96,7 @@ abstract class AbstractEntityHandler
     /**
      * {@inheritdoc }
      */
-    public function all($limit = 5, $offset = 0, $filters = array(), $params = array())
+    public function all($limit = 5, $offset = 0, $filters = [], $params = [])
     {
         $entities = $this->repository->findMore($limit, $offset, $params, $filters);
 

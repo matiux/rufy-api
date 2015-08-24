@@ -70,6 +70,5 @@ class ReservationHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('time', $reservation);
         $this->assertArrayHasKey('confirmed', $reservation);
         $this->assertArrayHasKey('waiting', $reservation);
-        $this->assertArrayHasKey('reservationOptions', $reservation);
     }
 }

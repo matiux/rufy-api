@@ -40,9 +40,7 @@ Feature: Testing Reservation API
 #      table_name
 #      customer
 #      area
-#      reservationOptions
 #      """
-#    And "reservationOptions" is a collection
 #    And "customer" is a collection
 #    And "customer" contains:
 #      """
@@ -68,7 +66,6 @@ Feature: Testing Reservation API
 #      | table_name         | 15            |
 #      | customer           | 1             |
 #      | area               | 1             |
-#      | reservationOptions | array,4,2     |
 #    When I request a resource
 #    Then the response status code should be 201
 #    And the response type should be "application/json"
@@ -83,9 +80,7 @@ Feature: Testing Reservation API
 #      table_name
 #      customer
 #      area
-#      reservationOptions
 #      """
-#    And "reservationOptions" is a collection
 #    And "customer" is a collection
 #    And "customer" contains:
 #      """
@@ -111,7 +106,6 @@ Feature: Testing Reservation API
       | table_name   | 15                                                                                             |
       | customer     | array,name=Pinco Pallo,phone=456987258,email=info@pallo.it,privacy=1,newsletter=0,restaurant=1 |
       | area         | 1                                                                                              |
-#      | reservationOptions | array,4,2                                                                                      |
     When I request a resource
     Then the response status code should be 201
     And the response type should be "application/json"
@@ -127,7 +121,6 @@ Feature: Testing Reservation API
       customer
       area
       """
-#    And "reservationOptions" is a collection
     And "customer" is a collection
     And "customer" contains:
       """
@@ -158,7 +151,6 @@ Feature: Testing Reservation API
       customer
       area
       """
-#    And "reservationOptions" is a collection
     And "customer" is a collection
     And "customer" contains:
       """

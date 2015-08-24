@@ -112,8 +112,3 @@ Rufy\RestApiBundle\Entity\Reservation:
           message: Indicare l'area della prenotazione
     customer:
       - Valid: ~
-
-#    reservationOptions:
-#       - Choice:
-#          callback: getReservationOptions2
-#          message:  Scegliere un genere valido.

@@ -48,31 +48,31 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
 
             'pousada'   => [
 
-                'Corridoio'     => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 2, 'minPeopleTable' => 2 ],
-                'Sala'          => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 10, 'minPeopleTable' => 8],
-                'Atras'         => ['options' => [], 'maxPeople' => 10, 'maxPeopleTable' => 6, 'minPeopleTable' => 4],
-                'Tondo'         => ['options' => [], 'maxPeople' => 5, 'maxPeopleTable' => 5, 'minPeopleTable' => 3],
-                'Frida'         => ['options' => [], 'maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
-                'Camarote'      => ['options' => [], 'maxPeople' => 20, 'maxPeopleTable' => 20, 'minPeopleTable' => 4],
-                'Fuori'         => ['options' => [], 'maxPeople' => 25, 'maxPeopleTable' => 15, 'minPeopleTable' => 2],
+                'Corridoio'     => ['maxPeople' => 10, 'maxPeopleTable' => 2, 'minPeopleTable' => 2 ],
+                'Sala'          => ['maxPeople' => 10, 'maxPeopleTable' => 10, 'minPeopleTable' => 8],
+                'Atras'         => ['maxPeople' => 10, 'maxPeopleTable' => 6, 'minPeopleTable' => 4],
+                'Tondo'         => ['maxPeople' => 5, 'maxPeopleTable' => 5, 'minPeopleTable' => 3],
+                'Frida'         => ['maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+                'Camarote'      => ['maxPeople' => 20, 'maxPeopleTable' => 20, 'minPeopleTable' => 4],
+                'Fuori'         => ['maxPeople' => 25, 'maxPeopleTable' => 15, 'minPeopleTable' => 2],
             ],
             'hotelito'  => [
 
-                'Tavoli da 2'   => ['options' => [], 'maxPeople' => 6, 'maxPeopleTable' => 2, 'minPeopleTable' => 2],
-                'Fronte'        => ['options' => [], 'maxPeople' => 28, 'maxPeopleTable' => 28, 'minPeopleTable' => 4],
-                'Lato'          => ['options' => [], 'maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
-                'Tenda'         => ['options' => [], 'maxPeople' => 18, 'maxPeopleTable' => 10, 'minPeopleTable' => 4],
-                'Fuori'         => ['options' => [], 'maxPeople' => 40, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+                'Tavoli da 2'   => ['maxPeople' => 6, 'maxPeopleTable' => 2, 'minPeopleTable' => 2],
+                'Fronte'        => ['maxPeople' => 28, 'maxPeopleTable' => 28, 'minPeopleTable' => 4],
+                'Lato'          => ['maxPeople' => 22, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
+                'Tenda'         => ['maxPeople' => 18, 'maxPeopleTable' => 10, 'minPeopleTable' => 4],
+                'Fuori'         => ['maxPeople' => 40, 'maxPeopleTable' => 22, 'minPeopleTable' => 4],
             ],
             'giardino' => [
 
-                'esterno'       => ['options' => [], 'maxPeople' => 30, 'maxPeopleTable' => 15, 'minPeopleTable' => 3],
+                'esterno'       => ['maxPeople' => 30, 'maxPeopleTable' => 15, 'minPeopleTable' => 3],
             ],
             'lochiamavanocariola'   => [
 
-                'Sopra'         => ['options' => [], 'maxPeople' => 58, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
-                'Sotto'         => ['options' => [], 'maxPeople' => 65, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
-                'Fuori'         => ['options' => [], 'maxPeople' => 28, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
+                'Sopra'         => ['maxPeople' => 58, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
+                'Sotto'         => ['maxPeople' => 65, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
+                'Fuori'         => ['maxPeople' => 28, 'maxPeopleTable' => 15, 'minPeopleTable' => 3 ],
             ],
         ];
 
@@ -84,9 +84,6 @@ class LoadArea extends AbstractFixture implements OrderedFixtureInterface
                 $areaObj->setName($areaName);
                 $areaObj->setRestaurant($this->getReference($ristoName));
                 $areaObj->setMaxPeople($areaData['maxPeople']);
-
-                foreach($areaData['options'] as $opt)
-                    $areaObj->addAreaOption($this->getReference("reservationOption_$opt"));
 
                 $this->setReference($areaName, $areaObj);
 

@@ -16,10 +16,10 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
      *
      * @param $limit
      * @param $offset
-     * @param $params
+     * @param $filters
      * @param ParamFetcherInterface $source
      */
-    protected function prepareFilters(&$limit, &$offset, &$params, ParamFetcherInterface $source) {
+    protected function prepareFilters(&$limit, &$offset, &$filters = [], ParamFetcherInterface $source) {
 
         $source         = $source->all();
 
@@ -27,6 +27,8 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
         $limit          = $source['limit'];
 
         unset($source['limit'], $source['offset']);
+
+        $filters = [];
 
         foreach ($source as $fKey => $fValue) {
 
@@ -36,7 +38,7 @@ class BaseController extends FOSRestController implements AuthenticatedFullyCont
 
             $values         = explode(',', $fValue);
 
-            $params[$fKey]  = 1 < count($values) ? $values: $fValue;
+            $filters[$fKey]  = 1 < count($values) ? $values: $fValue;
         }
     }
 

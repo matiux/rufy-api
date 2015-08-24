@@ -144,19 +144,5 @@ class ReservationController extends BaseController
 
             $request->request->set('customer', $c);
         }
-
-        $ro = $request->request->get('reservationOptions');
-
-        if ($ro && is_array($ro)) {
-
-            $o = [];
-
-            foreach($ro as $resOpts) {
-
-                $o[] = $resOpts['id'];
-            }
-
-            $request->request->set('reservationOptions', $o);
-        }
     }
 }

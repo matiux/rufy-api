@@ -62,12 +62,6 @@ class Area implements AreaInterface, EntityInterface
     private $reservations;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ReservationOption", inversedBy="areas")
-     * @ORM\JoinTable(name="areas_options")
-     */
-    private $areaOptions;
-
-    /**
      * @var datetime $created
      *
      * @Gedmo\Timestampable(on="create")
@@ -266,39 +260,6 @@ class Area implements AreaInterface, EntityInterface
     public function getDeletedAt()
     {
         return $this->deletedAt;
-    }
-
-    /**
-     * Add areaOptions
-     *
-     * @param \Rufy\RestApiBundle\Entity\ReservationOption $areaOptions
-     * @return Area
-     */
-    public function addAreaOption(\Rufy\RestApiBundle\Entity\ReservationOption $areaOptions)
-    {
-        $this->areaOptions[] = $areaOptions;
-
-        return $this;
-    }
-
-    /**
-     * Remove areaOptions
-     *
-     * @param \Rufy\RestApiBundle\Entity\ReservationOption $areaOptions
-     */
-    public function removeAreaOption(\Rufy\RestApiBundle\Entity\ReservationOption $areaOptions)
-    {
-        $this->areaOptions->removeElement($areaOptions);
-    }
-
-    /**
-     * Get areaOptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAreaOptions()
-    {
-        return $this->areaOptions;
     }
 
     /**

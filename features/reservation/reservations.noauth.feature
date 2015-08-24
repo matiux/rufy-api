@@ -26,7 +26,6 @@ Feature: Testing Reservation API
       | table_name         | 12                  |
       | customer           | 1                   |
       | area               | 1                   |
-      | reservationOptions | array,3,2           |
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"
@@ -44,7 +43,6 @@ Feature: Testing Reservation API
       | table_name         | 15            |
       | customer           | array,name=Pinco Pallo,phone=456987,email=info@pallo.it,privacy=1,newsletter=0,restaurant=1 |
       | area               | 1             |
-      | reservationOptions | array,4,2     |
     When I request a resource
     Then the response status code should be 403
     And the response type should be "application/json"

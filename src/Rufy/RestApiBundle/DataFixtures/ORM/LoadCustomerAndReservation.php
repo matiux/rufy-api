@@ -92,13 +92,6 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             ['a' => 'Fuori',  'r' => 'hotelito', 'u' => 'user_emanuele'],
         ];
 
-        $options = [
-
-            'smokers',
-            //'invalids',
-            'animals',
-        ];
-
         $users = [
             'user_matteo',
             'user_emanuele',
@@ -125,7 +118,6 @@ class LoadCustomerAndReservation extends AbstractFixture implements OrderedFixtu
             $reservation->setTime($this->buildTime());
             $reservation->setNote($faker->text(rand(50, 200)));
             $reservation->setStatus(rand(0, 2));
-            $reservation->addReservationOption($this->getReference('reservationOption_'.$options[rand(0, 1)]));
             $reservation->setTableName($faker->word);
 
             $z      = substr($aree[$x]['r'], 0, 1);

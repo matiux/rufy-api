@@ -43,7 +43,6 @@ class ReservationHandler extends AbstractEntityHandler implements EntityHandlerI
      */
     public function patch(EntityInterface $reservation, Request $request)
     {
-//        $reservation->getReservationOptions()->clear();
 //        $this->om->persist($reservation);
 //        $this->om->flush();
 

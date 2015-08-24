@@ -50,9 +50,6 @@ class ReservationVoter extends BaseVoter
 
                     // Controllo che il cliente per il quale si vuole fare la prenotazione appartenga al ristorante dell'utente
                     && $this->om->getRepository('RufyRestApiBundle:Restaurant')->hasCustomer($resource->getCustomer(), $user)
-
-                    // Controllo che le opzioni dell'area appartengano all'area del ristorante dell'utente
-                    //&& $this->om->getRepository('RufyRestApiBundle:Area')->hasOptions($resource)
                 )
                     return VoterInterface::ACCESS_GRANTED;
                 break;

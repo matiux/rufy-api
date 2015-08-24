@@ -113,9 +113,6 @@ class RestContext implements Context, SnippetAcceptingContext, RestContextInterf
 
         foreach ($toSendData as $index => $data) {
 
-//            if ('reservationOptions' == $data['field'])
-//                $data['value'] = explode(',', $data['value']);
-
             $value = new String($data['value']);
 
             if ($value->contains('array,'))

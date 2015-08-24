@@ -43,17 +43,6 @@ class LoadOwner extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($this->getReference('role_owner'));
         $manager->persist($this->getReference('role_reader'));
 
-        $options = [
-
-            'smokers',
-            'outside',
-            'invalids',
-            'animals'
-        ];
-
-        foreach ($options as $option)
-            $manager->persist($this->getReference('reservationOption_'.$option));
-
         $manager->flush();
     }
 
